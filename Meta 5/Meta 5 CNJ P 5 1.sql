@@ -1,5 +1,5 @@
 -- 3487,052 segundos para rodar
-# licenca
+-- licenca
 --5.1
 SELECT  
 saida.TXT_unidade,

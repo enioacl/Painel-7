@@ -1,5 +1,5 @@
 --3.5
-
+#apenas um teste
 
 SELECT
     saida.TXT_UNIDADE,
@@ -33,7 +33,7 @@ LEFT JOIN eg.EGT_CLASSE_PROCESSUAL classe ON (classe.NUM_CLASSE = processo.NUM_C
 LEFT JOIN eg.EGT_MUNICIPIO municipio ON (municipio.COD_MUNICIPIO = processo.COD_MUNICIPIO_ORIGEM)
 LEFT JOIN (SELECT 
 	orgao.NUM_ORGAO_ESTATISTICA,
-    LPAD(vara.NUM_VARA,2,0)||'ª VT DE '||RPAD(vara.txt_cidade,25) AS TXT_UNIDADE
+    LPAD(vara.NUM_VARA,2,0)||'Âª VT DE '||RPAD(vara.txt_cidade,25) AS TXT_UNIDADE
 FROM eg.EGT_ORGAO_ESTATISTICA orgao
 LEFT JOIN eg.EGT_VARA vara ON (vara.NUM_TRIBUNAL = orgao.NUM_TRIBUNAL AND vara.NUM_INTERNO_VARA = orgao.NUM_INTERNO_VARA)
 WHERE orgao.IND_EXCLUSAO = 'N'
@@ -59,7 +59,7 @@ WHERE
 	--AND REMESSA.COD_SITUACAO_REMESSA = 'G'
 	-- M - Mensal
 	AND REMESSA.COD_PERIODICIDADE = 'M'
-	-- Se desejar, faça filtro por orgaos estatistica aqui
+	-- Se desejar, faÃ§a filtro por orgaos estatistica aqui
 	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
 	-- Filtro por remessa e lote (se desejar, filtre por mes da remessa de maneira similar ao SQL que recupera remessa e lote a partir do mes)
 	-- Apenas itens com detalhes de processos 

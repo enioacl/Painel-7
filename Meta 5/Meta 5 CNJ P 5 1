@@ -1,5 +1,3 @@
--- 3487,052 segundos para rodar
-
 --5.1
 SELECT  
 saida.TXT_unidade,

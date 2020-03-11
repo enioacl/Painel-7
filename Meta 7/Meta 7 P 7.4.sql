@@ -1,6 +1,6 @@
-﻿--P 7.3 (pendentes dos dez maiores litigantes)
+﻿--P 7.4 (pendentes dos dez maiores litigantes)
 
-SELECT saida.TXT_SIGLA, saida.TXT_UNIDADE, saida.PROCESSO_NUMERO_UNICO, saida.TXT_ADICIONAL, extract(month from saida.DTA_VALOR) as mes
+SELECT saida.TXT_SIGLA, saida.TXT_UNIDADE, saida.PROCESSO_NUMERO_UNICO, saida.TXT_ADICIONAL, extract(MONTH FROM saida.DTA_VALOR) as mes
 FROM
 
 (SELECT 
@@ -76,10 +76,10 @@ LEFT JOIN sicond.ORGAO_ESTATISTICA_V orgao ON (orgao.NUM_ORGAO_ESTATISTICA = det
 LEFT JOIN eg.EGT_ORGAO_UNIDADE unidade_colegiado ON (unidade_colegiado.NUM_TRIBUNAL = 7 AND unidade_colegiado.NUM_UNIDADE = detalhe.NUM_UNIDADE_COLEGIADO_EGESTAO)
 LEFT JOIN eg.EGT_ORGAO_UNIDADE unidade_gabinete ON (unidade_gabinete.NUM_TRIBUNAL = 7 AND unidade_gabinete.NUM_UNIDADE = detalhe.NUM_UNIDADE_GABINETE_EGESTAO)
 LEFT JOIN sicond.VALOR_PARAMETRO_EM_SOLICIT parametro ON (detalhe.ID_SOLICITACAO_ESTATISTICAS=parametro.ID_SOLICITACAO_ESTATISTICAS)
---colocar a solicitação de apenas um mês pois é pergunta única
-WHERE detalhe.ID_SOLICITACAO_ESTATISTICAS IN (11273)  AND parametro.ID_PARAMETRO=2 --pra buscar somente as linhas com "data final"
+--colocar a solicitação de cada mês
+WHERE detalhe.ID_SOLICITACAO_ESTATISTICAS IN (11269,11270,11271,11272,11273,11274,11309,11310,11311,11312,11313,11342)  AND parametro.ID_PARAMETRO=2 --pra buscar somente as linhas com "data final"
 ORDER BY quantidade.ID_SOLICITACAO_ESTATISTICAS, quantidade.ID_RESULT_ESTAT_QUANT, detalhe.ID_RESULT_ESTAT_DET) saida
-where saida.TXT_SIGLA = 'P7.3'
+where saida.TXT_SIGLA = 'P7.4'
 --group by saida.TXT_SIGLA
 
 

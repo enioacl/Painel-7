@@ -8,23 +8,23 @@ require(dplyr)
 dados<-dataset
 
 dados<-dados%>%select(sort(names(.)))
-names(dados)<-c("Instância","mês","quant","soma","unidade")
-dados$mês<-as.numeric(dados$mês)
+names(dados)<-c("InstÃ¢ncia","mÃªs","quant","soma","unidade")
+dados$mÃªs<-as.numeric(dados$mÃªs)
 dados$quant<-as.numeric(dados$quant)
 dados$quant[is.na(dados$quant)]=0
 dados$soma<-as.numeric(dados$soma)
-dados<-dados%>%select(unidade,mês,quant,soma)
+dados<-dados%>%select(unidade,mÃªs,quant,soma)
 dados<-dados[-c(1:40),]
 dados<-as.data.frame(dados)
 Unidades<-as.data.frame(dados%>%select(unidade)); Unidades<-Unidades[c(1:37,39),]
 
 
-#trt primeira instância por mês
+#trt primeira instÃ¢ncia por mÃªs
 
-TRT_1<-cbind(unidade=rep(".TRT 7 1ª INSTÂNCIA",length(unique(dados$mês))),
-             dados%>%group_by(mês)%>%summarise(quant=sum(quant),soma=sum(soma)))
+TRT_1<-cbind(unidade=rep(".TRT 7 1Âª INSTÃ‚NCIA",length(unique(dados$mÃªs))),
+             dados%>%group_by(mÃªs)%>%summarise(quant=sum(quant),soma=sum(soma)))
 dados2<-rbind(dados,TRT_1)
-dados2<-arrange(dados2,unidade,mês)
+dados2<-arrange(dados2,unidade,mÃªs)
 
 
 
@@ -32,9 +32,9 @@ require(lubridate)
 require(data.table)
 
 
-#mes=1:month(floor_date(Sys.Date() - months(1), "month")) # até o mês anterior ao atual
-mês=1:12 
-combin=CJ(unidade=Unidades,mês) #combinação das unidades com cada mês para a comparação
+mÃªs=1:month(floor_date(Sys.Date() - months(1), "month")) # atÃ© o mÃªs anterior ao atual
+#mÃªs=1:12 
+combin=CJ(unidade=Unidades,mÃªs) #combinaÃ§Ã£o das unidades com cada mÃªs para a comparaÃ§Ã£o
 combin$quant<-0
 combin$soma<-0
 combin<-as.data.frame(combin)
@@ -47,8 +47,8 @@ require(prodlim)
 pos=which(is.na(row.match(combin[,1:2],dados2[,1:2]))) #linhas para adicionar
 ee=rbind(dados2,combin[pos,]) #juntando o data frame com as linhas faltantes
 
-#reorganizar as linhas por unidade e mês
-ee=ee%>%arrange(unidade,mês)
+#reorganizar as linhas por unidade e mÃªs
+ee=ee%>%arrange(unidade,mÃªs)
 
 dados2=as.data.frame(ee)
 
@@ -66,13 +66,13 @@ dados2<-dados2%>%group_by(unidade)%>%mutate(GC_atual=last(GC_acumulado))
 dados2[is.na(dados2)]=0
 
 
-meses=c("janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro")
+meses=c("janeiro","fevereiro","marÃ§o","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro")
 
 aux=1:dim(dados2)[1]
 
 
-for(i in 1:max(dados2$mês)){
-  a=which(dados2$mês==i)
+for(i in 1:max(dados2$mÃªs)){
+  a=which(dados2$mÃªs==i)
   aux[a]=meses[i]
 }
 

@@ -1,11 +1,9 @@
-﻿
+
 -- Meta 4 - Tempo médio de duração do processo 2º grau - TMDP2
 SELECT
-    --saida.TXT_UNIDADE,
     saida.mes,
     sum(saida.NUM_DIAS) as soma,
     count(saida.NUM_INTERNO_PROCESSO) as numero_de_processos
-   -- AVG(saida.NUM_DIAS) AS media
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -43,8 +41,8 @@ ORDER BY NUM_ORGAO_ESTATISTICA) vt ON vt.NUM_ORGAO_ESTATISTICA = processo.num_or
 INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
-            TO_DATE('01/01/2019','dd/mm/yy') AND 
-            TO_DATE('31/12/2019','dd/mm/yy')      
+            TO_DATE((select ADD_MONTHS(trunc(sysdate,'mm'),-extract(MONTH from sysdate)+1) from dual),'dd/mm/yy') AND 
+            TO_DATE((select ADD_MONTHS(last_day(sysdate), -1) from dual ),'dd/mm/yy')      
             AND REM.COD_SITUACAO_REMESSA = 'G'
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
@@ -53,16 +51,9 @@ LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TR
 												remessa.NUM_LOTE = PROCESSO.NUM_LOTE)
 WHERE
 	processo.NUM_TRIBUNAL = 7
-        -- G - Gerada
-	--AND REMESSA.COD_SITUACAO_REMESSA = 'G'
-	-- M - Mensal
 	AND REMESSA.COD_PERIODICIDADE = 'M'
-	-- Se desejar, faça filtro por orgaos estatistica aqui
 	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
-	-- Filtro por remessa e lote (se desejar, filtre por mes da remessa de maneira similar ao SQL que recupera remessa e lote a partir do mes)
-	-- Apenas itens com detalhes de processos 
 	AND estrutura_item.num_tipo_complemento = 1
-	-- Filtro por item - Exemplo com indicadores 90074 e 92198
 	AND processo.NUM_ITEM IN (2236, 2237, 92236, 92237)
 ) saida
 group by saida.mes

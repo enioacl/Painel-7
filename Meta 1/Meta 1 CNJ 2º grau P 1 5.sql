@@ -1,7 +1,8 @@
-﻿--META 1 CNJ 2º grau P 1.1
 SELECT
-    saida.mes,
-    COUNT(saida.NUM_INTERNO_PROCESSO) AS quantidade
+ --distinct pois ele repete o processo que foi julgado mais de uma vez no mês de referência
+
+saida.mes,
+   COUNT(distinct(saida.NUM_INTERNO_PROCESSO)) AS quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -39,8 +40,10 @@ ORDER BY NUM_ORGAO_ESTATISTICA) vt ON vt.NUM_ORGAO_ESTATISTICA = processo.num_or
 INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
-            TO_DATE('01/01/2019','dd/mm/yy') AND 
-            TO_DATE('31/12/2019','dd/mm/yy')  
+        TO_DATE((select ADD_MONTHS(trunc(sysdate,'mm'),-extract(MONTH from sysdate)+1) from dual),'dd/mm/yy') AND 
+        TO_DATE((select ADD_MONTHS(last_day(sysdate), -1) from dual ),'dd/mm/yy') 
+            --TO_DATE('01/01/2020','dd/mm/yy') AND 
+            --TO_DATE('31/01/2020','dd/mm/yy')  
             AND rem.COD_SITUACAO_REMESSA = 'G' 
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
@@ -50,20 +53,12 @@ LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TR
 
 WHERE
 	processo.NUM_TRIBUNAL = 7
-        -- G - Gerada
-	--AND REMESSA.COD_SITUACAO_REMESSA = 'G'
-	-- M - Mensal
 	AND REMESSA.COD_PERIODICIDADE = 'M'
-	-- Se desejar, faça filtro por orgaos estatistica aqui
-	AND processo.NUM_ORGAO_ESTATISTICA = 0
-	--AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
-	-- Filtro por remessa e lote (se desejar, filtre por mes da remessa de maneira similar ao SQL que recupera remessa e lote a partir do mes)
-	-- Apenas itens com detalhes de processos 
+	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
 	AND estrutura_item.num_tipo_complemento = 1
-	-- 92430 ESSE ITEM TÁ NA REGRA DO EGESTÃO, DEIXAR AQUI PARA ANÁLISE POSTERIOR. "PROCESSOS BAIXADOS SEM DECISÃO"
-	AND processo.NUM_ITEM IN (2140, 2429, 92429)     
+	AND processo.NUM_ITEM IN (2140,2429,92429,92430)
     AND processo.NUM_INTERNO_PROCESSO IN (SELECT
-            processo.NUM_INTERNO_PROCESSO
+            processo.NUM_INTERNO_PROCESSO 
 FROM eg.egt_info_processo processo
 LEFT JOIN eg.EGT_PROCESSO proc ON (	proc.NUM_TRIBUNAL = processo.NUM_TRIBUNAL 
 							AND proc.NUM_ORGAO_ESTATISTICA = processo.NUM_ORGAO_ESTATISTICA 
@@ -80,13 +75,14 @@ LEFT JOIN eg.EGT_VARA vara ON (vara.NUM_TRIBUNAL = orgao.NUM_TRIBUNAL AND vara.N
 WHERE orgao.IND_EXCLUSAO = 'N'
 	AND vara.COD_CLASSIFICACAO_VARA = 'V'
 ORDER BY NUM_ORGAO_ESTATISTICA) vt ON vt.NUM_ORGAO_ESTATISTICA = processo.num_orgao_estatistica
--- Essa parte do código é porque eles querem os processos que foram distribuídos em 2019
 INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
-            TO_DATE('01/01/2019','dd/mm/yy') AND 
-            TO_DATE('31/12/2019','dd/mm/yy')  
-            AND rem.COD_SITUACAO_REMESSA = 'G'              
+	TO_DATE((select ADD_MONTHS(trunc(sysdate,'mm'),-extract(MONTH from sysdate)+1) from dual),'dd/mm/yy') AND 
+        TO_DATE((select ADD_MONTHS(last_day(sysdate), -1) from dual ),'dd/mm/yy') 
+         --   TO_DATE('01/01/2020','dd/mm/yy') AND 
+          --  TO_DATE('31/12/2020','dd/mm/yy') 
+            AND rem.COD_SITUACAO_REMESSA = 'G'               
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
 												remessa.NUM_ORGAO_ESTATISTICA = PROCESSO.NUM_ORGAO_ESTATISTICA AND
@@ -95,21 +91,11 @@ LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TR
 
 WHERE
 	processo.NUM_TRIBUNAL = 7
-        -- G - Gerada
-	--AND REMESSA.COD_SITUACAO_REMESSA = 'G'
-	-- M - Mensal
 	AND REMESSA.COD_PERIODICIDADE = 'M'
-	-- Se desejar, faça filtro por orgaos estatistica aqui
-	AND processo.NUM_ORGAO_ESTATISTICA = 0
-	--AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
-	-- Filtro por remessa e lote (se desejar, filtre por mes da remessa de maneira similar ao SQL que recupera remessa e lote a partir do mes)
-	-- Apenas itens com detalhes de processos 
+	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
 	AND estrutura_item.num_tipo_complemento = 1
-	-- Filtro por item - Exemplo com indicadores 90074 e 92198
-	AND processo.NUM_ITEM IN (2137, 2138, 92137, 92138)
-)
+	AND processo.NUM_ITEM IN (2137,2138,92137,92138)
+    )
 
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
 group by saida.mes
-order by saida.mes
-

@@ -7,18 +7,18 @@ dados<-dataset
 
 unidade<-as.data.frame(dados[c(1:37,39),1])
 dados<-dados%>%select(sort(names(.)))
-names(dados)=c("Instância","mês","Pergunta","quant","Unidade")
-dados<-dados%>%select(Unidade,mês,Pergunta,quant,Instância)
+names(dados)=c("InstÃ¢ncia","mÃªs","Pergunta","quant","Unidade")
+dados<-dados%>%select(Unidade,mÃªs,Pergunta,quant,InstÃ¢ncia)
 dados$quant<-as.numeric(dados$quant)
 dados$quant[is.na(dados$quant)]=0
-dados$mês<-as.numeric(dados$mês)
+dados$mÃªs<-as.numeric(dados$mÃªs)
 
 
 
-p11<-dados%>%filter(Pergunta=="P11")%>%select(Unidade, mês, quant)
-p13<-dados%>%filter(Pergunta=="P13")%>%select(Unidade, mês, quant)
-p17<-dados%>%filter(Pergunta=="P17")%>%select(Unidade, mês, quant)
-p19<-dados%>%filter(Pergunta=="P19")%>%select(Unidade, mês, quant)
+p11<-dados%>%filter(Pergunta=="P11")%>%select(Unidade, mÃªs, quant)
+p13<-dados%>%filter(Pergunta=="P13")%>%select(Unidade, mÃªs, quant)
+p17<-dados%>%filter(Pergunta=="P17")%>%select(Unidade, mÃªs, quant)
+p19<-dados%>%filter(Pergunta=="P19")%>%select(Unidade, mÃªs, quant)
 
 
 names(p11)[3]="P11"
@@ -27,17 +27,17 @@ names(p17)[3]="P17"
 names(p19)[3]="P19"
 
 
-dados2<-full_join(p11, p13, by = c("mês", "Unidade"))%>%full_join(.,p17,by=c("mês", "Unidade"))%>%full_join(.,p19,by=c("mês","Unidade"))
+dados2<-full_join(p11, p13, by = c("mÃªs", "Unidade"))%>%full_join(.,p17,by=c("mÃªs", "Unidade"))%>%full_join(.,p19,by=c("mÃªs","Unidade"))
 dados2[is.na(dados2)]=0
 
-TRT_Total<-dados2%>%group_by(mês)%>%summarize(P11=sum(P11), P13=sum(P13), P17=sum(P17), P19=sum(P19))%>%arrange(mês)
-TRT_Total<-TRT_Total%>%mutate(Unidade=".TRT 7 1ª INSTÂNCIA")
+TRT_Total<-dados2%>%group_by(mÃªs)%>%summarize(P11=sum(P11), P13=sum(P13), P17=sum(P17), P19=sum(P19))%>%arrange(mÃªs)
+TRT_Total<-TRT_Total%>%mutate(Unidade=".TRT 7 1Âª INSTÃ‚NCIA")
 
 dados2<-rbind(dados2, TRT_Total)
 
-#mes=1:month(floor_date(Sys.Date() - months(1), "month")) # até o mês anterior ao atual
-mês=1:12
-combin=CJ(unidade[,1],mês) #combinação das unidades com cada mês para a comparação
+mÃªs=1:month(floor_date(Sys.Date() - months(1), "month")) # atÃ© o mÃªs anterior ao atual
+#mÃªs=1:12
+combin=CJ(unidade[,1],mÃªs) #combinaÃ§Ã£o das unidades com cada mÃªs para a comparaÃ§Ã£o
 combin$p11=rep(0,dim(combin)[1])
 combin$p13=rep(0,dim(combin)[1])
 combin$p17=rep(0,dim(combin)[1])
@@ -50,8 +50,8 @@ dados2<-as.data.frame(dados2)
 pos=which(is.na(row.match(combin[,1:2],dados2[,1:2]))) #linhas para adicionar 
 ee=rbind(dados2,combin[pos,]) #juntando o data frame com as linhas faltantes
 
-#reorganizar as linhas por unidade e mês
-ee=ee%>%arrange(Unidade,mês)
+#reorganizar as linhas por unidade e mÃªs
+ee=ee%>%arrange(Unidade,mÃªs)
 
 dados2=as.data.frame(ee)
 
@@ -68,14 +68,14 @@ dados2<-dados2%>%group_by(Unidade)%>%mutate(GCatual=last(GCacumulado))%>%ungroup
 dados2[is.na(dados2)]=0
 
 
-meses=c("janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro")
+meses=c("janeiro","fevereiro","marÃ§o","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro")
 
 
 aux=1:dim(dados2)[1]
 
 
-for(i in 1:max(dados2$mês)){
-  a=which(dados2$mês==i)
+for(i in 1:max(dados2$mÃªs)){
+  a=which(dados2$mÃªs==i)
   aux[a]=meses[i]
 }
 

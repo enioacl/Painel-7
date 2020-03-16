@@ -3,6 +3,7 @@
 require(dplyr)
 library(prodlim)
 library(data.table)
+require(lubridate)
 dados<-dataset
 
 unidade<-as.data.frame(dados[c(1:37,39),1])

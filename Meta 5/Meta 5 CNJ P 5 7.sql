@@ -42,8 +42,13 @@ LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TR
 
 WHERE
 	processo.NUM_TRIBUNAL = 7
+	AND REMESSA.COD_PERIODICIDADE = 'M'
+	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
+	AND estrutura_item.num_tipo_complemento = 1
 	--AND classe.NUM_CLASSE_CNJ IN (1116)
     AND processo.NUM_ITEM IN (392, 90392, 98, 90098)
+    
+    
     AND processo.NUM_INTERNO_PROCESSO IN (SELECT 
         processo.NUM_INTERNO_PROCESSO
     --classe.NOM_CLASSE,
@@ -65,8 +70,10 @@ ORDER BY NUM_ORGAO_ESTATISTICA) vt ON vt.NUM_ORGAO_ESTATISTICA = processo.num_or
 INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
-            TO_DATE('01/01/2019','dd/mm/yy') AND 
-            TO_DATE('31/12/2019','dd/mm/yy')              
+	TO_DATE((select ADD_MONTHS(trunc(sysdate,'mm'),-extract(MONTH from sysdate)+1) from dual),'dd/mm/yy') AND 
+        TO_DATE((select ADD_MONTHS(last_day(sysdate), -1) from dual ),'dd/mm/yy')
+            --TO_DATE('01/01/2019','dd/mm/yy') AND 
+            --TO_DATE('31/12/2019','dd/mm/yy')              
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
 						remessa.NUM_ORGAO_ESTATISTICA = PROCESSO.NUM_ORGAO_ESTATISTICA AND
@@ -77,6 +84,7 @@ WHERE
 	processo.NUM_TRIBUNAL = 7
 	--AND classe.NUM_CLASSE_CNJ IN (1116)
     AND processo.NUM_ITEM IN (329, 90329, 391, 90391, 91, 90091)
+    
     AND processo.NUM_INTERNO_PROCESSO NOT IN (SELECT 
         processo.NUM_INTERNO_PROCESSO
     --classe.NOM_CLASSE,
@@ -98,8 +106,10 @@ ORDER BY NUM_ORGAO_ESTATISTICA) vt ON vt.NUM_ORGAO_ESTATISTICA = processo.num_or
 INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
-            TO_DATE('01/01/2019','dd/mm/yy') AND 
-            TO_DATE('31/12/2019','dd/mm/yy') 
+	TO_DATE((select ADD_MONTHS(trunc(sysdate,'mm'),-extract(MONTH from sysdate)+1) from dual),'dd/mm/yy') AND 
+        TO_DATE((select ADD_MONTHS(last_day(sysdate), -1) from dual ),'dd/mm/yy')
+            --TO_DATE('01/01/2019','dd/mm/yy') AND 
+            --TO_DATE('31/12/2019','dd/mm/yy') 
             AND rem.COD_SITUACAO_REMESSA = 'G'               
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
@@ -109,8 +119,11 @@ LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TR
 
 WHERE
 	processo.NUM_TRIBUNAL = 7
-    AND classe.NUM_CLASSE_CNJ IN (1116, 183)
-    AND processo.NUM_ITEM IN (329, 90329, 391, 90391, 91, 90091)
+	AND REMESSA.COD_PERIODICIDADE = 'M'
+	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
+	AND estrutura_item.num_tipo_complemento = 1
+        AND classe.NUM_CLASSE_CNJ IN (1116, 183)
+        AND processo.NUM_ITEM IN (329, 90329, 391, 90391, 91, 90091)
 )
 )
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida

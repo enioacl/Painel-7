@@ -1,78 +1,109 @@
 # 'dataset' tem os dados de entrada para este script
-
-#TMDP 1
-
-require(dplyr)
-
-
 dados<-dataset
+require(dplyr)
+library(prodlim)
+library(data.table)
+
+#dados<-read.table(file.choose(),  sep ="\t", header = TRUE)
 
 dados<-dados%>%select(sort(names(.)))
-names(dados)<-c("Instância","mês","quant","soma","unidade")
-dados$mês<-as.numeric(dados$mês)
-dados$quant<-as.numeric(dados$quant)
-dados$quant[is.na(dados$quant)]=0
-dados$soma<-as.numeric(dados$soma)
-dados<-dados%>%select(unidade,mês,quant,soma)
-dados<-dados[-c(1:40),]
-dados<-as.data.frame(dados)
-Unidades<-as.data.frame(dados%>%select(unidade)); Unidades<-Unidades[c(1:37,39),]
+names(dados)[c(1,2,5,6)]<-c("InstÃ¢ncia","mes","pergunta","unidade")
+dados<-dados%>%select(unidade,mes,InstÃ¢ncia,pergunta)
+dados$unidade<-as.character(dados$unidade)
+dados$mes<-as.numeric(dados$mes)
+unidade<-as.character(dados[c(1:38),1])
+
+P73<-dados%>%group_by(unidade)%>%filter(pergunta=='P7.3')%>%summarise(quantidade=length(unidade))
+names(P73)[2]<-"P73"
+P73[nrow(P73)+1,]=c(".TRT 7 1Âª INSTÃ‚NCIA",sum(P73$P73))
+P73$P73<-as.numeric(P73$P73)
+
+P74<-dados%>%group_by(unidade,mes)%>%filter(pergunta=='P7.4')%>%summarise(quantidade=length(unidade))
+names(P74)[3]<-"P74"
+P74$P74<-as.numeric(P74$P74)
+
+P75<-dados%>%group_by(unidade,mes)%>%filter(pergunta=='P7.5')%>%summarise(quantidade=length(unidade))
+names(P75)[3]<-"P75"
+P75$P75<-as.numeric(P75$P75)
+
+P76<-dados%>%group_by(unidade,mes)%>%filter(pergunta=='P7.6')%>%summarise(quantidade=length(unidade))
+names(P76)[3]<-"P76"
+P76$P76<-as.numeric(P76$P76)
+
+P77<-dados%>%group_by(unidade,mes)%>%filter(pergunta=='P7.7')%>%summarise(quantidade=length(unidade))
+names(P77)[3]<-"P77"
+P77$P77<-as.numeric(P77$P77)
+
+dados2<-full_join(P74,P75,by=c("unidade","mes"))%>%full_join(.,P76,by=c("unidade","mes"))%>%full_join(.,P77,by=c("unidade","mes"))
+dados2[is.na(dados2)]=0
+dados2<-as.data.frame(dados2)
+dados2<-arrange(dados2,unidade,mes)
 
 
-#trt primeira instância por mês
-
-TRT_1<-cbind(unidade=rep(".TRT 7 1ª INSTÂNCIA",length(unique(dados$mês))),
-             dados%>%group_by(mês)%>%summarise(quant=sum(quant),soma=sum(soma)))
-dados2<-rbind(dados,TRT_1)
-dados2<-arrange(dados2,unidade,mês)
+TRT_1<-dados2%>%group_by(mes)%>%summarise(P74=sum(P74),P75=sum(P75),P76=sum(P76),P77=sum(P77))
+TRT_1<-as.data.frame(mutate(TRT_1,unidade=".TRT 7 1Âª INSTÃ‚NCIA")%>%select(unidade,everything()))
 
 
+dados2<-rbind(dados2,TRT_1)
+dados2<-arrange(dados2,unidade,mes)
+dados2[is.na(dados2)]=0
 
-require(lubridate)
-require(data.table)
+#linhas faltantes
 
-
-#mes=1:month(floor_date(Sys.Date() - months(1), "month")) # até o mês anterior ao atual
-mês=1:12 
-combin=CJ(unidade=Unidades,mês) #combinação das unidades com cada mês para a comparação
-combin$quant<-0
-combin$soma<-0
-combin<-as.data.frame(combin)
-
+#meses=1:12
+meses=1:month(floor_date(Sys.Date() - months(1), "month")) # atÃ© o mÃªs anterior ao atual
+combin=CJ(unidade=unidade,mes=meses) #combinaÃ§Ã£o das unidades com cada mÃªs para a comparaÃ§Ã£o
+combin$P74=rep(0,dim(combin)[1])
+combin$P75=rep(0,dim(combin)[1])
+combin$P76=rep(0,dim(combin)[1])
+combin$P77=rep(0,dim(combin)[1])
+combin$unidade<-as.character(combin$unidade)
+combin=as.data.frame(combin)
+combin$mes<-as.numeric(combin$mes)
+combin$unidade<-as.character(combin$unidade)
 
 require(prodlim)
 
-
-#ajeitar o combin[1:2] para combin[,1:2]
 pos=which(is.na(row.match(combin[,1:2],dados2[,1:2]))) #linhas para adicionar
 ee=rbind(dados2,combin[pos,]) #juntando o data frame com as linhas faltantes
 
-#reorganizar as linhas por unidade e mês
-ee=ee%>%arrange(unidade,mês)
+#reorganizar as linhas por unidade e mÃªs
+ee=ee%>%arrange(unidade,mes)
 
-dados2=as.data.frame(ee)
+dados2<-as.data.frame(ee)
+
+#adicionando a pergunta Ãºnica
+dados2<-left_join(dados2,P73,by="unidade")
 
 
-#divididos por 100 para ficar em porcentagem corretamente no power bi
 #Grau de cumprimento acumulado
-dados2<-dados2%>%group_by(unidade)%>%mutate(GC_acumulado=cumsum(soma)/cumsum(quant))
+
+#p73<-P73
+
+dados2<-dados2%>%group_by(unidade)%>%mutate(GC_acumulado=P73*0.98/(P73+cumsum(P74)+cumsum(P75)-cumsum(P76)-cumsum(P77)))%>%ungroup()
 
 #Grau de cumprimento mensal
-dados2<-dados2%>%mutate(GC_mensal=soma/quant)
+dados2<-dados2%>%group_by(unidade)%>%mutate(GC_mensal=P73*0.98/(P73+P74+P75-P76-P77))%>%ungroup()
+
+dados2$GC_acumulado[is.infinite(dados2$GC_acumulado)]<-1
+dados2$GC_mensal[is.infinite(dados2$GC_mensal)]<-1
+dados2$GC_acumulado[is.na(dados2$GC_acumulado)]<-1
+dados2$GC_mensal[is.na(dados2$GC_mensal)]<-1
 
 #Grau de cumprimento atual
-dados2<-dados2%>%group_by(unidade)%>%mutate(GC_atual=last(GC_acumulado))
-
-dados2[is.na(dados2)]=0
+dados2<-dados2%>%group_by(unidade)%>%mutate(GC_atual=last(GC_acumulado))%>%ungroup()
 
 
-meses=c("janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro")
+
+
+meses=c("janeiro","fevereiro","marÃ§o","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro")
+
 
 aux=1:dim(dados2)[1]
 
 
-for(i in 1:max(dados2$mês)){
-  a=which(dados2$mês==i)
+for(i in 1:max(dados2$mes)){
+  a=which(dados2$mes==i)
   aux[a]=meses[i]
 }
 
@@ -80,5 +111,22 @@ for(i in 1:max(dados2$mês)){
 dados2$mes_nomes=aux
 
 
-dados2$meta<-148
-dados2$gc_tmdp1<-148/dados2$GC_acumulado
+dados2$InstÃ¢ncia<-"TRT total"
+
+
+
+dados2$unidade[dados2$unidade=="VT DE ARACATI"]="01Âª VT DE ARACATI"
+dados2$unidade[dados2$unidade=="VT DE EUSÃ‰BIO"]="01Âª VT DE EUSEBIO"
+dados2$unidade[dados2$unidade=="VT DE PACAJUS"]="01Âª VT DE PACAJUS"
+dados2$unidade[dados2$unidade=="VT DE TIANGUÃ"]="01Âª VT DE TIANGUÃ"
+dados2$unidade[dados2$unidade=="VT DE BATURITE"]="01Âª VT DE BATURITE"
+dados2$unidade[dados2$unidade=="VT DE IGUATU"]="01Âª VT DE IGUATU"
+dados2$unidade[dados2$unidade=="VT DE QUIXADA"]="01Âª VT DE QUIXADA"
+dados2$unidade[dados2$unidade=="VT DE CRATEUS"]="01Âª VT DE CRATEUS"
+dados2$unidade[dados2$unidade=="VT DE LIMOEIRO DO NORTE"]="01Âª VT DE LIMOEIRO DO NORTE"
+dados2$unidade[dados2$unidade=="01Âª VT DA REGIÃƒO DO CARIRI"]="01Âª VT DE JUAZEIRO DO NORTE"
+dados2$unidade[dados2$unidade=="02Âª VT DA REGIÃƒO DO CARIRI"]="02Âª VT DE JUAZEIRO DO NORTE"
+dados2$unidade[dados2$unidade=="03Âª VT DA REGIÃƒO DO CARIRI"]="03Âª VT DE JUAZEIRO DO NORTE"
+dados2$unidade[dados2$unidade=="VT DE SÃƒO GONÃ‡ALO DO AMARANTE"]="01Âª VT DE SAO GONCALO DO AMARANTE"
+
+dados2<-arrange(dados2,unidade,mes)

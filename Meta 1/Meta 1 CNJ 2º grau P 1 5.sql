@@ -81,9 +81,9 @@ INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
 	--TO_DATE((select ADD_MONTHS(trunc(sysdate,'mm'),-extract(MONTH from sysdate)+1) from dual),'dd/mm/yy') AND 
         --TO_DATE((select ADD_MONTHS(last_day(sysdate), -1) from dual ),'dd/mm/yy') 
 	    
--- Essa parte do código é porque eles querem os processos que foram distribuídos em 2019
-           TO_DATE('01/01/2019','dd/mm/yy') AND 
-           TO_DATE('31/12/2019','dd/mm/yy') 
+-- Essa parte do código é porque eles querem os processos que foram distribuídos em 2020
+           TO_DATE('01/01/2020','dd/mm/yy') AND 
+           TO_DATE('31/12/2020','dd/mm/yy') 
             AND rem.COD_SITUACAO_REMESSA = 'G'               
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 

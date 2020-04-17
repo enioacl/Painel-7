@@ -39,8 +39,8 @@ require(lubridate)
 require(data.table)
 
 
-#mes=1:month(floor_date(Sys.Date() - months(1), "month")) # até o mês anterior ao atual
-mes=1:12 
+mes=1:month(floor_date(Sys.Date() - months(1), "month")) # até o mês anterior ao atual
+#mes=1:12 
 combin=CJ(unidade[,1],mes) #combinação das unidades com cada mês para a comparação
 combin$p35=rep(0,dim(combin)[1])
 combin$p36=rep(0,dim(combin)[1])

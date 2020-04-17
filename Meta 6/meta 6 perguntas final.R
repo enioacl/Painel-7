@@ -7,49 +7,49 @@ dados<-read_excel("X:/SGE/GABINETE/CONSELHO NACIONAL DE JUSTICA/METAS NACIONAIS 
 dados<-dados%>%select(sort(names(.)))
 
 
-names(dados)<-c("Instância","mês","Pergunta","quantidade","unidade")
-dados$mês<-as.numeric(dados$mês)
+names(dados)<-c("InstÃ¢ncia","mÃªs","Pergunta","quantidade","unidade")
+dados$mÃªs<-as.numeric(dados$mÃªs)
 dados$quantidade<-as.numeric(dados$quantidade)
 unidade<-dados%>%select(unidade)
 unidade<-as.data.frame(unidade[c(1:37,39),])
 
-#adicionado o "trt 1ª instância" nas perguntas únicas
+#adicionado o "trt 1Âª instÃ¢ncia" nas perguntas Ãºnicas
 
 
 pp61<-dados%>%filter(Pergunta=='P61')%>%select(unidade,quantidade)
 names(pp61)[2]="P61"
-pp61[nrow(pp61)+1,]=c(".TRT 7 1ª INSTÂNCIA",sum(pp61$P61))
+pp61[nrow(pp61)+1,]=c(".TRT 7 1Âª INSTÃ‚NCIA",sum(pp61$P61))
 pp61$P61<-as.numeric(pp61$P61)
-pp62<-dados%>%filter(Pergunta=='P62')%>%select(unidade,mês,quantidade)
+pp62<-dados%>%filter(Pergunta=='P62')%>%select(unidade,mÃªs,quantidade)
 names(pp62)[3]="P62"
-pp63<-dados%>%filter(Pergunta=='P63')%>%select(unidade,mês,quantidade)
+pp63<-dados%>%filter(Pergunta=='P63')%>%select(unidade,mÃªs,quantidade)
 names(pp63)[3]="P63"
-pp64<-dados%>%filter(Pergunta=='P64')%>%select(unidade,mês,quantidade)
+pp64<-dados%>%filter(Pergunta=='P64')%>%select(unidade,mÃªs,quantidade)
 names(pp64)[3]="P64"
 pp65<-dados%>%filter(Pergunta=='P65')%>%select(unidade,quantidade)
 names(pp65)[2]="P65"
-pp65[nrow(pp65)+1,]=c(".TRT 7 1ª INSTÂNCIA",sum(pp65$P65))
+pp65[nrow(pp65)+1,]=c(".TRT 7 1Âª INSTÃ‚NCIA",sum(pp65$P65))
 pp65$P65<-as.numeric(pp65$P65)
 
-dados2<-full_join(pp62,pp63,by=c("unidade","mês"))%>%full_join(.,pp64,by=c("unidade","mês"))
+dados2<-full_join(pp62,pp63,by=c("unidade","mÃªs"))%>%full_join(.,pp64,by=c("unidade","mÃªs"))
 dados2<-as.data.frame(dados2)
 dados2[is.na(dados2)]=0
 
 
-dados2<-dados2%>%arrange(unidade,mês)
+dados2<-dados2%>%arrange(unidade,mÃªs)
 
 
-TRT_1<-dados2%>%group_by(mês)%>%summarize(P62=sum(P62), P63=sum(P63), P64=sum(P64))
-TRT_1<-as.data.frame(TRT_1%>%mutate(unidade=".TRT 7 1ª INSTÂNCIA"))
-TRT_1<-arrange(TRT_1,mês)
+TRT_1<-dados2%>%group_by(mÃªs)%>%summarize(P62=sum(P62), P63=sum(P63), P64=sum(P64))
+TRT_1<-as.data.frame(TRT_1%>%mutate(unidade=".TRT 7 1Âª INSTÃ‚NCIA"))
+TRT_1<-arrange(TRT_1,mÃªs)
 dados2<-rbind(dados2,TRT_1)
 
 require(lubridate)
 require(data.table)
 
-#mes=1:month(floor_date(Sys.Date() - months(1), "month")) # até o mês anterior ao atual
-meses=1:12
-combin=CJ(unidade=unidade[,1],mês=meses) #combinação das unidades com cada mês para a comparação
+meses=1:month(floor_date(Sys.Date() - months(1), "month")) # atÃ© o mÃªs anterior ao atual
+#meses=1:12
+combin=CJ(unidade=unidade[,1],mÃªs=meses) #combinaÃ§Ã£o das unidades com cada mÃªs para a comparaÃ§Ã£o
 combin$p62=rep(0,dim(combin)[1])
 combin$p63=rep(0,dim(combin)[1])
 combin$p64=rep(0,dim(combin)[1])
@@ -62,12 +62,12 @@ require(prodlim)
 pos=which(is.na(row.match(combin[1:2],dados2[1:2]))) #linhas para adicionar 
 ee=rbind(dados2,combin[pos,]) #juntando o data frame com as linhas faltantes
 
-#reorganizar as linhas por unidade e mês
-ee=ee%>%arrange(unidade,mês)
+#reorganizar as linhas por unidade e mÃªs
+ee=ee%>%arrange(unidade,mÃªs)
 
 dados2=as.data.frame(ee)
 
-#Perguntas únicas
+#Perguntas Ãºnicas
 dados2=left_join(dados2,pp61,by="unidade")
 dados2=left_join(dados2,pp65,by="unidade")
 dados2[is.na(dados2)]=0
@@ -90,11 +90,11 @@ dados2=dados2%>%group_by(unidade)%>%mutate(GC_atual=last(GC_acumulado))
 
 
 
-meses=c("janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro")
+meses=c("janeiro","fevereiro","marÃ§o","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro")
 aux2=1:dim(dados2)[1]
 
-for(i in 1:max(dados2$mês)){
-  a=which(dados2$mês==i)
+for(i in 1:max(dados2$mÃªs)){
+  a=which(dados2$mÃªs==i)
   aux2[a]=meses[i]
 }
 

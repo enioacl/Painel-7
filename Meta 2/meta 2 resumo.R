@@ -2,27 +2,27 @@ require(readxl)
 require(dplyr)
 dados<-dataset
 dados<-dados%>%select(sort(names(.)))
-names(dados)<-c("Instância","mês","Pergunta","quant","Unidade")
-dados<-dados%>%select(mês,Instância,Pergunta,quant)
+names(dados)<-c("InstÃ¢ncia","mÃªs","Pergunta","quant","Unidade")
+dados<-dados%>%select(mÃªs,InstÃ¢ncia,Pergunta,quant)
 
 
 
 dados$quant <- as.numeric(dados$quant)
 dados$quant[is.na(dados$quant)]=0
-dados$mês <- as.numeric(dados$mês)
+dados$mÃªs <- as.numeric(dados$mÃªs)
 
 
-# Primeira Instância
-inst1_p21<-as.numeric(dados%>%filter(Pergunta=="P21" & Instância=="Primeira")%>%select(quant)%>%summarise(sum(quant)))
-inst1_p24<-dados%>%filter(Pergunta=="P24" & Instância=="Primeira")%>%group_by(mês)%>%summarise(quant=sum(quant))
-names(inst1_p24)=c("mês","P24")
-inst1_p27<-dados%>%filter(Pergunta=="P27" & Instância=="Primeira")%>%group_by(mês)%>%summarise(quant=sum(quant))
-names(inst1_p27)=c("mês","P27")
-inst1_p210<-dados%>%filter(Pergunta=="P210" & Instância=="Primeira")%>%group_by(mês)%>%summarise(quant=sum(quant))
-names(inst1_p210)=c("mês","P210")
-inst1_p213<-as.numeric(dados%>%filter(Pergunta=="P213" & Instância=="Primeira")%>%select(quant)%>%summarise(sum(quant)))
+# Primeira InstÃ¢ncia
+inst1_p21<-as.numeric(dados%>%filter(Pergunta=="P21" & InstÃ¢ncia=="Primeira")%>%select(quant)%>%summarise(sum(quant)))
+inst1_p24<-dados%>%filter(Pergunta=="P24" & InstÃ¢ncia=="Primeira")%>%group_by(mÃªs)%>%summarise(quant=sum(quant))
+names(inst1_p24)=c("mÃªs","P24")
+inst1_p27<-dados%>%filter(Pergunta=="P27" & InstÃ¢ncia=="Primeira")%>%group_by(mÃªs)%>%summarise(quant=sum(quant))
+names(inst1_p27)=c("mÃªs","P27")
+inst1_p210<-dados%>%filter(Pergunta=="P210" & InstÃ¢ncia=="Primeira")%>%group_by(mÃªs)%>%summarise(quant=sum(quant))
+names(inst1_p210)=c("mÃªs","P210")
+inst1_p213<-as.numeric(dados%>%filter(Pergunta=="P213" & InstÃ¢ncia=="Primeira")%>%select(quant)%>%summarise(sum(quant)))
 
-primeira_inst<-full_join(inst1_p24, inst1_p27, by="mês")%>%full_join(.,inst1_p210,by="mês")
+primeira_inst<-full_join(inst1_p24, inst1_p27, by="mÃªs")%>%full_join(.,inst1_p210,by="mÃªs")
 primeira_inst[is.na(primeira_inst)]=0
 primeira_inst<-primeira_inst%>%mutate(P21=inst1_p21)
 primeira_inst<-primeira_inst%>%mutate(P213=inst1_p213)
@@ -33,17 +33,17 @@ require(data.table)
 
 ##############################
 ############################
-#####meses=1:month(floor_date(Sys.Date() - months(1), "month")) # até o mês anterior ao atual
-meses<-1:12
-combin<-data.frame(mês=meses,P21=inst1_p21,P24=rep(0,length(meses)),P27=rep(0,length(meses)),P210=rep(0,length(meses)), P213=inst1_p213)
+meses=1:month(floor_date(Sys.Date() - months(1), "month")) # atÃ© o mÃªs anterior ao atual
+#meses<-1:12
+combin<-data.frame(mÃªs=meses,P21=inst1_p21,P24=rep(0,length(meses)),P27=rep(0,length(meses)),P210=rep(0,length(meses)), P213=inst1_p213)
 
 
 require(prodlim)
-pos=which(is.na(row.match(as.data.frame(combin$mês),as.data.frame(primeira_inst$mês))))
-primeira_inst<-rbind(primeira_inst,combin[pos,])%>%arrange(mês)
+pos=which(is.na(row.match(as.data.frame(combin$mÃªs),as.data.frame(primeira_inst$mÃªs))))
+primeira_inst<-rbind(primeira_inst,combin[pos,])%>%arrange(mÃªs)
 
-primeira_inst$Instância<-rep("Primeira",dim(primeira_inst)[1])
-primeira_inst<-as.data.frame(arrange(primeira_inst,mês))
+primeira_inst$InstÃ¢ncia<-rep("Primeira",dim(primeira_inst)[1])
+primeira_inst<-as.data.frame(arrange(primeira_inst,mÃªs))
 
 #Grau de cumprimento acumulado
 primeira_inst<-primeira_inst%>%mutate(GCacumulado=((cumsum(P210)+P213)/(P21+P213+cumsum(P24)-cumsum(P27)))*(10/9.2))
@@ -56,17 +56,17 @@ primeira_inst$Gcatual<-rep(last(primeira_inst$GCacumulado),dim(primeira_inst)[1]
 
 primeira_inst[is.na(primeira_inst)]=0
 
-# Segunda Instância
-inst2_p21<-as.numeric(dados%>%filter(Pergunta=="P21" & Instância=="Segunda")%>%select(quant))
-inst2_p24<-dados%>%filter(Pergunta=="P24" & Instância=="Segunda")%>%group_by(mês)%>%summarise(quant=sum(quant))
-names(inst2_p24)=c("mês","P24")
-inst2_p27<-dados%>%filter(Pergunta=="P27" & Instância=="Segunda")%>%group_by(mês)%>%summarise(quant=sum(quant))
-names(inst2_p27)=c("mês","P27")
-inst2_p210<-dados%>%filter(Pergunta=="P210" & Instância=="Segunda")%>%group_by(mês)%>%summarise(quant=sum(quant))
-names(inst2_p210)=c("mês","P210")
-inst2_p213<-as.numeric(dados%>%filter(Pergunta=="P213" & Instância=="Segunda")%>%select(quant))
+# Segunda InstÃ¢ncia
+inst2_p21<-as.numeric(dados%>%filter(Pergunta=="P21" & InstÃ¢ncia=="Segunda")%>%select(quant))
+inst2_p24<-dados%>%filter(Pergunta=="P24" & InstÃ¢ncia=="Segunda")%>%group_by(mÃªs)%>%summarise(quant=sum(quant))
+names(inst2_p24)=c("mÃªs","P24")
+inst2_p27<-dados%>%filter(Pergunta=="P27" & InstÃ¢ncia=="Segunda")%>%group_by(mÃªs)%>%summarise(quant=sum(quant))
+names(inst2_p27)=c("mÃªs","P27")
+inst2_p210<-dados%>%filter(Pergunta=="P210" & InstÃ¢ncia=="Segunda")%>%group_by(mÃªs)%>%summarise(quant=sum(quant))
+names(inst2_p210)=c("mÃªs","P210")
+inst2_p213<-as.numeric(dados%>%filter(Pergunta=="P213" & InstÃ¢ncia=="Segunda")%>%select(quant))
 
-segunda_inst <- full_join(inst2_p24, inst2_p27, by="mês")%>%full_join(.,inst2_p210, by="mês")
+segunda_inst <- full_join(inst2_p24, inst2_p27, by="mÃªs")%>%full_join(.,inst2_p210, by="mÃªs")
 segunda_inst[is.na(segunda_inst)]=0
 segunda_inst<-segunda_inst%>%mutate(P21=inst2_p21)
 segunda_inst<-segunda_inst%>%mutate(P213=inst2_p213)
@@ -74,11 +74,11 @@ segunda_inst<-segunda_inst%>%mutate(P213=inst2_p213)
 
 
 
-combin2<-data.frame(mês=meses,P21=inst2_p21,P24=rep(0,length(meses)),P27=rep(0,length(meses)),P210=rep(0,length(meses)),P213=inst2_p213)
-pos2=which(is.na(row.match(as.data.frame(combin2$mês),as.data.frame(segunda_inst$mês))))
-segunda_inst<-rbind(segunda_inst,combin2[pos2,])%>%arrange(mês)
-segunda_inst$Instância<-rep("Segunda",dim(segunda_inst)[1])
-segunda_inst<-as.data.frame(arrange(segunda_inst,mês))
+combin2<-data.frame(mÃªs=meses,P21=inst2_p21,P24=rep(0,length(meses)),P27=rep(0,length(meses)),P210=rep(0,length(meses)),P213=inst2_p213)
+pos2=which(is.na(row.match(as.data.frame(combin2$mÃªs),as.data.frame(segunda_inst$mÃªs))))
+segunda_inst<-rbind(segunda_inst,combin2[pos2,])%>%arrange(mÃªs)
+segunda_inst$InstÃ¢ncia<-rep("Segunda",dim(segunda_inst)[1])
+segunda_inst<-as.data.frame(arrange(segunda_inst,mÃªs))
 
 #Grau de cumprimento acumulado
 segunda_inst<-segunda_inst%>%mutate(GCacumulado=((cumsum(P210)+P213)/(P21+P213+cumsum(P24)-cumsum(P27)))*(10/9.2))
@@ -92,11 +92,11 @@ segunda_inst$Gcatual<-rep(last(segunda_inst$GCacumulado),dim(segunda_inst)[1])
 segunda_inst[is.na(segunda_inst)]=0
 
 #TRT total
-TRT_total<-rbind(primeira_inst, segunda_inst)%>%group_by(mês)%>%summarise(P24=sum(P24),P27=sum(P27),P210=sum(P210))
+TRT_total<-rbind(primeira_inst, segunda_inst)%>%group_by(mÃªs)%>%summarise(P24=sum(P24),P27=sum(P27),P210=sum(P210))
 TRT_total$P21<-inst1_p21+inst2_p21
 TRT_total$P213<-inst1_p213+inst2_p213
 
-TRT_total<-as.data.frame(arrange(TRT_total,mês))
+TRT_total<-as.data.frame(arrange(TRT_total,mÃªs))
 
 #Grau de cumprimento acumulado
 TRT_total<-TRT_total%>%mutate(GCacumulado=((cumsum(P210)+P213)/(P21+P213+cumsum(P24)-cumsum(P27)))*(10/9.2))
@@ -108,19 +108,19 @@ TRT_total<-TRT_total%>%mutate(GCmensal=((P210+P213)/(P21+P213+P24-P27))*(10/9.2)
 TRT_total$Gcatual<-rep(last(TRT_total$GCacumulado),dim(TRT_total)[1])
 
 TRT_total[is.na(TRT_total)]=0
-TRT_total$Instância="TRT total"
+TRT_total$InstÃ¢ncia="TRT total"
 
 final<-as.data.frame(rbind(primeira_inst,segunda_inst,TRT_total))
 
 
-meses=c("janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro")
+meses=c("janeiro","fevereiro","marÃ§o","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro")
 
 
 aux=1:dim(final)[1]
 
 
-for(i in 1:max(final$mês)){
-  a=which(final$mês==i)
+for(i in 1:max(final$mÃªs)){
+  a=which(final$mÃªs==i)
   aux[a]=meses[i]
 }
 

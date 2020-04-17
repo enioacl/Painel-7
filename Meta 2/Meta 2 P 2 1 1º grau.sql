@@ -1,7 +1,7 @@
 
 SELECT  
 saida.txt_unidade,
-count(saida.PROCESSO_NUMERO_UNICO) AS Quantidade
+count(distinct(saida.PROCESSO_NUMERO_UNICO)) AS Quantidade
 
 FROM (SELECT  
 		processo.NUM_REMESSA,

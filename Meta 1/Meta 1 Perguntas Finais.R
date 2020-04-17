@@ -36,8 +36,8 @@ TRT_Total<-TRT_Total%>%mutate(Unidade=".TRT 7 1ª INSTÂNCIA")
 
 dados2<-rbind(dados2, TRT_Total)
 
-mês=1:month(floor_date(Sys.Date() - months(1), "month")) # até o mês anterior ao atual
 #mês=1:12
+mês=1:month(floor_date(Sys.Date() - months(1), "month")) # até o mês anterior ao atual
 combin=CJ(unidade[,1],mês) #combinação das unidades com cada mês para a comparação
 combin$p11=rep(0,dim(combin)[1])
 combin$p13=rep(0,dim(combin)[1])

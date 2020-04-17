@@ -46,8 +46,8 @@ ORDER BY NUM_ORGAO_ESTATISTICA) vt ON vt.NUM_ORGAO_ESTATISTICA = processo.num_or
 INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
-            TO_DATE('01/01/2019','dd/mm/yy') AND 
-            TO_DATE('31/01/2019','dd/mm/yy')    
+            TO_DATE('01/01/2020','dd/mm/yy') AND 
+            TO_DATE('31/01/2020','dd/mm/yy')    
             AND rem.COD_SITUACAO_REMESSA = 'G'            
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
@@ -56,20 +56,16 @@ LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TR
 												remessa.NUM_LOTE = PROCESSO.NUM_LOTE)
 WHERE
 	processo.NUM_TRIBUNAL = 7
-        -- G - Gerada
-	--AND REMESSA.COD_SITUACAO_REMESSA = 'G'
-	-- M - Mensal
 	AND REMESSA.COD_PERIODICIDADE = 'M'
-	-- Se desejar, faça filtro por orgaos estatistica aqui
 	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
 	-- Filtro por remessa e lote (se desejar, filtre por mes da remessa de maneira similar ao SQL que recupera remessa e lote a partir do mes)
 	-- Apenas itens com detalhes de processos 
-    AND proc.ANO_PROC <=2017
+    AND proc.ANO_PROC <=2018
 	AND estrutura_item.num_tipo_complemento = 1
 	-- Filtro por item - Exemplo com indicadores 90074 e 92198
 	AND processo.NUM_ITEM IN (2192, 2195, 92192, 92195)
     
-    
+    --distribuído até 2018
     AND processo.NUM_INTERNO_PROCESSO IN (SELECT  
 		processo.NUM_INTERNO_PROCESSO
 FROM eg.egt_info_processo processo
@@ -93,7 +89,7 @@ INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
             TO_DATE('01/01/2000','dd/mm/yy') AND 
-            TO_DATE('31/12/2017','dd/mm/yy')              
+            TO_DATE('31/12/2018','dd/mm/yy')              
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
 												remessa.NUM_ORGAO_ESTATISTICA = PROCESSO.NUM_ORGAO_ESTATISTICA AND
@@ -110,14 +106,14 @@ WHERE
 	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
 	-- Filtro por remessa e lote (se desejar, filtre por mes da remessa de maneira similar ao SQL que recupera remessa e lote a partir do mes)
 	-- Apenas itens com detalhes de processos 
-    AND proc.ANO_PROC <=2017
+    AND proc.ANO_PROC <=2018
     AND estrutura_item.num_tipo_complemento = 1
 	-- Filtro por item - Exemplo com indicadores 90074 e 92198
     --AND classe.NUM_CLASSE_CNJ IN (1116, 183)
     AND processo.NUM_ITEM IN (2137, 2138, 92137, 92138)
     )
     
-    
+    --não julgado até p mês de referência
     AND processo.NUM_INTERNO_PROCESSO NOT IN (SELECT  
 		processo.NUM_INTERNO_PROCESSO
 FROM eg.egt_info_processo processo
@@ -140,7 +136,7 @@ INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
             TO_DATE('01/01/2000','dd/mm/yy') AND 
-            TO_DATE('31/12/2018','dd/mm/yy') 
+            TO_DATE('31/12/2019','dd/mm/yy') 
             AND rem.COD_SITUACAO_REMESSA = 'G'               
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
@@ -213,8 +209,8 @@ ORDER BY NUM_ORGAO_ESTATISTICA) vt ON vt.NUM_ORGAO_ESTATISTICA = processo.num_or
 INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
-            TO_DATE('01/02/2019','dd/mm/yy') AND 
-            TO_DATE('28/02/2019','dd/mm/yy')    
+            TO_DATE('01/02/2020','dd/mm/yy') AND 
+            TO_DATE('29/02/2020','dd/mm/yy')    
             AND rem.COD_SITUACAO_REMESSA = 'G'            
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
@@ -231,7 +227,7 @@ WHERE
 	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
 	-- Filtro por remessa e lote (se desejar, filtre por mes da remessa de maneira similar ao SQL que recupera remessa e lote a partir do mes)
 	-- Apenas itens com detalhes de processos 
-    AND proc.ANO_PROC <=2017
+    AND proc.ANO_PROC <=2018
 	AND estrutura_item.num_tipo_complemento = 1
 	-- Filtro por item - Exemplo com indicadores 90074 e 92198
 	AND processo.NUM_ITEM IN (2192, 2195, 92192, 92195)
@@ -259,7 +255,7 @@ INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
             TO_DATE('01/01/2000','dd/mm/yy') AND 
-            TO_DATE('31/12/2017','dd/mm/yy')              
+            TO_DATE('31/12/2018','dd/mm/yy')              
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
 												remessa.NUM_ORGAO_ESTATISTICA = PROCESSO.NUM_ORGAO_ESTATISTICA AND
@@ -276,7 +272,7 @@ WHERE
 	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
 	-- Filtro por remessa e lote (se desejar, filtre por mes da remessa de maneira similar ao SQL que recupera remessa e lote a partir do mes)
 	-- Apenas itens com detalhes de processos 
-    AND proc.ANO_PROC <=2017
+    AND proc.ANO_PROC <=2018
     AND estrutura_item.num_tipo_complemento = 1
 	-- Filtro por item - Exemplo com indicadores 90074 e 92198
     --AND classe.NUM_CLASSE_CNJ IN (1116, 183)
@@ -306,7 +302,7 @@ INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
             TO_DATE('01/01/2000','dd/mm/yy') AND 
-            TO_DATE('01/01/2019','dd/mm/yy') 
+            TO_DATE('31/01/2020','dd/mm/yy') 
             AND rem.COD_SITUACAO_REMESSA = 'G'               
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
@@ -380,8 +376,8 @@ ORDER BY NUM_ORGAO_ESTATISTICA) vt ON vt.NUM_ORGAO_ESTATISTICA = processo.num_or
 INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
-            TO_DATE('01/03/2019','dd/mm/yy') AND 
-            TO_DATE('31/03/2019','dd/mm/yy')    
+            TO_DATE('01/03/2020','dd/mm/yy') AND 
+            TO_DATE('31/03/2020','dd/mm/yy')    
             AND rem.COD_SITUACAO_REMESSA = 'G'            
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
@@ -398,7 +394,7 @@ WHERE
 	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
 	-- Filtro por remessa e lote (se desejar, filtre por mes da remessa de maneira similar ao SQL que recupera remessa e lote a partir do mes)
 	-- Apenas itens com detalhes de processos 
-    AND proc.ANO_PROC <=2017
+    AND proc.ANO_PROC <=2018
 	AND estrutura_item.num_tipo_complemento = 1
 	-- Filtro por item - Exemplo com indicadores 90074 e 92198
 	AND processo.NUM_ITEM IN (2192, 2195, 92192, 92195)
@@ -426,7 +422,7 @@ INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
             TO_DATE('01/01/2000','dd/mm/yy') AND 
-            TO_DATE('31/12/2017','dd/mm/yy')              
+            TO_DATE('31/12/2018','dd/mm/yy')              
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
 												remessa.NUM_ORGAO_ESTATISTICA = PROCESSO.NUM_ORGAO_ESTATISTICA AND
@@ -443,7 +439,7 @@ WHERE
 	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
 	-- Filtro por remessa e lote (se desejar, filtre por mes da remessa de maneira similar ao SQL que recupera remessa e lote a partir do mes)
 	-- Apenas itens com detalhes de processos 
-    AND proc.ANO_PROC <=2017
+    AND proc.ANO_PROC <=2018
     AND estrutura_item.num_tipo_complemento = 1
 	-- Filtro por item - Exemplo com indicadores 90074 e 92198
     --AND classe.NUM_CLASSE_CNJ IN (1116, 183)
@@ -474,7 +470,7 @@ INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
             TO_DATE('01/02/2000','dd/mm/yy') AND 
-            TO_DATE('28/02/2019','dd/mm/yy') 
+            TO_DATE('29/02/2020','dd/mm/yy') 
             AND rem.COD_SITUACAO_REMESSA = 'G'               
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
@@ -547,8 +543,8 @@ ORDER BY NUM_ORGAO_ESTATISTICA) vt ON vt.NUM_ORGAO_ESTATISTICA = processo.num_or
 INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
-            TO_DATE('01/04/2019','dd/mm/yy') AND 
-            TO_DATE('30/04/2019','dd/mm/yy')    
+            TO_DATE('01/04/2020','dd/mm/yy') AND 
+            TO_DATE('30/04/2020','dd/mm/yy')    
             AND rem.COD_SITUACAO_REMESSA = 'G'            
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
@@ -565,7 +561,7 @@ WHERE
 	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
 	-- Filtro por remessa e lote (se desejar, filtre por mes da remessa de maneira similar ao SQL que recupera remessa e lote a partir do mes)
 	-- Apenas itens com detalhes de processos 
-    AND proc.ANO_PROC <=2017
+    AND proc.ANO_PROC <=2018
 	AND estrutura_item.num_tipo_complemento = 1
 	-- Filtro por item - Exemplo com indicadores 90074 e 92198
 	AND processo.NUM_ITEM IN (2192, 2195, 92192, 92195)
@@ -594,7 +590,7 @@ INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
             TO_DATE('01/01/2000','dd/mm/yy') AND 
-            TO_DATE('31/12/2017','dd/mm/yy')              
+            TO_DATE('31/12/2018','dd/mm/yy')              
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
 												remessa.NUM_ORGAO_ESTATISTICA = PROCESSO.NUM_ORGAO_ESTATISTICA AND
@@ -611,7 +607,7 @@ WHERE
 	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
 	-- Filtro por remessa e lote (se desejar, filtre por mes da remessa de maneira similar ao SQL que recupera remessa e lote a partir do mes)
 	-- Apenas itens com detalhes de processos 
-    AND proc.ANO_PROC <=2017
+    AND proc.ANO_PROC <=2018
     AND estrutura_item.num_tipo_complemento = 1
 	-- Filtro por item - Exemplo com indicadores 90074 e 92198
     --AND classe.NUM_CLASSE_CNJ IN (1116, 183)
@@ -643,7 +639,7 @@ INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
             TO_DATE('01/03/2000','dd/mm/yy') AND 
-            TO_DATE('31/03/2019','dd/mm/yy') 
+            TO_DATE('31/03/2020','dd/mm/yy') 
             AND rem.COD_SITUACAO_REMESSA = 'G'               
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
@@ -716,8 +712,8 @@ ORDER BY NUM_ORGAO_ESTATISTICA) vt ON vt.NUM_ORGAO_ESTATISTICA = processo.num_or
 INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
-            TO_DATE('01/05/2019','dd/mm/yy') AND 
-            TO_DATE('31/05/2019','dd/mm/yy')    
+            TO_DATE('01/05/2020','dd/mm/yy') AND 
+            TO_DATE('31/05/2020','dd/mm/yy')    
             AND rem.COD_SITUACAO_REMESSA = 'G'            
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
@@ -734,7 +730,7 @@ WHERE
 	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
 	-- Filtro por remessa e lote (se desejar, filtre por mes da remessa de maneira similar ao SQL que recupera remessa e lote a partir do mes)
 	-- Apenas itens com detalhes de processos 
-    AND proc.ANO_PROC <=2017
+    AND proc.ANO_PROC <=2018
 	AND estrutura_item.num_tipo_complemento = 1
 	-- Filtro por item - Exemplo com indicadores 90074 e 92198
 	AND processo.NUM_ITEM IN (2192, 2195, 92192, 92195)
@@ -763,7 +759,7 @@ INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
             TO_DATE('01/01/2000','dd/mm/yy') AND 
-            TO_DATE('31/12/2017','dd/mm/yy')              
+            TO_DATE('31/12/2018','dd/mm/yy')              
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
 												remessa.NUM_ORGAO_ESTATISTICA = PROCESSO.NUM_ORGAO_ESTATISTICA AND
@@ -780,7 +776,7 @@ WHERE
 	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
 	-- Filtro por remessa e lote (se desejar, filtre por mes da remessa de maneira similar ao SQL que recupera remessa e lote a partir do mes)
 	-- Apenas itens com detalhes de processos 
-    AND proc.ANO_PROC <=2017
+    AND proc.ANO_PROC <=2018
     AND estrutura_item.num_tipo_complemento = 1
 	-- Filtro por item - Exemplo com indicadores 90074 e 92198
     --AND classe.NUM_CLASSE_CNJ IN (1116, 183)
@@ -810,7 +806,7 @@ INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
             TO_DATE('01/04/2000','dd/mm/yy') AND 
-            TO_DATE('30/04/2019','dd/mm/yy') 
+            TO_DATE('30/04/2020','dd/mm/yy') 
             AND rem.COD_SITUACAO_REMESSA = 'G'               
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
@@ -883,8 +879,8 @@ ORDER BY NUM_ORGAO_ESTATISTICA) vt ON vt.NUM_ORGAO_ESTATISTICA = processo.num_or
 INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
-            TO_DATE('01/06/2019','dd/mm/yy') AND 
-            TO_DATE('30/06/2019','dd/mm/yy')    
+            TO_DATE('01/06/2020','dd/mm/yy') AND 
+            TO_DATE('30/06/2020','dd/mm/yy')    
             AND rem.COD_SITUACAO_REMESSA = 'G'            
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
@@ -901,7 +897,7 @@ WHERE
 	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
 	-- Filtro por remessa e lote (se desejar, filtre por mes da remessa de maneira similar ao SQL que recupera remessa e lote a partir do mes)
 	-- Apenas itens com detalhes de processos 
-    AND proc.ANO_PROC <=2017
+    AND proc.ANO_PROC <=2018
 	AND estrutura_item.num_tipo_complemento = 1
 	-- Filtro por item - Exemplo com indicadores 90074 e 92198
 	AND processo.NUM_ITEM IN (2192, 2195, 92192, 92195)
@@ -930,7 +926,7 @@ INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
             TO_DATE('01/01/2000','dd/mm/yy') AND 
-            TO_DATE('31/12/2017','dd/mm/yy')              
+            TO_DATE('31/12/2018','dd/mm/yy')              
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
 												remessa.NUM_ORGAO_ESTATISTICA = PROCESSO.NUM_ORGAO_ESTATISTICA AND
@@ -947,7 +943,7 @@ WHERE
 	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
 	-- Filtro por remessa e lote (se desejar, filtre por mes da remessa de maneira similar ao SQL que recupera remessa e lote a partir do mes)
 	-- Apenas itens com detalhes de processos 
-    AND proc.ANO_PROC <=2017
+    AND proc.ANO_PROC <=2018
     AND estrutura_item.num_tipo_complemento = 1
 	-- Filtro por item - Exemplo com indicadores 90074 e 92198
     --AND classe.NUM_CLASSE_CNJ IN (1116, 183)
@@ -978,7 +974,7 @@ INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
             TO_DATE('01/05/2000','dd/mm/yy') AND 
-            TO_DATE('31/05/2019','dd/mm/yy') 
+            TO_DATE('31/05/2020','dd/mm/yy') 
             AND rem.COD_SITUACAO_REMESSA = 'G'               
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
@@ -1051,8 +1047,8 @@ ORDER BY NUM_ORGAO_ESTATISTICA) vt ON vt.NUM_ORGAO_ESTATISTICA = processo.num_or
 INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
-            TO_DATE('01/07/2019','dd/mm/yy') AND 
-            TO_DATE('31/07/2019','dd/mm/yy')    
+            TO_DATE('01/07/2020','dd/mm/yy') AND 
+            TO_DATE('31/07/2020','dd/mm/yy')    
             AND rem.COD_SITUACAO_REMESSA = 'G'            
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
@@ -1069,7 +1065,7 @@ WHERE
 	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
 	-- Filtro por remessa e lote (se desejar, filtre por mes da remessa de maneira similar ao SQL que recupera remessa e lote a partir do mes)
 	-- Apenas itens com detalhes de processos 
-    AND proc.ANO_PROC <=2017
+    AND proc.ANO_PROC <=2018
 	AND estrutura_item.num_tipo_complemento = 1
 	-- Filtro por item - Exemplo com indicadores 90074 e 92198
 	AND processo.NUM_ITEM IN (2192, 2195, 92192, 92195)
@@ -1097,7 +1093,7 @@ INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
             TO_DATE('01/01/2000','dd/mm/yy') AND 
-            TO_DATE('31/12/2017','dd/mm/yy')              
+            TO_DATE('31/12/2018','dd/mm/yy')              
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
 												remessa.NUM_ORGAO_ESTATISTICA = PROCESSO.NUM_ORGAO_ESTATISTICA AND
@@ -1114,7 +1110,7 @@ WHERE
 	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
 	-- Filtro por remessa e lote (se desejar, filtre por mes da remessa de maneira similar ao SQL que recupera remessa e lote a partir do mes)
 	-- Apenas itens com detalhes de processos 
-    AND proc.ANO_PROC <=2017
+    AND proc.ANO_PROC <=2018
     AND estrutura_item.num_tipo_complemento = 1
 	-- Filtro por item - Exemplo com indicadores 90074 e 92198
     --AND classe.NUM_CLASSE_CNJ IN (1116, 183)
@@ -1145,7 +1141,7 @@ INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
             TO_DATE('01/06/2000','dd/mm/yy') AND 
-            TO_DATE('30/06/2019','dd/mm/yy') 
+            TO_DATE('30/06/2020','dd/mm/yy') 
             AND rem.COD_SITUACAO_REMESSA = 'G'               
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
@@ -1218,8 +1214,8 @@ ORDER BY NUM_ORGAO_ESTATISTICA) vt ON vt.NUM_ORGAO_ESTATISTICA = processo.num_or
 INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
-            TO_DATE('01/08/2019','dd/mm/yy') AND 
-            TO_DATE('31/08/2019','dd/mm/yy')    
+            TO_DATE('01/08/2020','dd/mm/yy') AND 
+            TO_DATE('31/08/2020','dd/mm/yy')    
             AND rem.COD_SITUACAO_REMESSA = 'G'            
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
@@ -1236,7 +1232,7 @@ WHERE
 	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
 	-- Filtro por remessa e lote (se desejar, filtre por mes da remessa de maneira similar ao SQL que recupera remessa e lote a partir do mes)
 	-- Apenas itens com detalhes de processos 
-    AND proc.ANO_PROC <=2017
+    AND proc.ANO_PROC <=2018
 	AND estrutura_item.num_tipo_complemento = 1
 	-- Filtro por item - Exemplo com indicadores 90074 e 92198
 	AND processo.NUM_ITEM IN (2192, 2195, 92192, 92195)
@@ -1264,7 +1260,7 @@ INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
             TO_DATE('01/01/2000','dd/mm/yy') AND 
-            TO_DATE('31/12/2017','dd/mm/yy')              
+            TO_DATE('31/12/2018','dd/mm/yy')              
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
 												remessa.NUM_ORGAO_ESTATISTICA = PROCESSO.NUM_ORGAO_ESTATISTICA AND
@@ -1281,7 +1277,7 @@ WHERE
 	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
 	-- Filtro por remessa e lote (se desejar, filtre por mes da remessa de maneira similar ao SQL que recupera remessa e lote a partir do mes)
 	-- Apenas itens com detalhes de processos 
-    AND proc.ANO_PROC <=2017
+    AND proc.ANO_PROC <=2018
     AND estrutura_item.num_tipo_complemento = 1
 	-- Filtro por item - Exemplo com indicadores 90074 e 92198
     --AND classe.NUM_CLASSE_CNJ IN (1116, 183)
@@ -1312,7 +1308,7 @@ INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
             TO_DATE('01/07/2000','dd/mm/yy') AND 
-            TO_DATE('31/07/2019','dd/mm/yy') 
+            TO_DATE('31/07/2020','dd/mm/yy') 
             AND rem.COD_SITUACAO_REMESSA = 'G'               
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
@@ -1385,8 +1381,8 @@ ORDER BY NUM_ORGAO_ESTATISTICA) vt ON vt.NUM_ORGAO_ESTATISTICA = processo.num_or
 INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
-            TO_DATE('01/09/2019','dd/mm/yy') AND 
-            TO_DATE('30/09/2019','dd/mm/yy')    
+            TO_DATE('01/09/2020','dd/mm/yy') AND 
+            TO_DATE('30/09/2020','dd/mm/yy')    
             AND rem.COD_SITUACAO_REMESSA = 'G'            
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
@@ -1403,7 +1399,7 @@ WHERE
 	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
 	-- Filtro por remessa e lote (se desejar, filtre por mes da remessa de maneira similar ao SQL que recupera remessa e lote a partir do mes)
 	-- Apenas itens com detalhes de processos 
-    AND proc.ANO_PROC <=2017
+    AND proc.ANO_PROC <=2018
 	AND estrutura_item.num_tipo_complemento = 1
 	-- Filtro por item - Exemplo com indicadores 90074 e 92198
 	AND processo.NUM_ITEM IN (2192, 2195, 92192, 92195)
@@ -1431,7 +1427,7 @@ INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
             TO_DATE('01/01/2000','dd/mm/yy') AND 
-            TO_DATE('31/12/2017','dd/mm/yy')              
+            TO_DATE('31/12/2018','dd/mm/yy')              
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
 												remessa.NUM_ORGAO_ESTATISTICA = PROCESSO.NUM_ORGAO_ESTATISTICA AND
@@ -1448,7 +1444,7 @@ WHERE
 	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
 	-- Filtro por remessa e lote (se desejar, filtre por mes da remessa de maneira similar ao SQL que recupera remessa e lote a partir do mes)
 	-- Apenas itens com detalhes de processos 
-    AND proc.ANO_PROC <=2017
+    AND proc.ANO_PROC <=2018
     AND estrutura_item.num_tipo_complemento = 1
 	-- Filtro por item - Exemplo com indicadores 90074 e 92198
     --AND classe.NUM_CLASSE_CNJ IN (1116, 183)
@@ -1479,7 +1475,7 @@ INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
             TO_DATE('01/08/2000','dd/mm/yy') AND 
-            TO_DATE('31/08/2019','dd/mm/yy') 
+            TO_DATE('31/08/2020','dd/mm/yy') 
             AND rem.COD_SITUACAO_REMESSA = 'G'               
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
@@ -1552,8 +1548,8 @@ ORDER BY NUM_ORGAO_ESTATISTICA) vt ON vt.NUM_ORGAO_ESTATISTICA = processo.num_or
 INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
-            TO_DATE('01/10/2019','dd/mm/yy') AND 
-            TO_DATE('31/10/2019','dd/mm/yy')    
+            TO_DATE('01/10/2020','dd/mm/yy') AND 
+            TO_DATE('31/10/2020','dd/mm/yy')    
             AND rem.COD_SITUACAO_REMESSA = 'G'            
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
@@ -1570,7 +1566,7 @@ WHERE
 	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
 	-- Filtro por remessa e lote (se desejar, filtre por mes da remessa de maneira similar ao SQL que recupera remessa e lote a partir do mes)
 	-- Apenas itens com detalhes de processos 
-    AND proc.ANO_PROC <=2017
+    AND proc.ANO_PROC <=2018
 	AND estrutura_item.num_tipo_complemento = 1
 	-- Filtro por item - Exemplo com indicadores 90074 e 92198
 	AND processo.NUM_ITEM IN (2192, 2195, 92192, 92195)
@@ -1598,7 +1594,7 @@ INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
             TO_DATE('01/01/2000','dd/mm/yy') AND 
-            TO_DATE('31/12/2017','dd/mm/yy')              
+            TO_DATE('31/12/2018','dd/mm/yy')              
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
 												remessa.NUM_ORGAO_ESTATISTICA = PROCESSO.NUM_ORGAO_ESTATISTICA AND
@@ -1615,7 +1611,7 @@ WHERE
 	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
 	-- Filtro por remessa e lote (se desejar, filtre por mes da remessa de maneira similar ao SQL que recupera remessa e lote a partir do mes)
 	-- Apenas itens com detalhes de processos 
-    AND proc.ANO_PROC <=2017
+    AND proc.ANO_PROC <=2018
     AND estrutura_item.num_tipo_complemento = 1
 	-- Filtro por item - Exemplo com indicadores 90074 e 92198
     --AND classe.NUM_CLASSE_CNJ IN (1116, 183)
@@ -1646,7 +1642,7 @@ INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
             TO_DATE('01/09/2000','dd/mm/yy') AND 
-            TO_DATE('30/09/2019','dd/mm/yy') 
+            TO_DATE('30/09/2020','dd/mm/yy') 
             AND rem.COD_SITUACAO_REMESSA = 'G'               
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
@@ -1719,8 +1715,8 @@ ORDER BY NUM_ORGAO_ESTATISTICA) vt ON vt.NUM_ORGAO_ESTATISTICA = processo.num_or
 INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
-            TO_DATE('01/11/2019','dd/mm/yy') AND 
-            TO_DATE('30/11/2019','dd/mm/yy')    
+            TO_DATE('01/11/2020','dd/mm/yy') AND 
+            TO_DATE('30/11/2020','dd/mm/yy')    
             AND rem.COD_SITUACAO_REMESSA = 'G'            
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
@@ -1737,7 +1733,7 @@ WHERE
 	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
 	-- Filtro por remessa e lote (se desejar, filtre por mes da remessa de maneira similar ao SQL que recupera remessa e lote a partir do mes)
 	-- Apenas itens com detalhes de processos 
-    AND proc.ANO_PROC <=2017
+    AND proc.ANO_PROC <=2018
 	AND estrutura_item.num_tipo_complemento = 1
 	-- Filtro por item - Exemplo com indicadores 90074 e 92198
 	AND processo.NUM_ITEM IN (2192, 2195, 92192, 92195)
@@ -1765,7 +1761,7 @@ INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
             TO_DATE('01/01/2000','dd/mm/yy') AND 
-            TO_DATE('31/12/2017','dd/mm/yy')              
+            TO_DATE('31/12/2018','dd/mm/yy')              
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
 												remessa.NUM_ORGAO_ESTATISTICA = PROCESSO.NUM_ORGAO_ESTATISTICA AND
@@ -1782,7 +1778,7 @@ WHERE
 	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
 	-- Filtro por remessa e lote (se desejar, filtre por mes da remessa de maneira similar ao SQL que recupera remessa e lote a partir do mes)
 	-- Apenas itens com detalhes de processos 
-    AND proc.ANO_PROC <=2017
+    AND proc.ANO_PROC <=2018
     AND estrutura_item.num_tipo_complemento = 1
 	-- Filtro por item - Exemplo com indicadores 90074 e 92198
     --AND classe.NUM_CLASSE_CNJ IN (1116, 183)
@@ -1813,7 +1809,7 @@ INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
             TO_DATE('01/10/2000','dd/mm/yy') AND 
-            TO_DATE('31/10/2019','dd/mm/yy') 
+            TO_DATE('31/10/2020','dd/mm/yy') 
             AND rem.COD_SITUACAO_REMESSA = 'G'               
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
@@ -1886,8 +1882,8 @@ ORDER BY NUM_ORGAO_ESTATISTICA) vt ON vt.NUM_ORGAO_ESTATISTICA = processo.num_or
 INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
-            TO_DATE('01/12/2019','dd/mm/yy') AND 
-            TO_DATE('31/12/2019','dd/mm/yy')    
+            TO_DATE('01/12/2020','dd/mm/yy') AND 
+            TO_DATE('31/12/2020','dd/mm/yy')    
             AND rem.COD_SITUACAO_REMESSA = 'G'            
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
@@ -1904,7 +1900,7 @@ WHERE
 	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
 	-- Filtro por remessa e lote (se desejar, filtre por mes da remessa de maneira similar ao SQL que recupera remessa e lote a partir do mes)
 	-- Apenas itens com detalhes de processos 
-    AND proc.ANO_PROC <=2017
+    AND proc.ANO_PROC <=2018
 	AND estrutura_item.num_tipo_complemento = 1
 	-- Filtro por item - Exemplo com indicadores 90074 e 92198
 	AND processo.NUM_ITEM IN (2192, 2195, 92192, 92195)
@@ -1932,7 +1928,7 @@ INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
             TO_DATE('01/01/2000','dd/mm/yy') AND 
-            TO_DATE('31/12/2017','dd/mm/yy')              
+            TO_DATE('31/12/2018','dd/mm/yy')              
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 
 												remessa.NUM_ORGAO_ESTATISTICA = PROCESSO.NUM_ORGAO_ESTATISTICA AND
@@ -1949,7 +1945,7 @@ WHERE
 	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
 	-- Filtro por remessa e lote (se desejar, filtre por mes da remessa de maneira similar ao SQL que recupera remessa e lote a partir do mes)
 	-- Apenas itens com detalhes de processos 
-    AND proc.ANO_PROC <=2017
+    AND proc.ANO_PROC <=2018
     AND estrutura_item.num_tipo_complemento = 1
 	-- Filtro por item - Exemplo com indicadores 90074 e 92198
     --AND classe.NUM_CLASSE_CNJ IN (1116, 183)
@@ -1980,7 +1976,7 @@ INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
             TO_DATE('01/11/2000','dd/mm/yy') AND 
-            TO_DATE('30/11/2019','dd/mm/yy') 
+            TO_DATE('30/11/2020','dd/mm/yy') 
             AND rem.COD_SITUACAO_REMESSA = 'G'               
 GROUP BY rem.NUM_REMESSA) x ON processo.NUM_REMESSA=x.NUM_REMESSA AND processo.NUM_LOTE=x.NUM_LOTE
 LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TRIBUNAL AND 

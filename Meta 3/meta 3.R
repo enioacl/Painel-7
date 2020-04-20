@@ -1,9 +1,4 @@
 # 'dataset' tem os dados de entrada para este script
-# 'dataset' tem os dados de entrada para este script
-##neste código o 'mes' na parte da combinação das unidades e meses está apenas para teste
-##em comentário está a função correta para ser utilizada. Ou, se for melhor, colocar
-## de 1 até 12.
-# 'dataset' tem os dados de entrada para este script
 
 require(readxl)
 require(dplyr)

@@ -1,5 +1,5 @@
 
-SELECT
+SELECT 
     saida.TXT_UNIDADE,
     saida.mes,
     COUNT(distinct(saida.NUM_INTERNO_PROCESSO)) AS QUANTIDADE

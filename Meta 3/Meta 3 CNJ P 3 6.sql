@@ -54,16 +54,9 @@ LEFT JOIN eg.EGT_REMESSA_LOTE remessa ON (remessa.NUM_TRIBUNAL = PROCESSO.NUM_TR
 
 WHERE
 	processo.NUM_TRIBUNAL = 7
-        -- G - Gerada
-	--AND REMESSA.COD_SITUACAO_REMESSA = 'G'
-	-- M - Mensal
 	AND REMESSA.COD_PERIODICIDADE = 'M'
-	-- Se desejar, faça filtro por orgaos estatistica aqui
 	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
-	-- Filtro por remessa e lote (se desejar, filtre por mes da remessa de maneira similar ao SQL que recupera remessa e lote a partir do mes)
-	-- Apenas itens com detalhes de processos 
 	AND estrutura_item.num_tipo_complemento = 1
-	-- Filtro por item - Exemplo com indicadores 90074 e 92198
 	AND processo.NUM_ITEM IN (39, 90039,40, 90040, 41, 90041,42, 90042, 43, 90043,44, 90044,46,90046)
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
 group by  saida.TXT_UNIDADE, saida.mes

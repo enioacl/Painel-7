@@ -52,11 +52,12 @@ WHERE
 	processo.NUM_TRIBUNAL = 7
 	AND REMESSA.COD_PERIODICIDADE = 'M'
 	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
-    AND proc.ANO_PROC <=2018
+        AND proc.ANO_PROC <=2018
 	AND estrutura_item.num_tipo_complemento = 1
 	AND classe.NUM_CLASSE_CNJ IN (119, 976, 987, 988)
-    AND processo.NUM_ITEM IN (2198, 2253, 92198, 92253)
-    AND processo.NUM_INTERNO_PROCESSO NOT IN (SELECT  
+        AND processo.NUM_ITEM IN (2198, 2253, 92198, 92253)
+	
+        AND processo.NUM_INTERNO_PROCESSO NOT IN (SELECT  
 		processo.NUM_INTERNO_PROCESSO
 FROM eg.egt_info_processo processo
 LEFT JOIN eg.EGT_PROCESSO proc ON (	proc.NUM_TRIBUNAL = processo.NUM_TRIBUNAL 
@@ -91,7 +92,7 @@ WHERE
 	AND REMESSA.COD_PERIODICIDADE = 'M'
 	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
 	AND estrutura_item.num_tipo_complemento = 1
-    AND processo.NUM_ITEM IN (2434, 92434)
+        AND processo.NUM_ITEM IN (2434, 92434)
     )
     
        
@@ -132,9 +133,8 @@ WHERE
 	processo.NUM_TRIBUNAL = 7
 	AND REMESSA.COD_PERIODICIDADE = 'M'
 	AND processo.NUM_ORGAO_ESTATISTICA IN (SELECT NUM_ORGAO_ESTATISTICA FROM eg.EGT_ORGAO_ESTATISTICA)
-    AND proc.ANO_PROC <=2018
-    AND estrutura_item.num_tipo_complemento = 1
-    AND processo.NUM_ITEM IN (2137, 2138, 92137, 92138)
+        AND estrutura_item.num_tipo_complemento = 1
+        AND processo.NUM_ITEM IN (2137, 2138, 92137, 92138)
     )
     
     

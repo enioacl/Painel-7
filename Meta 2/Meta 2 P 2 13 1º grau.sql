@@ -1,4 +1,4 @@
-﻿--2.13 sem item 49
+﻿--2.13 1° grau
 SELECT  
 saida.txt_unidade,
 count(distinct(saida.PROCESSO_NUMERO_UNICO)) AS Quantidade

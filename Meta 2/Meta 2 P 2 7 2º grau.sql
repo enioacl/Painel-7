@@ -1,4 +1,6 @@
-﻿
+﻿--P2.7 2° grau
+ 
+ 
 SELECT  
     saida.mes,
     --saida.PROCESSO_NUMERO_UNICO

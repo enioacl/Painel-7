@@ -1,4 +1,7 @@
 ﻿
+--P2.1 2º grau 
+ 
+ 
 SELECT
 count(distinct(saida.NUM_INTERNO_PROCESSO)) AS quantidade
 FROM (SELECT  

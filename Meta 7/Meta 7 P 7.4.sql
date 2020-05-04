@@ -1,4 +1,4 @@
-﻿--P 7.4 (pendentes dos dez maiores litigantes)
+﻿--P 7.4 
 
 SELECT saida.TXT_SIGLA, saida.TXT_UNIDADE, saida.PROCESSO_NUMERO_UNICO, saida.TXT_ADICIONAL, extract(MONTH FROM saida.DTA_VALOR) as mes
 FROM

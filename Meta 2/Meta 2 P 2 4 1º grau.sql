@@ -1,4 +1,4 @@
-﻿--2.4
+﻿--2.4 1° grau
 SELECT  
 saida.txt_unidade,
 saida.mes,                                    

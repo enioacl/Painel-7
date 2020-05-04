@@ -1,6 +1,6 @@
 ﻿
 --fazer separado para cada mês
---1.9
+--1.9 1º grau
 SELECT *
 FROM (
 

@@ -1,4 +1,4 @@
---6.3
+--6.3 1° grau
 SELECT
     saida.TXT_UNIDADE,saida.mes,count(saida.num_interno_processo) as quantidade
 FROM (SELECT  

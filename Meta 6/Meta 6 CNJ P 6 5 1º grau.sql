@@ -1,4 +1,4 @@
---6.5
+--6.5 1° grau
 SELECT
     saida.txt_unidade,
     count(saida.PROCESSO_NUMERO_UNICO) as Quantidade

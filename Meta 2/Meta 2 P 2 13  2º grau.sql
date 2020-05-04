@@ -1,4 +1,8 @@
 ﻿
+ --P2.13 2º GRAU
+ 
+ 
+ 
 SELECT  
     count(distinct(saida.NUM_INTERNO_PROCESSO)) AS quantidade
 --saida.NOM_CLASSE

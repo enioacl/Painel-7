@@ -2,8 +2,8 @@ require(readxl)
 require(dplyr)
 library(prodlim)
 library(data.table)
-#dados<-dataset
-dados<-read_excel("X:/SGE/GABINETE/CONSELHO NACIONAL DE JUSTICA/METAS NACIONAIS CNJ/Metas Nacionais 2019 - CNJ/SQL metas/metas por pergunta/Meta 2/v2 meta 2 perguntas.xlsx")
+dados<-dataset
+#dados<-read_excel("X:/SGE/GABINETE/CONSELHO NACIONAL DE JUSTICA/METAS NACIONAIS CNJ/Metas Nacionais 2019 - CNJ/SQL metas/metas por pergunta/Meta 2/v2 meta 2 perguntas.xlsx")
 
 dados<-dados%>%select(sort(names(.)))
 names(dados)=c("Instância","mês","Pergunta","quant","Unidade")

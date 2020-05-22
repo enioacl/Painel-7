@@ -74,11 +74,11 @@ dados2[is.na(dados2)]=0
 
 
 #Grau de cumprimento acumulado
-dados2<-dados2%>%group_by(unidade)%>%mutate(GC_acumulado=(cumsum(P64)+P65)/(P61+P65+cumsum(P62)-cumsum(P63))*(10/9.8))
+dados2<-dados2%>%group_by(unidade)%>%mutate(GC_acumulado=(cumsum(P64)+P65)/(P61+P65+cumsum(P62)-cumsum(P63))*(10/9.5))
 
 
 #Grau de cumprimento mensal
-dados2<-dados2%>%mutate(GC_mensal=(P64+P65)/(P61+P65+P62-P63)*(10/9.8))
+dados2<-dados2%>%mutate(GC_mensal=(P64+P65)/(P61+P65+P62-P63)*(10/9.5))
 
 dados2$GC_acumulado[is.infinite(dados2$GC_acumulado)]<-1
 dados2$GC_mensal[is.infinite(dados2$GC_mensal)]<-1

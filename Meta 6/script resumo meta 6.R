@@ -95,10 +95,10 @@ segunda_inst$Instância<-"Segunda"
 
 
 #Grau de cumprimento acumulado
-segunda_inst<-segunda_inst%>%mutate(GC_acumulado=(cumsum(P64)+P65)/(P61+P65+cumsum(P62)-cumsum(P63))*(10/9.8))
+segunda_inst<-segunda_inst%>%mutate(GC_acumulado=(cumsum(P64)+P65)/(P61+P65+cumsum(P62)-cumsum(P63))*(10/9.5))
 
 #Grau de cumprimento mensal
-segunda_inst$GC_mensal<-((segunda_inst$P64+segunda_inst$P65)/(segunda_inst$P61+segunda_inst$P65+segunda_inst$P62-segunda_inst$P63)*(10/9.8))
+segunda_inst$GC_mensal<-((segunda_inst$P64+segunda_inst$P65)/(segunda_inst$P61+segunda_inst$P65+segunda_inst$P62-segunda_inst$P63)*(10/9.5))
 
 #Grau de cumprimento atual
 segunda_inst<-segunda_inst%>%mutate(GC_atual=last(GC_acumulado))

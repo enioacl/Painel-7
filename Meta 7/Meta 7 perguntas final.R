@@ -3,6 +3,7 @@ dados<-dataset
 require(dplyr)
 library(prodlim)
 library(data.table)
+library(lubridate)
 
 #dados<-read.table(file.choose(),  sep ="\t", header = TRUE)
 

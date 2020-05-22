@@ -55,10 +55,10 @@ primeira_inst$Instância<-"Primeira"
 
 
 #Grau de cumprimento acumulado
-primeira_inst=primeira_inst%>%mutate(GC_acumulado=(cumsum(P64)+P65)/(P61+P65+cumsum(P62)-cumsum(P63))*(10/9.8))%>%arrange(mês)
+primeira_inst=primeira_inst%>%mutate(GC_acumulado=(cumsum(P64)+P65)/(P61+P65+cumsum(P62)-cumsum(P63))*(10/9.5))%>%arrange(mês)
 
 #Graud e cumprimento mensal
-primeira_inst$GC_mensal=((primeira_inst$P64+primeira_inst$P65)/(primeira_inst$P61+primeira_inst$P65+primeira_inst$P62-primeira_inst$P63)*(10/9.8))
+primeira_inst$GC_mensal=((primeira_inst$P64+primeira_inst$P65)/(primeira_inst$P61+primeira_inst$P65+primeira_inst$P62-primeira_inst$P63)*(10/9.5))
 
 #Grau de cumprimento atual
 primeira_inst<-primeira_inst%>%mutate(GC_atual=last(GC_acumulado))
@@ -113,10 +113,10 @@ trt_total$Instância<-"TRT total"
 
 
 #Grau de cumprimento acumulado
-trt_total<-trt_total%>%mutate(GC_acumulado=(cumsum(P64)+P65)/(P61+P65+cumsum(P62)-cumsum(P63))*(10/9.8))
+trt_total<-trt_total%>%mutate(GC_acumulado=(cumsum(P64)+P65)/(P61+P65+cumsum(P62)-cumsum(P63))*(10/9.5))
 
 #Grau de cumprimento mensal
-trt_total$GC_mensal<-((trt_total$P64+trt_total$P65)/(trt_total$P61+trt_total$P65+trt_total$P62-trt_total$P63)*(10/9.8))
+trt_total$GC_mensal<-((trt_total$P64+trt_total$P65)/(trt_total$P61+trt_total$P65+trt_total$P62-trt_total$P63)*(10/9.5))
 
 #Grau de cumprimento atual
 trt_total<-trt_total%>%mutate(GC_atual=last(GC_acumulado))

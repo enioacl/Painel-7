@@ -80,5 +80,5 @@ for(i in 1:max(dados2$mês)){
 dados2$mes_nomes=aux
 
 
-dados2$meta<-148
-dados2$gc_tmdp1<-148/dados2$GC_acumulado
+dados2$meta<-
+dados2$gc_tmdp1<-203/dados2$GC_acumulado

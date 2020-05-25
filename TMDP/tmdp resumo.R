@@ -97,7 +97,7 @@ for(i in 1:max(final$mês)){
 final$mes_nomes=aux
 
 
-final<-final%>%mutate(meta=case_when(Instância=="Primeira"~148, Instância=="Segunda"~137, Instância=="TRT total"~140))
+final<-final%>%mutate(meta=case_when(Instância=="Primeira"~203, Instância=="Segunda"~131, Instância=="TRT total"~140))
 
 
 

@@ -3,7 +3,7 @@
 require(readxl)
 require(dplyr)
 dados<-dataset
-dados<-read_excel("X:/SGE/GABINETE/CONSELHO NACIONAL DE JUSTICA/METAS NACIONAIS CNJ/Metas Nacionais 2019 - CNJ/SQL metas/metas por pergunta/Meta 6/tab dados.xlsx")
+#dados<-read_excel("X:/SGE/GABINETE/CONSELHO NACIONAL DE JUSTICA/METAS NACIONAIS CNJ/Metas Nacionais 2019 - CNJ/SQL metas/metas por pergunta/Meta 6/tab dados.xlsx")
 dados<-dados%>%select(sort(names(.)))
 
 

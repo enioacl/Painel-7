@@ -80,5 +80,9 @@ for(i in 1:max(dados2$mês)){
 dados2$mes_nomes=aux
 
 
-dados2$meta<-
+dados2$meta<-203
 dados2$gc_tmdp1<-203/dados2$GC_acumulado
+dados2<-dados2%>%group_by(unidade)%>%mutate(GCtmdp1_atual=last(gc_tmdp1))%>%ungroup()
+
+
+dados2<-as.data.frame(dados2)

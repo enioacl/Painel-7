@@ -102,5 +102,7 @@ final<-final%>%mutate(meta=case_when(Instância=="Primeira"~203, Instância=="Se
 
 
 final$GC_tmdp2<-final$meta/final$GC_acumulado
+final<-final%>%group_by(Instância)%>%mutate(GCtmdp2_atual=last(GC_tmdp2))%>%ungroup()
+
 
 final<-as.data.frame(final)

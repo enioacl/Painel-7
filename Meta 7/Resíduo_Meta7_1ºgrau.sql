@@ -1,5 +1,5 @@
 
---Resíduo meta 7
+--Resíduo meta 7 1º grau
 
 SELECT tabela1.PROCESSO_NUMERO_UNICO, tabela1.TXT_UNIDADE from
 

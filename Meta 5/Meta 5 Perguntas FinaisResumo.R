@@ -70,16 +70,21 @@ dados2=arrange(dados2,Unidade,mês)
 
 #Grau de cumprimento acumulado
 dados2<-dados2%>%group_by(Unidade)%>%mutate(GCacumulado=(cumsum(P53)+cumsum(P54))/(cumsum(P51)+cumsum(P52)+1+cumsum(P55)+cumsum(P56)-cumsum(P57)-cumsum(P58)))
-dados2<-dados2%>%group_by(Unidade)%>%mutate(GCatual=last(GCacumulado))
+
 #Grau de cumprimento mensal
 dados2<-dados2%>%mutate(GCmensal=(P53+P54)/(P51+P52+1+P55+P56-P57-P58))
+
+dados2[is.na(dados2)]=1
+dados2$GCmensal[is.infinite(dados2$GCmensal)]=1
+dados2$GCacumulado[is.infinite(dados2$GCacumulado)]=1
+dados2$GCacumulado[dados2$GCacumulado<0]=1
+dados2$GCmensal[dados2$GCmensal<0]=1
 
 #Grau de cumprimento atual
 dados2<-dados2%>%group_by(Unidade)%>%mutate(GCatual=last(GCacumulado))
 
-dados2[is.na(dados2)]=0
-dados2$GCmensal[is.infinite(dados2$GCmensal)]=0
-dados2$GCacumulado[is.infinite(dados2$GCacumulado)]=0
+
+
 
 
 meses=c("janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro")

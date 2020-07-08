@@ -77,8 +77,8 @@ dados2<-dados2%>%mutate(GCmensal=(P53+P54)/(P51+P52+1+P55+P56-P57-P58))
 dados2[is.na(dados2)]=1
 dados2$GCmensal[is.infinite(dados2$GCmensal)]=1
 dados2$GCacumulado[is.infinite(dados2$GCacumulado)]=1
-dados2$GCacumulado[dados2$GCacumulado<0]=1
-dados2$GCmensal[dados2$GCmensal<0]=1
+#dados2$GCacumulado[dados2$GCacumulado<0]=1
+#dados2$GCmensal[dados2$GCmensal<0]=1
 
 #Grau de cumprimento atual
 dados2<-dados2%>%group_by(Unidade)%>%mutate(GCatual=last(GCacumulado))

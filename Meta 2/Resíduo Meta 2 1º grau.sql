@@ -7,14 +7,12 @@ SELECT tabela1.PROCESSO_NUMERO_UNICO, tabela1.TXT_UNIDADE from
 
 (
 
-
---2.1
-
+--P2.1 1º grau
 
 
 SELECT  
 saida.txt_unidade,
-saida.processo_numero_unico
+saida.PROCESSO_NUMERO_UNICO
 
 FROM (SELECT  
 		processo.NUM_REMESSA,
@@ -148,6 +146,7 @@ WHERE
     )
     
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
+
 
 
 

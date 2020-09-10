@@ -509,8 +509,7 @@ UNION
 --2.10
 SELECT  
 saida.txt_unidade,
-saida.mes,
-count(saida.num_interno_processo) AS quantidade
+saida.PROCESSO_NUMERO_UNICO
 --saida.NOM_CLASSE
 FROM (SELECT  
 		processo.NUM_REMESSA,
@@ -613,8 +612,7 @@ UNION
 --2.10
 SELECT  
 saida.txt_unidade,
-saida.mes,
-count(saida.num_interno_processo) AS quantidade
+saida.PROCESSO_NUMERO_UNICO
 --saida.NOM_CLASSE
 FROM (SELECT  
 		processo.NUM_REMESSA,
@@ -725,8 +723,7 @@ UNION
 --2.10
 SELECT  
 saida.txt_unidade,
-saida.mes,
-count(saida.num_interno_processo) AS quantidade
+saida.PROCESSO_NUMERO_UNICO
 --saida.NOM_CLASSE
 FROM (SELECT  
 		processo.NUM_REMESSA,
@@ -844,8 +841,7 @@ UNION
 --2.10
 SELECT  
 saida.txt_unidade,
-saida.mes,
-count(saida.num_interno_processo) AS quantidade
+saida.PROCESSO_NUMERO_UNICO
 --saida.NOM_CLASSE
 FROM (SELECT  
 		processo.NUM_REMESSA,
@@ -963,8 +959,7 @@ UNION
 --2.10
 SELECT  
 saida.txt_unidade,
-saida.mes,
-count(saida.num_interno_processo) AS quantidade
+saida.PROCESSO_NUMERO_UNICO
 --saida.NOM_CLASSE
 FROM (SELECT  
 		processo.NUM_REMESSA,
@@ -1082,8 +1077,7 @@ UNION
 --2.10
 SELECT  
 saida.txt_unidade,
-saida.mes,
-count(saida.num_interno_processo) AS quantidade
+saida.PROCESSO_NUMERO_UNICO
 --saida.NOM_CLASSE
 FROM (SELECT  
 		processo.NUM_REMESSA,
@@ -1201,8 +1195,7 @@ UNION
 --2.10
 SELECT  
 saida.txt_unidade,
-saida.mes,
-count(saida.num_interno_processo) AS quantidade
+saida.PROCESSO_NUMERO_UNICO
 --saida.NOM_CLASSE
 FROM (SELECT  
 		processo.NUM_REMESSA,
@@ -1320,8 +1313,7 @@ UNION
 --2.10
 SELECT  
 saida.txt_unidade,
-saida.mes,
-count(saida.num_interno_processo) AS quantidade
+saida.PROCESSO_NUMERO_UNICO
 --saida.NOM_CLASSE
 FROM (SELECT  
 		processo.NUM_REMESSA,
@@ -1439,8 +1431,7 @@ UNION
 --2.10
 SELECT  
 saida.txt_unidade,
-saida.mes,
-count(saida.num_interno_processo) AS quantidade
+saida.PROCESSO_NUMERO_UNICO
 --saida.NOM_CLASSE
 FROM (SELECT  
 		processo.NUM_REMESSA,
@@ -1558,8 +1549,7 @@ UNION
 --2.10
 SELECT  
 saida.txt_unidade,
-saida.mes,
-count(saida.num_interno_processo) AS quantidade
+saida.PROCESSO_NUMERO_UNICO
 --saida.NOM_CLASSE
 FROM (SELECT  
 		processo.NUM_REMESSA,
@@ -1677,8 +1667,7 @@ UNION
 --2.10
 SELECT  
 saida.txt_unidade,
-saida.mes,
-count(saida.num_interno_processo) AS quantidade
+saida.PROCESSO_NUMERO_UNICO
 --saida.NOM_CLASSE
 FROM (SELECT  
 		processo.NUM_REMESSA,

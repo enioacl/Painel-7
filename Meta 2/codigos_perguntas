@@ -1,0 +1,26 @@
+
+#código para a pergunta 2.1
+dados<-dataset
+dados$perg<-"p21"
+dados<-as.data.frame(dados)
+
+---------------------------
+
+#para a 2.4
+dados<-dataset
+dados$perg<-"p24"
+dados<-as.data.frame(dados)
+
+---------------------------
+
+#para a 2.7
+dados<-dataset
+dados$perg<-"p27"
+dados<-as.data.frame(dados)
+
+---------------------------
+
+#para a 2.10
+dados<-dataset
+dados$perg<-"p210"
+dados<-as.data.frame(dados)

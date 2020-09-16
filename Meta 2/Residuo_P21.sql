@@ -3,7 +3,7 @@
 
 SELECT  
 saida.txt_unidade,
-saida.mes,
+saida.DATA,
 saida.PROCESSO_NUMERO_UNICO
 
 FROM (SELECT  
@@ -23,7 +23,8 @@ FROM (SELECT
 		processo.DTA_OCORRENCIA,    
         proc.ANO_PROC,
         2018-proc.ANO_PROC AS Idade_do_processo_em_anos,
-        extract(MONTH from remessa.DTA_INICIO_PERIODO_REFERENCIA) AS mes
+        --extract(MONTH from remessa.DTA_INICIO_PERIODO_REFERENCIA) AS mes
+      	remessa.DTA_INICIO_PERIODO_REFERENCIA as DATA
 FROM eg.egt_info_processo processo
 LEFT JOIN eg.EGT_PROCESSO proc ON (	proc.NUM_TRIBUNAL = processo.NUM_TRIBUNAL 
 							AND proc.NUM_ORGAO_ESTATISTICA = processo.NUM_ORGAO_ESTATISTICA 

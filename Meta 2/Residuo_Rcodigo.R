@@ -2,7 +2,7 @@ library(dplyr)
 library(lubridate)
 dados<-dataset
 dados<-as.data.frame(dados)
-dados$DATA<-dmy(dados$DATA) 
+dados$DATA<-dmy_hms(dados$DATA) 
 
 
 p47<-dados%>%filter(perg=="p24"|perg=="p27") #perguntas 2.4 e 2.7

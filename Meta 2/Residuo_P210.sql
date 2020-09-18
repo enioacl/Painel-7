@@ -1406,5 +1406,5 @@ ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NU
 
 )
 
-order by txt_unidade, mes
+order by txt_unidade, data
 

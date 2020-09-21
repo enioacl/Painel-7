@@ -47,6 +47,7 @@ p27_p210<-union(p27,p210)
 p27_p210<-p27_p210%>%select(TXT_UNIDADE,PROCESSO_NUMERO_UNICO)
 residuo<-anti_join(p21_p24,p27_p210,by="PROCESSO_NUMERO_UNICO")
 names(residuo)<-c("unidade","processo")
+residuo<-unique(residuo)
 residuo<-as.data.frame(residuo)
 
 

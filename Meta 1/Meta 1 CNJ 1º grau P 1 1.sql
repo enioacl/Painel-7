@@ -3,7 +3,7 @@
 SELECT
     saida.TXT_UNIDADE,
     saida.mes,
-    COUNT(saida.NUM_INTERNO_PROCESSO) AS quantidade
+    saida.NUM_INTERNO_PROCESSO AS quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -59,5 +59,5 @@ WHERE
 	AND estrutura_item.num_tipo_complemento = 1
 	AND processo.NUM_ITEM IN (26,90026)
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
-group by  saida.TXT_UNIDADE, saida.mes
+--group by  saida.TXT_UNIDADE, saida.mes
 order by saida.txt_unidade, saida.mes

@@ -1,7 +1,7 @@
 --6.1 2º grau
 SELECT
 
-    COUNT(saida.NUM_INTERNO_PROCESSO) AS quantidade
+    saida.PROCESSO_NUMERO_UNICO AS quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,

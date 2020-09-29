@@ -2,7 +2,7 @@
 SELECT
     saida.TXT_UNIDADE,
     saida.mes,
-    count(saida.NUM_INTERNO_PROCESSO) as quantidade
+    saida.PROCESSO_NUMERO_UNICO as quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -98,6 +98,6 @@ WHERE
     
     
     ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
-    group by  saida.TXT_UNIDADE, saida.mes
+    --group by  saida.TXT_UNIDADE, saida.mes
 order by saida.TXT_UNIDADE, saida.mes
     

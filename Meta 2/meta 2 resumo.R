@@ -1,22 +1,24 @@
-require(readxl)
-require(dplyr)
+library(dplyr)
+library(lubridate)
+library(data.table)
+library(prodlim)
 dados<-dataset
 dados<-dados%>%select(sort(names(.)))
 names(dados)<-c("Instância","mês","Pergunta","quant","Unidade")
-dados<-dados%>%select(mês,Instância,Pergunta,quant)
+dados<-dados%>%select(Unidade,mês,Instância,Pergunta,quant)
 
 
 
 #SUBSTITUI AS VT's DOS PROCESSOS QUE FORAM REDISTRIBUÍDOS
 redis<-filter(dados,(Pergunta=="REDISTRIBUIDO"))%>%select(Unidade,mês,quant)
-redis$mês<-dmy_hms(redis$mês)
+redis$mês<-dmy_smh(redis$mês)
 dados<-filter(dados,!(Pergunta=="REDISTRIBUIDO"))
 
 
 #DEIXAR APENAS A ÚLTIMA VT PARA A QUAL O PROCESSO FOI DISTRIBUÍDO
 
 redis<-redis%>%group_by(quant)%>%mutate(mês=if_else(mês!=max(mês),as.Date(NA),mês))
-  
+
 redis<-na.omit(redis)
 redis<-select(redis,Unidade,quant)
 
@@ -27,8 +29,8 @@ names(a)[1]="Unidade"
 
 dados<-a
 
-dados<-dados%>%group_by(Unidade,mês,Pergunta,Instância)%>%summarise(quant=n())%>%data.frame()%>%
-  select(Unidade,mês,Pergunta,quant,Instância)
+dados<-dados%>%group_by(mês,Pergunta,Instância)%>%summarise(quant=n())%>%data.frame()%>%
+  select(mês,Pergunta,quant,Instância)
 
 
 
@@ -53,8 +55,7 @@ primeira_inst<-primeira_inst%>%mutate(P21=inst1_p21)
 primeira_inst<-primeira_inst%>%mutate(P213=inst1_p213)
 
 
-require(lubridate)
-require(data.table)
+
 
 ##############################
 ############################
@@ -63,7 +64,6 @@ meses=1:month(floor_date(Sys.Date() - months(1), "month")) # até o mês anterio
 combin<-data.frame(mês=meses,P21=inst1_p21,P24=rep(0,length(meses)),P27=rep(0,length(meses)),P210=rep(0,length(meses)), P213=inst1_p213)
 
 
-require(prodlim)
 pos=which(is.na(row.match(as.data.frame(combin$mês),as.data.frame(primeira_inst$mês))))
 primeira_inst<-rbind(primeira_inst,combin[pos,])%>%arrange(mês)
 
@@ -76,10 +76,16 @@ primeira_inst<-primeira_inst%>%mutate(GCacumulado=((cumsum(P210)+P213)/(P21+P213
 #Grau de cumprimento mensal
 primeira_inst<-primeira_inst%>%mutate(GCmensal=((P210+P213)/(P21+P213+P24-P27))*(10/9.2))
 
+primeira_inst$GCacumulado[is.infinite(primeira_inst$GCacumulado)]<-1
+primeira_inst$GCacumulado[is.na(primeira_inst$GCacumulado)]<-1
+primeira_inst$GCmensal[is.infinite(primeira_inst$GCmensal)]<-1
+primeira_inst$GCmensal[is.na(primeira_inst$GCmensal)]<-1
+
+
 #Grau de cumprimento atual
 primeira_inst$Gcatual<-rep(last(primeira_inst$GCacumulado),dim(primeira_inst)[1])
 
-primeira_inst[is.na(primeira_inst)]=0
+
 
 # Segunda Instância
 inst2_p21<-as.numeric(dados%>%filter(Pergunta=="P21" & Instância=="Segunda")%>%select(quant))
@@ -111,10 +117,15 @@ segunda_inst<-segunda_inst%>%mutate(GCacumulado=((cumsum(P210)+P213)/(P21+P213+c
 #Grau de cumprimento mensal
 segunda_inst<-segunda_inst%>%mutate(GCmensal=((P210+P213)/(P21+P213+P24-P27))*(10/9.2))
 
+segunda_inst$GCacumulado[is.infinite(segunda_inst$GCacumulado)]<-1
+segunda_inst$GCacumulado[is.na(segunda_inst$GCacumulado)]<-1
+segunda_inst$GCmensal[is.infinite(segunda_inst$GCmensal)]<-1
+segunda_inst$GCmensal[is.na(segunda_inst$GCmensal)]<-1
+
 #Grau de cumprimento atual
 segunda_inst$Gcatual<-rep(last(segunda_inst$GCacumulado),dim(segunda_inst)[1])
 
-segunda_inst[is.na(segunda_inst)]=0
+
 
 #TRT total
 TRT_total<-rbind(primeira_inst, segunda_inst)%>%group_by(mês)%>%summarise(P24=sum(P24),P27=sum(P27),P210=sum(P210))
@@ -129,10 +140,15 @@ TRT_total<-TRT_total%>%mutate(GCacumulado=((cumsum(P210)+P213)/(P21+P213+cumsum(
 #Grau de cumprimento mensal
 TRT_total<-TRT_total%>%mutate(GCmensal=((P210+P213)/(P21+P213+P24-P27))*(10/9.2))
 
+TRT_total$GCacumulado[is.infinite(TRT_total$GCacumulado)]<-1
+TRT_total$GCacumulado[is.na(TRT_total$GCacumulado)]<-1
+TRT_total$GCmensal[is.infinite(TRT_total$GCmensal)]<-1
+TRT_total$GCmensal[is.na(TRT_total$GCmensal)]<-1
+
 #Grau de cumprimento atual
 TRT_total$Gcatual<-rep(last(TRT_total$GCacumulado),dim(TRT_total)[1])
 
-TRT_total[is.na(TRT_total)]=0
+
 TRT_total$Instância="TRT total"
 
 final<-as.data.frame(rbind(primeira_inst,segunda_inst,TRT_total))

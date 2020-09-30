@@ -1,13 +1,47 @@
 # 'dataset' tem os dados de entrada para este script
 
-require(readxl)
-require(dplyr)
+library(readxl)
+library(dplyr)
+library(lubridate)
+library(data.table)
 dados<-dataset 
 
 dados<-dados%>%select(sort(names(.)))
 names(dados)<-c("mês","Pergunta","quant","unidade")
 dados<-dados%>%select(unidade,mês,Pergunta,quant)
 unidade<-as.data.frame(dados[c(1:37,39),1])
+
+
+
+#SUBSTITUI AS VT's DOS PROCESSOS QUE FORAM REDISTRIBUÍDOS
+redis<-filter(dados,(Pergunta=="REDISTRIBUIDO"))%>%select(unidade,mês,quant)
+redis$mês<-dmy_hms(redis$mês) 
+dados<-filter(dados,!(Pergunta=="REDISTRIBUIDO"))
+
+
+# #DEIXAR APENAS A ÚLTIMA VT PARA A QUAL O PROCESSO FOI DISTRIBUÍDO
+
+redis<-redis%>%group_by(quant)%>%mutate(mês=if_else(mês!=max(mês),as.Date(NA),mês))
+  
+redis<-na.omit(redis)
+redis<-select(redis,unidade,quant)
+
+
+a<-left_join(dados,redis,by="quant")
+a$unidade.x<-ifelse(is.na(a$unidade.y),a$unidade.x,a$unidade.y)
+a<-select(a,-unidade.y)
+names(a)[1]="unidade"
+
+dados<-a
+
+
+dados<-dados%>%group_by(unidade,mês,Pergunta,Instância)%>%summarise(quant=n())%>%data.frame()%>%
+  select(unidade,mês,Pergunta,quant,Instância)
+
+
+
+
+
 dados$quant<-as.numeric(dados$quant)
 dados$quant[is.na(dados$quant)]=0
 dados$mês<-as.numeric(dados$mês)
@@ -30,8 +64,7 @@ dados2<-dados2%>%arrange(unidade,mês)
 dados2=as.data.frame(rbind(dados2,TRT_1))
 
 
-require(lubridate)
-require(data.table)
+
 
 
 mes=1:month(floor_date(Sys.Date() - months(1), "month")) # até o mês anterior ao atual
@@ -43,7 +76,7 @@ names(combin)=names(dados2)
 combin=as.data.frame(combin)
 
 
-require(prodlim)
+library(prodlim)
 
 pos=which(is.na(row.match(combin[,1:2],dados2[,1:2]))) #linhas para adicionar 
 ee=rbind(dados2,combin[pos,]) #juntando o data frame com as linhas faltantes

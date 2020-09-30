@@ -9,7 +9,7 @@ dados<-dados%>%select(mês,Instância,Pergunta,quant)
 
 #SUBSTITUI AS VT's DOS PROCESSOS QUE FORAM REDISTRIBUÍDOS
 redis<-filter(dados,(Pergunta=="REDISTRIBUIDO"))%>%select(Unidade,mês,quant)
-redis$mês<-dmy(redis$mês) #aqui colocar dmy_smh
+redis$mês<-dmy_hms(redis$mês)
 dados<-filter(dados,!(Pergunta=="REDISTRIBUIDO"))
 
 

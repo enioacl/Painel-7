@@ -3,8 +3,8 @@
 SELECT
     saida.TXT_UNIDADE,
     saida.mes,
-    sum(saida.NUM_DIAS) as soma,
-    count(saida.NUM_INTERNO_PROCESSO) as numero_de_processos
+    saida.NUM_DIAS as soma,
+    saida.PROCESSO_NUMERO_UNICO as numero_de_processos
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -59,5 +59,5 @@ WHERE
 	AND estrutura_item.num_tipo_complemento = 1
 	AND processo.NUM_ITEM IN (416,90416) 
 ) saida
-group by saida.TXT_UNIDADE, saida.mes
+--group by saida.TXT_UNIDADE, saida.mes
 order by  saida.TXT_UNIDADE,saida.mes

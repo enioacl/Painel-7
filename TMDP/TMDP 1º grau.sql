@@ -4,7 +4,7 @@ SELECT
     saida.TXT_UNIDADE,
     saida.mes,
     saida.NUM_DIAS as soma,
-    saida.PROCESSO_NUMERO_UNICO as quant
+    saida.PROCESSO_NUMERO_UNICO as quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,

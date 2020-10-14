@@ -129,5 +129,8 @@ dados2$unidade[dados2$unidade=="01ª VT DA REGIÃO DO CARIRI"]="01ª VT DE JUAZE
 dados2$unidade[dados2$unidade=="02ª VT DA REGIÃO DO CARIRI"]="02ª VT DE JUAZEIRO DO NORTE"
 dados2$unidade[dados2$unidade=="03ª VT DA REGIÃO DO CARIRI"]="03ª VT DE JUAZEIRO DO NORTE"
 dados2$unidade[dados2$unidade=="VT DE SÃO GONÇALO DO AMARANTE"]="01ª VT DE SAO GONCALO DO AMARANTE"
+dados2$unidade[dados2$unidade=="01ª VT DE MARACANAÚ"]="01ª VT DE MARACANAU"
+dados2$unidade[dados2$unidade=="02ª VT DE MARACANAÚ"]="02ª VT DE MARACANAU"
+
 
 dados2<-arrange(dados2,unidade,mes)

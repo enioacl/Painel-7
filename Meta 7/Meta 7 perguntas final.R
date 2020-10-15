@@ -1,6 +1,6 @@
 # 'dataset' tem os dados de entrada para este script
 dados<-dataset
-require(dplyr)
+library(dplyr)
 library(prodlim)
 library(data.table)
 library(lubridate)
@@ -14,7 +14,7 @@ dados$unidade<-as.character(dados$unidade)
 dados$mes<-as.numeric(dados$mes)
 unidade<-as.character(dados[c(1:38),1])
 
-P73<-dados%>%group_by(unidade)%>%filter(pergunta=='P7.3')%>%summarise(quantidade=length(unidade))
+P73<-dados%>%group_by(unidade)%>%filter(pergunta=='P7.3')%>%summarise(quantidade=length(unidade))%>%data.frame()
 names(P73)[2]<-"P73"
 P73[nrow(P73)+1,]=c(".TRT 7 1ª INSTÂNCIA",sum(P73$P73))
 P73$P73<-as.numeric(P73$P73)

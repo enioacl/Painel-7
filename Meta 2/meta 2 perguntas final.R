@@ -1,23 +1,22 @@
-require(readxl)
-require(dplyr)
+library(readxl)
+library(dplyr)
 library(prodlim)
 library(data.table)
+library(lubridate)
 dados<-dataset
-#dados<-read_excel("X:/SGE/GABINETE/CONSELHO NACIONAL DE JUSTICA/METAS NACIONAIS CNJ/Metas Nacionais 2019 - CNJ/SQL metas/metas por pergunta/Meta 2/v2 meta 2 perguntas.xlsx")
-
 dados<-dados%>%select(sort(names(.)))
 names(dados)=c("Instância","mês","Pergunta","quant","Unidade")
 dados<-dados%>%select(Unidade,mês,Pergunta,quant,Instância)
 Unidade<-as.data.frame(dados%>%select(Unidade))
 Unidade<-Unidade[c(1:37,39),]
-
+dados$mês<-as.character(dados$mês)
 
 
 #SUBSTITUI AS VT's DOS PROCESSOS QUE FORAM REDISTRIBUÍDOS
 redis<-filter(dados,(Pergunta=="REDISTRIBUIDO"))%>%select(Unidade,mês,quant)
 redis$mês<-dmy_hms(redis$mês) 
 dados<-filter(dados,!(Pergunta=="REDISTRIBUIDO"))
-
+dados$mês<-as.numeric(dados$mês)
 
 # #DEIXAR APENAS A ÚLTIMA VT PARA A QUAL O PROCESSO FOI DISTRIBUÍDO
 

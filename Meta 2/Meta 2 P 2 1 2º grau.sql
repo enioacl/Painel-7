@@ -3,7 +3,7 @@
  
  
 SELECT
-count(distinct(saida.NUM_INTERNO_PROCESSO)) AS quantidade
+distinct(saida.NUM_INTERNO_PROCESSO) AS quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,

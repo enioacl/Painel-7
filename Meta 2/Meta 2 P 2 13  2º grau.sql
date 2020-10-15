@@ -4,7 +4,7 @@
  
  
 SELECT  
-    count(distinct(saida.NUM_INTERNO_PROCESSO)) AS quantidade
+  distinct(saida.PROCESSO_NUMERO_UNICO) AS quantidade
 --saida.NOM_CLASSE
 FROM (SELECT  
 		processo.NUM_REMESSA,

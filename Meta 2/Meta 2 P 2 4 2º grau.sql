@@ -4,7 +4,7 @@
 SELECT  
 saida.mes,
 --saida.PROCESSO_NUMERO_UNICO,
-count(saida.NUM_INTERNO_PROCESSO) AS quantidade
+saida.PROCESSO_NUMERO_UNICO AS quantidade
 --saida.NOM_CLASSE
 FROM (SELECT  
 		processo.NUM_REMESSA,
@@ -144,6 +144,6 @@ WHERE
     )
 
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
-group by saida.mes
+--group by saida.mes
 order by saida.mes
 

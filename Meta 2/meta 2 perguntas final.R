@@ -39,7 +39,7 @@ dados$mês<-as.numeric(dados$mês)
 dados$quant<-as.numeric(dados$quant)
 dados$quant[is.na(dados$quant)]=0
 
-p21<-dados%>%filter(Pergunta=="P21")%>%select(Unidade,quant)
+p21<-dados%>%filter(Pergunta=="P21")%>%select(Unidade,quant)%>%data.frame()
 names(p21)[2]="P21"
 p21[nrow(p21)+1,]=c(".TRT 7 1ª INSTÂNCIA",sum(p21$P21))
 p21$P21<-as.numeric(p21$P21)
@@ -53,7 +53,7 @@ names(p27)[3]="P27"
 p210<-dados%>%filter(Pergunta=="P210")%>%select(Unidade, mês, quant)
 names(p210)[3]="P210"
 
-p213<-dados%>%filter(Pergunta=="P213")%>%select(Unidade,quant)
+p213<-dados%>%filter(Pergunta=="P213")%>%select(Unidade,quant)%>%data.frame()
 names(p213)[2]="P213"
 p213[nrow(p213)+1,]=c(".TRT 7 1ª INSTÂNCIA",sum(p213$P213))
 p213$P213<-as.numeric(p213$P213)

@@ -99,5 +99,5 @@ WHERE
     
     
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
-group by saida.txt_unidade
+--group by saida.txt_unidade
 order by saida.txt_unidade

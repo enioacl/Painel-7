@@ -7,7 +7,7 @@ FROM (
 
 SELECT  
 saida.txt_unidade,
-saida.DATA,
+saida.MES,
 saida.PROCESSO_NUMERO_UNICO
 --saida.NOM_CLASSE
 FROM (SELECT  
@@ -24,10 +24,10 @@ FROM (SELECT
 		classe.TXT_SIGLA_CLASSE,
 		classe.NOM_CLASSE,
         vt.TXT_UNIDADE,
-		processo.DTA_OCORRENCIA as DATA,    
+		processo.DTA_OCORRENCIA as mes,    
         proc.ANO_PROC,
         2018-proc.ANO_PROC AS Idade_do_processo_em_anos,
-        extract(MONTH from remessa.DTA_INICIO_PERIODO_REFERENCIA) AS mes
+        extract(MONTH from remessa.DTA_INICIO_PERIODO_REFERENCIA) 
      
 FROM eg.egt_info_processo processo
 LEFT JOIN eg.EGT_PROCESSO proc ON (	proc.NUM_TRIBUNAL = processo.NUM_TRIBUNAL 
@@ -111,7 +111,7 @@ UNION
 --2.10
 SELECT  
 saida.txt_unidade,
-saida.DATA,
+saida.mes,
 saida.PROCESSO_NUMERO_UNICO
 --saida.NOM_CLASSE
 FROM (SELECT  
@@ -128,10 +128,10 @@ FROM (SELECT
 		classe.TXT_SIGLA_CLASSE,
 		classe.NOM_CLASSE,
         vt.TXT_UNIDADE,
-		processo.DTA_OCORRENCIA as DATA,    
+		processo.DTA_OCORRENCIA as mes,    
         proc.ANO_PROC,
         2018-proc.ANO_PROC AS Idade_do_processo_em_anos,
-        extract(MONTH from remessa.DTA_INICIO_PERIODO_REFERENCIA) AS mes
+        extract(MONTH from remessa.DTA_INICIO_PERIODO_REFERENCIA) 
       
 FROM eg.egt_info_processo processo
 LEFT JOIN eg.EGT_PROCESSO proc ON (	proc.NUM_TRIBUNAL = processo.NUM_TRIBUNAL 
@@ -216,7 +216,7 @@ UNION
 --2.10
 SELECT  
 saida.txt_unidade,
-saida.DATA,
+saida.mes,
 saida.PROCESSO_NUMERO_UNICO
 --saida.NOM_CLASSE
 FROM (SELECT  
@@ -233,10 +233,10 @@ FROM (SELECT
 		classe.TXT_SIGLA_CLASSE,
 		classe.NOM_CLASSE,
         vt.TXT_UNIDADE,
-		processo.DTA_OCORRENCIA as DATA,    
+		processo.DTA_OCORRENCIA as mes,    
         proc.ANO_PROC,
         2018-proc.ANO_PROC AS Idade_do_processo_em_anos,
-        extract(MONTH from remessa.DTA_INICIO_PERIODO_REFERENCIA) AS mes
+        extract(MONTH from remessa.DTA_INICIO_PERIODO_REFERENCIA) 
       
 FROM eg.egt_info_processo processo
 LEFT JOIN eg.EGT_PROCESSO proc ON (	proc.NUM_TRIBUNAL = processo.NUM_TRIBUNAL 
@@ -329,7 +329,7 @@ UNION
 --2.10
 SELECT  
 saida.txt_unidade,
-saida.DATA,
+saida.mes,
 saida.PROCESSO_NUMERO_UNICO
 --saida.NOM_CLASSE
 FROM (SELECT  
@@ -346,10 +346,10 @@ FROM (SELECT
 		classe.TXT_SIGLA_CLASSE,
 		classe.NOM_CLASSE,
         vt.TXT_UNIDADE,
-		processo.DTA_OCORRENCIA as DATA,    
+		processo.DTA_OCORRENCIA as mes,    
         proc.ANO_PROC,
         2018-proc.ANO_PROC AS Idade_do_processo_em_anos,
-        extract(MONTH from remessa.DTA_INICIO_PERIODO_REFERENCIA) AS mes
+        extract(MONTH from remessa.DTA_INICIO_PERIODO_REFERENCIA)
       
 FROM eg.egt_info_processo processo
 LEFT JOIN eg.EGT_PROCESSO proc ON (	proc.NUM_TRIBUNAL = processo.NUM_TRIBUNAL 
@@ -449,7 +449,7 @@ UNION
 --2.10
 SELECT  
 saida.txt_unidade,
-saida.DATA,
+saida.mes,
 saida.PROCESSO_NUMERO_UNICO
 --saida.NOM_CLASSE
 FROM (SELECT  
@@ -466,10 +466,10 @@ FROM (SELECT
 		classe.TXT_SIGLA_CLASSE,
 		classe.NOM_CLASSE,
         vt.TXT_UNIDADE,
-		processo.DTA_OCORRENCIA as DATA,    
+		processo.DTA_OCORRENCIA as mes,    
         proc.ANO_PROC,
         2018-proc.ANO_PROC AS Idade_do_processo_em_anos,
-        extract(MONTH from remessa.DTA_INICIO_PERIODO_REFERENCIA) AS mes
+        extract(MONTH from remessa.DTA_INICIO_PERIODO_REFERENCIA) 
    
 FROM eg.egt_info_processo processo
 LEFT JOIN eg.EGT_PROCESSO proc ON (	proc.NUM_TRIBUNAL = processo.NUM_TRIBUNAL 
@@ -569,7 +569,7 @@ UNION
 --2.10
 SELECT  
 saida.txt_unidade,
-saida.DATA,
+saida.mes,
 saida.PROCESSO_NUMERO_UNICO
 --saida.NOM_CLASSE
 FROM (SELECT  
@@ -586,10 +586,10 @@ FROM (SELECT
 		classe.TXT_SIGLA_CLASSE,
 		classe.NOM_CLASSE,
         vt.TXT_UNIDADE,
-		processo.DTA_OCORRENCIA as DATA,    
+		processo.DTA_OCORRENCIA as mes,    
         proc.ANO_PROC,
         2018-proc.ANO_PROC AS Idade_do_processo_em_anos,
-        extract(MONTH from remessa.DTA_INICIO_PERIODO_REFERENCIA) AS mes
+        extract(MONTH from remessa.DTA_INICIO_PERIODO_REFERENCIA)
      
 FROM eg.egt_info_processo processo
 LEFT JOIN eg.EGT_PROCESSO proc ON (	proc.NUM_TRIBUNAL = processo.NUM_TRIBUNAL 
@@ -689,7 +689,7 @@ UNION
 --2.10
 SELECT  
 saida.txt_unidade,
-saida.DATA,
+saida.mes,
 saida.PROCESSO_NUMERO_UNICO
 --saida.NOM_CLASSE
 FROM (SELECT  
@@ -706,10 +706,10 @@ FROM (SELECT
 		classe.TXT_SIGLA_CLASSE,
 		classe.NOM_CLASSE,
         vt.TXT_UNIDADE,
-		processo.DTA_OCORRENCIA as DATA,    
+		processo.DTA_OCORRENCIA as mes,    
         proc.ANO_PROC,
         2018-proc.ANO_PROC AS Idade_do_processo_em_anos,
-        extract(MONTH from remessa.DTA_INICIO_PERIODO_REFERENCIA) AS mes
+        extract(MONTH from remessa.DTA_INICIO_PERIODO_REFERENCIA)  
       
 FROM eg.egt_info_processo processo
 LEFT JOIN eg.EGT_PROCESSO proc ON (	proc.NUM_TRIBUNAL = processo.NUM_TRIBUNAL 
@@ -809,7 +809,7 @@ UNION
 --2.10
 SELECT  
 saida.txt_unidade,
-saida.DATA,
+saida.mes,
 saida.PROCESSO_NUMERO_UNICO
 --saida.NOM_CLASSE
 FROM (SELECT  
@@ -826,10 +826,10 @@ FROM (SELECT
 		classe.TXT_SIGLA_CLASSE,
 		classe.NOM_CLASSE,
         vt.TXT_UNIDADE,
-		processo.DTA_OCORRENCIA as DATA,    
+		processo.DTA_OCORRENCIA as mes,    
         proc.ANO_PROC,
         2018-proc.ANO_PROC AS Idade_do_processo_em_anos,
-        extract(MONTH from remessa.DTA_INICIO_PERIODO_REFERENCIA) AS mes
+        extract(MONTH from remessa.DTA_INICIO_PERIODO_REFERENCIA) 
      
 FROM eg.egt_info_processo processo
 LEFT JOIN eg.EGT_PROCESSO proc ON (	proc.NUM_TRIBUNAL = processo.NUM_TRIBUNAL 
@@ -929,7 +929,7 @@ UNION
 --2.10
 SELECT  
 saida.txt_unidade,
-saida.DATA,
+saida.mes,
 saida.PROCESSO_NUMERO_UNICO
 --saida.NOM_CLASSE
 FROM (SELECT  
@@ -946,10 +946,10 @@ FROM (SELECT
 		classe.TXT_SIGLA_CLASSE,
 		classe.NOM_CLASSE,
         vt.TXT_UNIDADE,
-		processo.DTA_OCORRENCIA as DATA,    
+		processo.DTA_OCORRENCIA as mes,    
         proc.ANO_PROC,
         2018-proc.ANO_PROC AS Idade_do_processo_em_anos,
-        extract(MONTH from remessa.DTA_INICIO_PERIODO_REFERENCIA) AS mes
+        extract(MONTH from remessa.DTA_INICIO_PERIODO_REFERENCIA)  
       
 FROM eg.egt_info_processo processo
 LEFT JOIN eg.EGT_PROCESSO proc ON (	proc.NUM_TRIBUNAL = processo.NUM_TRIBUNAL 
@@ -1049,7 +1049,7 @@ UNION
 --2.10
 SELECT  
 saida.txt_unidade,
-saida.DATA,
+saida.mes,
 saida.PROCESSO_NUMERO_UNICO
 --saida.NOM_CLASSE
 FROM (SELECT  
@@ -1066,10 +1066,10 @@ FROM (SELECT
 		classe.TXT_SIGLA_CLASSE,
 		classe.NOM_CLASSE,
         vt.TXT_UNIDADE,
-		processo.DTA_OCORRENCIA as DATA,    
+		processo.DTA_OCORRENCIA as mes,    
         proc.ANO_PROC,
         2018-proc.ANO_PROC AS Idade_do_processo_em_anos,
-        extract(MONTH from remessa.DTA_INICIO_PERIODO_REFERENCIA) AS mes
+        extract(MONTH from remessa.DTA_INICIO_PERIODO_REFERENCIA)  
       
 FROM eg.egt_info_processo processo
 LEFT JOIN eg.EGT_PROCESSO proc ON (	proc.NUM_TRIBUNAL = processo.NUM_TRIBUNAL 
@@ -1169,7 +1169,7 @@ UNION
 --2.10
 SELECT  
 saida.txt_unidade,
-saida.DATA,
+saida.mes,
 saida.PROCESSO_NUMERO_UNICO
 --saida.NOM_CLASSE
 FROM (SELECT  
@@ -1186,10 +1186,10 @@ FROM (SELECT
 		classe.TXT_SIGLA_CLASSE,
 		classe.NOM_CLASSE,
         vt.TXT_UNIDADE,
-		processo.DTA_OCORRENCIA as DATA,    
+		processo.DTA_OCORRENCIA as mes,    
         proc.ANO_PROC,
         2018-proc.ANO_PROC AS Idade_do_processo_em_anos,
-        extract(MONTH from remessa.DTA_INICIO_PERIODO_REFERENCIA) AS mes
+        extract(MONTH from remessa.DTA_INICIO_PERIODO_REFERENCIA)  
       
 FROM eg.egt_info_processo processo
 LEFT JOIN eg.EGT_PROCESSO proc ON (	proc.NUM_TRIBUNAL = processo.NUM_TRIBUNAL 
@@ -1289,7 +1289,7 @@ UNION
 --2.10
 SELECT  
 saida.txt_unidade,
-saida.DATA,
+saida.mes,
 saida.PROCESSO_NUMERO_UNICO
 --saida.NOM_CLASSE
 FROM (SELECT  
@@ -1306,10 +1306,10 @@ FROM (SELECT
 		classe.TXT_SIGLA_CLASSE,
 		classe.NOM_CLASSE,
         vt.TXT_UNIDADE,
-		processo.DTA_OCORRENCIA as DATA,    
+		processo.DTA_OCORRENCIA as mes,    
         proc.ANO_PROC,
         2018-proc.ANO_PROC AS Idade_do_processo_em_anos,
-        extract(MONTH from remessa.DTA_INICIO_PERIODO_REFERENCIA) AS mes
+        extract(MONTH from remessa.DTA_INICIO_PERIODO_REFERENCIA) 
       
 FROM eg.egt_info_processo processo
 LEFT JOIN eg.EGT_PROCESSO proc ON (	proc.NUM_TRIBUNAL = processo.NUM_TRIBUNAL 

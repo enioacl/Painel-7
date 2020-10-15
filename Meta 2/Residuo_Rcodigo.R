@@ -2,7 +2,24 @@ library(dplyr)
 library(lubridate)
 dados<-dataset
 dados<-as.data.frame(dados)
-dados$DATA<-dmy_hms(dados$DATA) 
+dados$MES<-dmy_hms(dados$MES) 
+dados<-dados%>%select(sort(names(.)))
+
+names(dados)<-c("mês","Pergunta","quant","Unidade")
+redis<-filter(dados,(Pergunta=="REDISTRIBUIDO"))%>%select(Unidade,mês,quant)
+dados<-filter(dados,!(Pergunta=="REDISTRIBUIDO"))
+
+# #DEIXAR APENAS A ÚLTIMA VT PARA A QUAL O PROCESSO FOI DISTRIBUÍDO
+redis<-redis%>%group_by(quant)%>%mutate(mês=if_else(mês!=max(mês),as.Date(NA),mês))
+redis<-na.omit(redis)
+redis<-select(redis,Unidade,quant)
+
+
+a<-left_join(dados,redis,by="quant")
+a$Unidade.x<-ifelse(is.na(a$Unidade.y),a$Unidade.x,a$Unidade.y)
+a<-select(a,-Unidade.y)
+names(a)=c("DATA","perg","PROCESSO_NUMERO_UNICO","TXT_UNIDADE")
+dados<-as.data.frame(a)
 
 
 p47<-dados%>%filter(perg=="p24"|perg=="p27") #perguntas 2.4 e 2.7
@@ -49,9 +66,4 @@ residuo<-anti_join(p21_p24,p27_p210,by="PROCESSO_NUMERO_UNICO")
 names(residuo)<-c("unidade","processo")
 residuo<-unique(residuo)
 residuo<-as.data.frame(residuo)
-
-
-
-
-
 

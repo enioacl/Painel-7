@@ -4,7 +4,7 @@
 SELECT
 saida.TXT_unidade,
 saida.mes,
-count(DISTINCT(saida.PROCESSO_NUMERO_UNICO)) AS quantidade
+DISTINCT(saida.PROCESSO_NUMERO_UNICO) AS quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -99,6 +99,6 @@ WHERE
 	AND processo.NUM_ITEM IN (92,90092)
 ) 
 ) saida
-group by saida. txt_unidade, saida.mes
+--group by saida. txt_unidade, saida.mes
 order by saida.mes, saida.txt_unidade
 

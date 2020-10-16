@@ -8,7 +8,7 @@ FROM (
 SELECT  
 saida.txt_unidade,
 saida.MES,
-saida.PROCESSO_NUMERO_UNICO
+saida.PROCESSO_NUMERO_UNICO as quantidade
 --saida.NOM_CLASSE
 FROM (SELECT  
 		processo.NUM_REMESSA,

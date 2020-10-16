@@ -1,10 +1,31 @@
-require(dplyr)
+library(lubridate)
+library(dplyr)
 dados<-dataset
 dados<-dados%>%select(sort(names(.)))
 names(dados)<-c("Instância","mês","Pergunta","quant","Unidade")
 dados<-dados%>%select(Unidade,mês,Pergunta,quant,Instância)
 Unidade<-as.data.frame(dados%>%select(Unidade))
 Unidade<-Unidade[c(1:37,39),]
+
+
+redis<-filter(dados,(Pergunta=="REDISTRIBUIDO"))%>%select(Unidade,mês,quant)
+dados<-filter(dados,!(Pergunta=="REDISTRIBUIDO"))
+
+# #DEIXAR APENAS A ÚLTIMA VT PARA A QUAL O PROCESSO FOI DISTRIBUÍDO
+redis$mês<-dmy_hms(redis$mês)
+redis<-redis%>%group_by(quant)%>%mutate(mês=if_else(mês!=max(mês),as.Date(NA),mês))
+redis<-na.omit(redis)
+redis<-select(redis,Unidade,quant)
+
+
+a<-left_join(dados,redis,by="quant")
+a$Unidade.x<-ifelse(is.na(a$Unidade.y),a$Unidade.x,a$Unidade.y)
+a<-select(a,-Unidade.y)
+names(a)[1]="Unidade"
+dados<-as.data.frame(a)
+dados<-dados%>%select(-Instância)
+dados<-dados%>%group_by(Unidade,mês,Pergunta)%>%summarise(quant=n())%>%data.frame()%>%select(Unidade,mês,Pergunta,quant)
+
 
 dados$quant <- as.numeric(dados$quant)
 dados$quant[is.na(dados$quant)]=0

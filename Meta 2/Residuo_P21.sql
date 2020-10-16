@@ -1,7 +1,7 @@
 SELECT  
 saida.txt_unidade,
 saida.MES,
-saida.PROCESSO_NUMERO_UNICO
+saida.PROCESSO_NUMERO_UNICO as quantidade
 
 FROM (SELECT  
 		processo.NUM_REMESSA,

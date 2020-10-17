@@ -3,7 +3,7 @@
 
 SELECT
    saida.mes,
-    COUNT(DISTINCT(saida.NUM_INTERNO_PROCESSO)) AS quantidade
+ distinct(saida.PROCESSO_NUMERO_UNICO) AS quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -57,5 +57,5 @@ WHERE
 	AND estrutura_item.num_tipo_complemento = 1
 	AND processo.NUM_ITEM IN (2427,92427)
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
-group by saida.mes
+--group by saida.mes
 order by saida.mes

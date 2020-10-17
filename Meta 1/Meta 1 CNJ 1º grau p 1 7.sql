@@ -7,7 +7,7 @@ FROM(
 SELECT
     saida.txt_unidade,
     saida.mes,
-    COUNT(DISTINCT(saida.NUM_INTERNO_PROCESSO)) AS quantidade
+     distinct(saida.PROCESSO_NUMERO_UNICO) AS quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -100,7 +100,7 @@ WHERE
 	AND processo.NUM_ITEM IN (39, 40, 41, 42, 43, 44, 46, 47, 48, 90039, 90040, 90041, 90042, 90043, 90044, 90046, 90047, 90048)
     )
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
-group by saida.mes, saida.txt_unidade
+--group by saida.mes, saida.txt_unidade
 
 
 
@@ -111,7 +111,7 @@ UNION
 SELECT
     saida.txt_unidade,
     saida.mes,
-    COUNT(DISTINCT(saida.NUM_INTERNO_PROCESSO)) AS quantidade
+ distinct(saida.PROCESSO_NUMERO_UNICO) AS quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -204,7 +204,7 @@ WHERE
 	AND processo.NUM_ITEM IN (39, 40, 41, 42, 43, 44, 46, 47, 48, 90039, 90040, 90041, 90042, 90043, 90044, 90046, 90047, 90048)
     )
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
-group by saida.mes, saida.txt_unidade
+--group by saida.mes, saida.txt_unidade
 
 
 
@@ -217,7 +217,7 @@ UNION
 SELECT
     saida.txt_unidade,
     saida.mes,
-    COUNT(DISTINCT(saida.NUM_INTERNO_PROCESSO)) AS quantidade
+ distinct(saida.PROCESSO_NUMERO_UNICO) AS quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -310,7 +310,7 @@ WHERE
 	AND processo.NUM_ITEM IN (39, 40, 41, 42, 43, 44, 46, 47, 48, 90039, 90040, 90041, 90042, 90043, 90044, 90046, 90047, 90048)
     )
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
-group by saida.mes, saida.txt_unidade
+--group by saida.mes, saida.txt_unidade
 
 
 
@@ -321,7 +321,7 @@ UNION
 SELECT
     saida.txt_unidade,
     saida.mes,
-    COUNT(DISTINCT(saida.NUM_INTERNO_PROCESSO)) AS quantidade
+ distinct(saida.PROCESSO_NUMERO_UNICO) AS quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -414,7 +414,7 @@ WHERE
 	AND processo.NUM_ITEM IN (39, 40, 41, 42, 43, 44, 46, 47, 48, 90039, 90040, 90041, 90042, 90043, 90044, 90046, 90047, 90048)
     )
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
-group by saida.mes, saida.txt_unidade
+--group by saida.mes, saida.txt_unidade
 
 
 
@@ -425,7 +425,7 @@ UNION
 SELECT
     saida.txt_unidade,
     saida.mes,
-    COUNT(DISTINCT(saida.NUM_INTERNO_PROCESSO)) AS quantidade
+ distinct(saida.PROCESSO_NUMERO_UNICO) AS quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -518,7 +518,7 @@ WHERE
 	AND processo.NUM_ITEM IN (39, 40, 41, 42, 43, 44, 46, 47, 48, 90039, 90040, 90041, 90042, 90043, 90044, 90046, 90047, 90048)
     )
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
-group by saida.mes, saida.txt_unidade
+--group by saida.mes, saida.txt_unidade
 
 
 
@@ -529,7 +529,7 @@ UNION
 SELECT
     saida.txt_unidade,
     saida.mes,
-    COUNT(DISTINCT(saida.NUM_INTERNO_PROCESSO)) AS quantidade
+ distinct(saida.PROCESSO_NUMERO_UNICO) AS quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -622,7 +622,7 @@ WHERE
 	AND processo.NUM_ITEM IN (39, 40, 41, 42, 43, 44, 46, 47, 48, 90039, 90040, 90041, 90042, 90043, 90044, 90046, 90047, 90048)
     )
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
-group by saida.mes, saida.txt_unidade
+--group by saida.mes, saida.txt_unidade
 
 
 
@@ -633,7 +633,7 @@ UNION
 SELECT
     saida.txt_unidade,
     saida.mes,
-    COUNT(DISTINCT(saida.NUM_INTERNO_PROCESSO)) AS quantidade
+  distinct(saida.PROCESSO_NUMERO_UNICO) AS quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -726,7 +726,7 @@ WHERE
 	AND processo.NUM_ITEM IN (39, 40, 41, 42, 43, 44, 46, 47, 48, 90039, 90040, 90041, 90042, 90043, 90044, 90046, 90047, 90048)
     )
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
-group by saida.mes, saida.txt_unidade
+--group by saida.mes, saida.txt_unidade
 
 
 
@@ -737,7 +737,7 @@ UNION
 SELECT
     saida.txt_unidade,
     saida.mes,
-    COUNT(DISTINCT(saida.NUM_INTERNO_PROCESSO)) AS quantidade
+ distinct(saida.PROCESSO_NUMERO_UNICO) AS quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -830,7 +830,7 @@ WHERE
 	AND processo.NUM_ITEM IN (39, 40, 41, 42, 43, 44, 46, 47, 48, 90039, 90040, 90041, 90042, 90043, 90044, 90046, 90047, 90048)
     )
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
-group by saida.mes, saida.txt_unidade
+--group by saida.mes, saida.txt_unidade
 
 
 
@@ -841,7 +841,7 @@ UNION
 SELECT
     saida.txt_unidade,
     saida.mes,
-    COUNT(DISTINCT(saida.NUM_INTERNO_PROCESSO)) AS quantidade
+ distinct(saida.PROCESSO_NUMERO_UNICO) AS quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -934,7 +934,7 @@ WHERE
 	AND processo.NUM_ITEM IN (39, 40, 41, 42, 43, 44, 46, 47, 48, 90039, 90040, 90041, 90042, 90043, 90044, 90046, 90047, 90048)
     )
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
-group by saida.mes, saida.txt_unidade
+--group by saida.mes, saida.txt_unidade
 
 
 
@@ -945,7 +945,7 @@ UNION
 SELECT
     saida.txt_unidade,
     saida.mes,
-    COUNT(DISTINCT(saida.NUM_INTERNO_PROCESSO)) AS quantidade
+ distinct(saida.PROCESSO_NUMERO_UNICO) AS quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -1038,7 +1038,7 @@ WHERE
 	AND processo.NUM_ITEM IN (39, 40, 41, 42, 43, 44, 46, 47, 48, 90039, 90040, 90041, 90042, 90043, 90044, 90046, 90047, 90048)
     )
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
-group by saida.mes, saida.txt_unidade
+--group by saida.mes, saida.txt_unidade
 
 
 
@@ -1049,7 +1049,7 @@ UNION
 SELECT
     saida.txt_unidade,
     saida.mes,
-    COUNT(DISTINCT(saida.NUM_INTERNO_PROCESSO)) AS quantidade
+ distinct(saida.PROCESSO_NUMERO_UNICO) AS quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -1142,7 +1142,7 @@ WHERE
 	AND processo.NUM_ITEM IN (39, 40, 41, 42, 43, 44, 46, 47, 48, 90039, 90040, 90041, 90042, 90043, 90044, 90046, 90047, 90048)
     )
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
-group by saida.mes, saida.txt_unidade
+--group by saida.mes, saida.txt_unidade
 
 
 
@@ -1153,7 +1153,7 @@ UNION
 SELECT
     saida.txt_unidade,
     saida.mes,
-    COUNT(DISTINCT(saida.NUM_INTERNO_PROCESSO)) AS quantidade
+ distinct(saida.PROCESSO_NUMERO_UNICO) AS quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -1246,7 +1246,7 @@ WHERE
 	AND processo.NUM_ITEM IN (39, 40, 41, 42, 43, 44, 46, 47, 48, 90039, 90040, 90041, 90042, 90043, 90044, 90046, 90047, 90048)
     )
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
-group by saida.mes, saida.txt_unidade
+--group by saida.mes, saida.txt_unidade
 
 )
 order by txt_unidade,mes

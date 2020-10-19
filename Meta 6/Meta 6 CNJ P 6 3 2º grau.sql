@@ -2,7 +2,7 @@
 
 SELECT
    saida.mes,
-    saida.NUM_INTERNO_PROCESSO AS quantidade
+    saida.PROCESSO_NUMERO_UNICO AS quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,

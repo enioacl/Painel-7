@@ -1,15 +1,22 @@
+
 #RESUMO META 1
 
 
 # 'dataset' tem os dados de entrada para este script
-require(readxl)
-require(dplyr)
+library(readxl)
+library(dplyr)
+library(prodlim)
+library(lubridate)
+library(data.table)
 dados<-dataset
 
 dados<-dados%>%select(sort(names(.)))
 names(dados)<-c("Instância","mês","Pergunta","quant","Unidade")
 dados<-dados%>%select(mês,Pergunta,Instância,quant)
 
+dados<-dados%>%group_by(mês,Pergunta,Instância)%>%summarise(quant=n())%>%data.frame()%>%select(mês,Pergunta,quant,Instância)
+dados$quant<-as.numeric(dados$quant)
+dados$mês<-as.numeric(dados$mês)
 
 #Primeira Instância
 inst1_p11<-dados%>%filter(Pergunta=="P11" & Instância=="Primeira")%>%group_by(mês)%>%summarise(quant=sum(quant))
@@ -25,8 +32,7 @@ primeira_inst<-full_join(inst1_p11, inst1_p13, by="mês")%>%full_join(.,inst1_p1
 primeira_inst[is.na(primeira_inst)]=0
 
 
-require(lubridate)
-require(data.table)
+
 ##############################
 ############################
 
@@ -34,7 +40,7 @@ meses=1:month(floor_date(Sys.Date() - months(1), "month")) # até o mês anterio
 combin<-data.frame(mês=meses,P11=rep(0,length(meses)),P13=rep(0,length(meses)),P17=rep(0,length(meses)),P19=rep(0,length(meses)))
 
 
-require(prodlim)
+
 pos=which(is.na(row.match(as.data.frame(combin$mês),as.data.frame(primeira_inst$mês))))
 primeira_inst<-rbind(primeira_inst,combin[pos,])%>%arrange(mês)
 

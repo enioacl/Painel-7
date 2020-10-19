@@ -1,32 +1,47 @@
 #META 1 
 # 'dataset' tem os dados de entrada para este script
-require(dplyr)
+library(dplyr)
 library(prodlim)
 library(data.table)
-require(lubridate)
+library(lubridate)
 dados<-dataset
-
-unidade<-as.data.frame(dados[c(1:37,39),1])
 dados<-dados%>%select(sort(names(.)))
+unidade<-as.data.frame(dados[c(1:37,39),5])
 names(dados)=c("Instância","mês","Pergunta","quant","Unidade")
 dados<-dados%>%select(Unidade,mês,Pergunta,quant,Instância)
+
+#DEIXAR APENAS A ÚLTIMA VT PARA A QUAL O PROCESSO FOI DISTRIBUÍDO
+redis<-filter(dados,(Pergunta=="REDISTRIBUIDO"))%>%select(Unidade,mês,quant)
+dados<-filter(dados,!(Pergunta=="REDISTRIBUIDO"))
+redis$mês<-dmy(redis$mês) #aqui mudar para dmy_hms
+
+redis<-redis%>%group_by(quant)%>%mutate(mês=if_else(mês!=max(mês),as.Date(NA),mês))
+redis<-na.omit(redis)
+redis<-select(redis,Unidade,quant)
+
+a<-left_join(dados,redis,by="quant")
+a$Unidade.x<-ifelse(is.na(a$Unidade.y),a$Unidade.x,a$Unidade.y)
+a<-select(a,-Unidade.y, -Instância)
+names(a)[1]="Unidade"
+
+dados<-a
+
+dados<-dados%>%group_by(Unidade,mês,Pergunta)%>%summarise(quant=n())%>%data.frame()%>%select(Unidade,mês,Pergunta,quant)
+
+
 dados$quant<-as.numeric(dados$quant)
 dados$quant[is.na(dados$quant)]=0
 dados$mês<-as.numeric(dados$mês)
-
-
 
 p11<-dados%>%filter(Pergunta=="P11")%>%select(Unidade, mês, quant)
 p13<-dados%>%filter(Pergunta=="P13")%>%select(Unidade, mês, quant)
 p17<-dados%>%filter(Pergunta=="P17")%>%select(Unidade, mês, quant)
 p19<-dados%>%filter(Pergunta=="P19")%>%select(Unidade, mês, quant)
 
-
 names(p11)[3]="P11"
 names(p13)[3]="P13"
 names(p17)[3]="P17"
 names(p19)[3]="P19"
-
 
 dados2<-full_join(p11, p13, by = c("mês", "Unidade"))%>%full_join(.,p17,by=c("mês", "Unidade"))%>%full_join(.,p19,by=c("mês","Unidade"))
 dados2[is.na(dados2)]=0
@@ -36,7 +51,6 @@ TRT_Total<-TRT_Total%>%mutate(Unidade=".TRT 7 1ª INSTÂNCIA")
 
 dados2<-rbind(dados2, TRT_Total)
 
-#mês=1:12
 mês=1:month(floor_date(Sys.Date() - months(1), "month")) # até o mês anterior ao atual
 combin=CJ(unidade[,1],mês) #combinação das unidades com cada mês para a comparação
 combin$p11=rep(0,dim(combin)[1])
@@ -45,7 +59,6 @@ combin$p17=rep(0,dim(combin)[1])
 combin$p19=rep(0,dim(combin)[1])
 names(combin)=names(dados2)
 combin=as.data.frame(combin)
-
 
 dados2<-as.data.frame(dados2)
 pos=which(is.na(row.match(combin[,1:2],dados2[,1:2]))) #linhas para adicionar 

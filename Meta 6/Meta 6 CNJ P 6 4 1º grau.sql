@@ -7,7 +7,7 @@ FROM(
 SELECT  
 saida.TXT_UNIDADE,
 saida.mes,
-count(saida.num_interno_processo) AS quantidade
+saida.PROCESSO_NUMERO_UNICO AS quantidade
 
 FROM (SELECT  
 		processo.NUM_REMESSA,
@@ -102,7 +102,7 @@ WHERE
     )
    
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
-group by saida.TXT_UNIDADE,saida.mes
+--group by saida.TXT_UNIDADE,saida.mes
 
 
 
@@ -115,7 +115,7 @@ union
 SELECT  
 saida.TXT_UNIDADE,
 saida.mes,
-count(saida.num_interno_processo) AS quantidade
+saida.PROCESSO_NUMERO_UNICO AS quantidade
 
 FROM (SELECT  
 		processo.NUM_REMESSA,
@@ -210,7 +210,7 @@ WHERE
     )
    
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
-group by saida.TXT_UNIDADE,saida.mes
+--group by saida.TXT_UNIDADE,saida.mes
 
 
 
@@ -224,7 +224,7 @@ SELECT
 
 saida.TXT_UNIDADE,
 saida.mes,
-count(saida.num_interno_processo) AS quantidade
+saida.PROCESSO_NUMERO_UNICO AS quantidade
 
 FROM (SELECT  
 		processo.NUM_REMESSA,
@@ -319,7 +319,7 @@ WHERE
     )
    
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
-group by saida.TXT_UNIDADE,saida.mes
+--group by saida.TXT_UNIDADE,saida.mes
 
 
 
@@ -333,7 +333,7 @@ SELECT
 
 saida.TXT_UNIDADE,
 saida.mes,
-count(saida.num_interno_processo) AS quantidade
+saida.PROCESSO_NUMERO_UNICO AS quantidade
 
 FROM (SELECT  
 		processo.NUM_REMESSA,
@@ -428,7 +428,7 @@ WHERE
     )
    
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
-group by saida.TXT_UNIDADE,saida.mes
+--group by saida.TXT_UNIDADE,saida.mes
 
 
 union
@@ -440,7 +440,7 @@ union
 SELECT  
 saida.TXT_UNIDADE,
 saida.mes,
-count(saida.num_interno_processo) AS quantidade
+saida.PROCESSO_NUMERO_UNICO AS quantidade
 
 FROM (SELECT  
 		processo.NUM_REMESSA,
@@ -535,7 +535,7 @@ WHERE
     )
    
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
-group by saida.TXT_UNIDADE,saida.mes
+--group by saida.TXT_UNIDADE,saida.mes
 
 
 
@@ -548,7 +548,7 @@ union
 SELECT  
 saida.TXT_UNIDADE,
 saida.mes,
-count(saida.num_interno_processo) AS quantidade
+saida.PROCESSO_NUMERO_UNICO AS quantidade
 
 FROM (SELECT  
 		processo.NUM_REMESSA,
@@ -643,7 +643,7 @@ WHERE
     )
    
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
-group by saida.TXT_UNIDADE,saida.mes
+--group by saida.TXT_UNIDADE,saida.mes
 
 
 union
@@ -655,7 +655,7 @@ union
 SELECT  
 saida.TXT_UNIDADE,
 saida.mes,
-count(saida.num_interno_processo) AS quantidade
+saida.PROCESSO_NUMERO_UNICO AS quantidade
 
 FROM (SELECT  
 		processo.NUM_REMESSA,
@@ -750,7 +750,7 @@ WHERE
     )
    
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
-group by saida.TXT_UNIDADE,saida.mes
+--group by saida.TXT_UNIDADE,saida.mes
 
 
 
@@ -763,7 +763,7 @@ union
 SELECT  
 saida.TXT_UNIDADE,
 saida.mes,
-count(saida.num_interno_processo) AS quantidade
+saida.PROCESSO_NUMERO_UNICO AS quantidade
 
 FROM (SELECT  
 		processo.NUM_REMESSA,
@@ -858,7 +858,7 @@ WHERE
     )
    
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
-group by saida.TXT_UNIDADE,saida.mes
+--group by saida.TXT_UNIDADE,saida.mes
 
 
 union
@@ -870,7 +870,7 @@ union
 SELECT  
 saida.TXT_UNIDADE,
 saida.mes,
-count(saida.num_interno_processo) AS quantidade
+saida.PROCESSO_NUMERO_UNICO AS quantidade
 
 FROM (SELECT  
 		processo.NUM_REMESSA,
@@ -965,7 +965,7 @@ WHERE
     )
    
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
-group by saida.TXT_UNIDADE,saida.mes
+--group by saida.TXT_UNIDADE,saida.mes
 
 
 
@@ -978,7 +978,7 @@ union
 SELECT  
 saida.TXT_UNIDADE,
 saida.mes,
-count(saida.num_interno_processo) AS quantidade
+saida.PROCESSO_NUMERO_UNICO AS quantidade
 
 FROM (SELECT  
 		processo.NUM_REMESSA,
@@ -1073,7 +1073,7 @@ WHERE
     )
    
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
-group by saida.TXT_UNIDADE,saida.mes
+--group by saida.TXT_UNIDADE,saida.mes
 
 
 
@@ -1086,7 +1086,7 @@ union
 SELECT  
 saida.TXT_UNIDADE,
 saida.mes,
-count(saida.num_interno_processo) AS quantidade
+saida.PROCESSO_NUMERO_UNICO AS quantidade
 
 FROM (SELECT  
 		processo.NUM_REMESSA,
@@ -1181,7 +1181,7 @@ WHERE
     )
    
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
-group by saida.TXT_UNIDADE,saida.mes
+--group by saida.TXT_UNIDADE,saida.mes
 --order by saida.TXT_UNIDADE,saida.mes
 
 
@@ -1194,7 +1194,7 @@ union
 SELECT  
 saida.TXT_UNIDADE,
 saida.mes,
-count(saida.num_interno_processo) AS quantidade
+saida.PROCESSO_NUMERO_UNICO AS quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -1288,7 +1288,7 @@ WHERE
     )
    
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
-group by saida.TXT_UNIDADE,saida.mes
+--group by saida.TXT_UNIDADE,saida.mes
 
 
 )

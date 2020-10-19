@@ -4,34 +4,12 @@ library(data.table)
 library(prodlim)
 dados<-dataset
 dados<-dados%>%select(sort(names(.)))
-names(dados)<-c("Instância","mês","Pergunta","quant","Unidade")
-dados<-dados%>%select(Unidade,mês,Instância,Pergunta,quant)
+names(dados)<-c("Instância","mês","Pergunta","quant")
+dados<-dados%>%select(mês,Instância,Pergunta,quant)
 
-
-
-#SUBSTITUI AS VT's DOS PROCESSOS QUE FORAM REDISTRIBUÍDOS
-redis<-filter(dados,(Pergunta=="REDISTRIBUIDO"))%>%select(Unidade,mês,quant)
-redis$mês<-dmy_smh(redis$mês)
-dados<-filter(dados,!(Pergunta=="REDISTRIBUIDO"))
-
-
-#DEIXAR APENAS A ÚLTIMA VT PARA A QUAL O PROCESSO FOI DISTRIBUÍDO
-
-redis<-redis%>%group_by(quant)%>%mutate(mês=if_else(mês!=max(mês),as.Date(NA),mês))
-
-redis<-na.omit(redis)
-redis<-select(redis,Unidade,quant)
-
-a<-left_join(dados,redis,by="quant")
-a$Unidade.x<-ifelse(is.na(a$Unidade.y),a$Unidade.x,a$Unidade.y)
-a<-select(a,-Unidade.y)
-names(a)[1]="Unidade"
-
-dados<-a
 
 dados<-dados%>%group_by(mês,Pergunta,Instância)%>%summarise(quant=n())%>%data.frame()%>%
   select(mês,Pergunta,quant,Instância)
-
 
 
 dados$quant <- as.numeric(dados$quant)

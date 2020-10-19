@@ -6,6 +6,9 @@ dados<-dataset
 dados<-dados%>%select(sort(names(.)))
 names(dados)=c("Instância","mês","Pergunta","quant","unidade")
 dados<-dados%>%select(-unidade)
+
+dados<-dados%>%group_by(mês,Pergunta,Instância)%>%summarise(quant=n())%>%data.frame()%>%select(Instância,mês,Pergunta,quant)
+
 dados$mês<-as.numeric(dados$mês)
 dados$quant<-as.numeric(dados$quant); dados$quant[is.na(dados$quant)]=0
 

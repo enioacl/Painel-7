@@ -1,6 +1,6 @@
 ﻿--P 7.3 (pendentes dos dez maiores litigantes)
 
-SELECT saida.TXT_SIGLA, saida.TXT_UNIDADE, saida.PROCESSO_NUMERO_UNICO as quantidade, saida.TXT_ADICIONAL, extract(month from saida.DTA_VALOR) as mes
+SELECT saida.TXT_SIGLA as Pergunta, saida.TXT_UNIDADE, saida.PROCESSO_NUMERO_UNICO as quantidade, saida.TXT_ADICIONAL, extract(month from saida.DTA_VALOR) as mes
 FROM
 
 (SELECT 

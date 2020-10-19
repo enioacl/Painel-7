@@ -2,7 +2,7 @@
 SELECT  
 --colocar distinct 
 
-saida.num_interno_processo AS quantidade
+distinct(saida.processo_numero_unico) AS quantidade
 
 FROM (SELECT  
 		processo.NUM_REMESSA,

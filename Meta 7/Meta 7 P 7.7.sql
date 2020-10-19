@@ -1,6 +1,6 @@
 ﻿--P 7.7
 
-SELECT saida.TXT_SIGLA, saida.TXT_UNIDADE, saida.PROCESSO_NUMERO_UNICO, saida.TXT_ADICIONAL, extract(MONTH FROM saida.DTA_VALOR) as mes
+SELECT saida.TXT_SIGLA, saida.TXT_UNIDADE, saida.PROCESSO_NUMERO_UNICO as quantidade, saida.TXT_ADICIONAL, extract(MONTH FROM saida.DTA_VALOR) as mes
 FROM
 
 (SELECT 

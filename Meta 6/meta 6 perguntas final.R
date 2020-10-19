@@ -1,23 +1,49 @@
-# 'dataset' tem os dados de entrada para este script
-
-require(readxl)
-require(dplyr)
+library(dplyr)
+library(lubridate)
+library(data.table)
+library(prodlim)
 dados<-dataset
-#dados<-read_excel("X:/SGE/GABINETE/CONSELHO NACIONAL DE JUSTICA/METAS NACIONAIS CNJ/Metas Nacionais 2019 - CNJ/SQL metas/metas por pergunta/Meta 6/tab dados.xlsx")
+
 dados<-dados%>%select(sort(names(.)))
-
-
 names(dados)<-c("Instância","mês","Pergunta","quantidade","unidade")
-dados$mês<-as.numeric(dados$mês)
-dados$quantidade<-as.numeric(dados$quantidade)
 unidade<-dados%>%select(unidade)
 unidade<-as.data.frame(unidade[c(1:37,39),])
+
+
+#SUBSTITUI AS VT's DOS PROCESSOS QUE FORAM REDISTRIBUÍDOS
+redis<-filter(dados,(Pergunta=="REDISTRIBUIDO"))%>%select(unidade,mês,quantidade)
+redis$mês<-dmy_hms(redis$mês) #aqui mudar para dmy_hms
+dados<-filter(dados,!(Pergunta=="REDISTRIBUIDO"))
+#dados$mês<-as.numeric(dados$mês)
+
+# #DEIXAR APENAS A ÚLTIMA VT PARA A QUAL O PROCESSO FOI DISTRIBUÍDO
+
+redis<-redis%>%group_by(quantidade)%>%mutate(mês=if_else(mês!=max(mês),as.Date(NA),mês))
+redis<-na.omit(redis)
+redis<-select(redis,unidade,quantidade)
+
+
+a<-left_join(dados,redis,by="quantidade")
+a$unidade.x<-ifelse(is.na(a$unidade.y),a$unidade.x,a$unidade.y)
+a<-select(a,-unidade.y)
+names(a)[5]="unidade"
+
+dados<-a
+
+dados<-dados%>%group_by(unidade,mês,Pergunta,Instância)%>%summarise(quantidade=n())%>%data.frame()%>%select(unidade,mês,Pergunta,quantidade,Instância)
+
+
+
+dados$mês<-as.numeric(dados$mês)
+dados$quantidade<-as.numeric(dados$quantidade)
+
 
 #adicionado o "trt 1ª instância" nas perguntas únicas
 
 
-pp61<-dados%>%filter(Pergunta=='P61')%>%select(unidade,quantidade)
+pp61<-dados%>%filter(Pergunta=='P61')%>%select(unidade,quantidade)%>%data.frame()
 names(pp61)[2]="P61"
+pp61$P61<-as.numeric(pp61$P61)
 pp61[nrow(pp61)+1,]=c(".TRT 7 1ª INSTÂNCIA",sum(pp61$P61))
 pp61$P61<-as.numeric(pp61$P61)
 pp62<-dados%>%filter(Pergunta=='P62')%>%select(unidade,mês,quantidade)
@@ -27,7 +53,9 @@ names(pp63)[3]="P63"
 pp64<-dados%>%filter(Pergunta=='P64')%>%select(unidade,mês,quantidade)
 names(pp64)[3]="P64"
 pp65<-dados%>%filter(Pergunta=='P65')%>%select(unidade,quantidade)
+pp65<-as.data.frame(pp65)
 names(pp65)[2]="P65"
+pp65$P65<-as.numeric(pp65$P65)
 pp65[nrow(pp65)+1,]=c(".TRT 7 1ª INSTÂNCIA",sum(pp65$P65))
 pp65$P65<-as.numeric(pp65$P65)
 
@@ -44,8 +72,7 @@ TRT_1<-as.data.frame(TRT_1%>%mutate(unidade=".TRT 7 1ª INSTÂNCIA"))
 TRT_1<-arrange(TRT_1,mês)
 dados2<-rbind(dados2,TRT_1)
 
-require(lubridate)
-require(data.table)
+
 
 meses=1:month(floor_date(Sys.Date() - months(1), "month")) # até o mês anterior ao atual
 #meses=1:12
@@ -57,7 +84,7 @@ names(combin)=names(dados2)
 combin=as.data.frame(combin)
 
 
-require(prodlim)
+
 
 pos=which(is.na(row.match(combin[1:2],dados2[1:2]))) #linhas para adicionar 
 ee=rbind(dados2,combin[pos,]) #juntando o data frame com as linhas faltantes
@@ -101,4 +128,3 @@ for(i in 1:max(dados2$mês)){
 dados2$mes_nomes=aux2
 
 dados2<-as.data.frame(dados2)
-

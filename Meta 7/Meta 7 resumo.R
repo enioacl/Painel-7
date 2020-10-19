@@ -7,7 +7,7 @@ require(dplyr)
 dados<-dataset
 
 dados<-dados%>%select(sort(names(.)))
-names(dados)[c(1,2,5)]=c("Instância","mes","Pergunta")
+names(dados)[c(1,2,3)]=c("Instância","mes","Pergunta")
 dados<-dados%>%select(mes,Instância,Pergunta)
 dados$mes<-as.numeric(dados$mes)
 dados$Instância<-as.character(dados$Instância)

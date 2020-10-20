@@ -77,7 +77,7 @@ LEFT JOIN eg.EGT_ORGAO_UNIDADE unidade_colegiado ON (unidade_colegiado.NUM_TRIBU
 LEFT JOIN eg.EGT_ORGAO_UNIDADE unidade_gabinete ON (unidade_gabinete.NUM_TRIBUNAL = 7 AND unidade_gabinete.NUM_UNIDADE = detalhe.NUM_UNIDADE_GABINETE_EGESTAO)
 LEFT JOIN sicond.VALOR_PARAMETRO_EM_SOLICIT parametro ON (detalhe.ID_SOLICITACAO_ESTATISTICAS=parametro.ID_SOLICITACAO_ESTATISTICAS)
 --colocar a solicitação de cada mês
-WHERE detalhe.ID_SOLICITACAO_ESTATISTICAS IN (11269,11270,11271,11272,11273,11274,11309,11310,11311,11312,11313,11342)  AND parametro.ID_PARAMETRO=2 --pra buscar somente as linhas com "data final"
+WHERE detalhe.ID_SOLICITACAO_ESTATISTICAS IN (12123,12126,12130,12302,12595,12841,12972,13263,13498)  AND parametro.ID_PARAMETRO=2 --pra buscar somente as linhas com "data final"
 ORDER BY quantidade.ID_SOLICITACAO_ESTATISTICAS, quantidade.ID_RESULT_ESTAT_QUANT, detalhe.ID_RESULT_ESTAT_DET) saida
 where saida.TXT_SIGLA = 'P7.4'
 --group by saida.TXT_SIGLA

@@ -28,7 +28,7 @@ dados$unidade[dados$unidade=="VT DE SÃO GONÇALO DO AMARANTE"]="01ª VT DE SAO 
 dados$unidade[dados$unidade=="01ª VT DE MARACANAÚ"]="01ª VT DE MARACANAU"
 dados$unidade[dados$unidade=="02ª VT DE MARACANAÚ"]="02ª VT DE MARACANAU"
 
-unidade<-as.character(dados[c(1:38),1])
+unidade<-dados[c(1:38),1]
 
 
 
@@ -95,7 +95,7 @@ dados2[is.na(dados2)]=0
 #linhas faltantes
 
 meses=1:month(floor_date(Sys.Date() - months(1), "month")) # até o mês anterior ao atual
-combin=CJ(unidade=unidade,mes=meses) #combinação das unidades com cada mês para a comparação
+combin=CJ(unidade=unidade$unidade,mes=meses) #combinação das unidades com cada mês para a comparação
 combin$P74=rep(0,dim(combin)[1])
 combin$P75=rep(0,dim(combin)[1])
 combin$P76=rep(0,dim(combin)[1])

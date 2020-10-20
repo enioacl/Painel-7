@@ -42,7 +42,8 @@ ORDER BY NUM_ORGAO_ESTATISTICA) vt ON vt.NUM_ORGAO_ESTATISTICA = processo.num_or
 INNER JOIN (SELECT rem.NUM_REMESSA, max(rem.NUM_LOTE) NUM_LOTE
               FROM eg.EGT_REMESSA_LOTE rem
         WHERE rem.DTA_INICIO_PERIODO_REFERENCIA BETWEEN 
-        TO_DATE((select ADD_MONTHS(trunc(sysdate,'mm'),-extract(MONTH from sysdate)+1) from dual),'dd/mm/yy') AND 
+        --TO_DATE((select ADD_MONTHS(trunc(sysdate,'mm'),-extract(MONTH from sysdate)+1) from dual),'dd/mm/yy') AND 
+	    TO_DATE('01/01/2000','dd/mm/yy') AND 
         TO_DATE((select ADD_MONTHS(last_day(sysdate), -1) from dual ),'dd/mm/yy')
            -- TO_DATE('01/01/2019','dd/mm/yy') AND 
            -- TO_DATE('31/12/2019','dd/mm/yy')

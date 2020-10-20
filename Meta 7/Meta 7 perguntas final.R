@@ -28,7 +28,8 @@ dados$unidade[dados$unidade=="VT DE SÃO GONÇALO DO AMARANTE"]="01ª VT DE SAO 
 dados$unidade[dados$unidade=="01ª VT DE MARACANAÚ"]="01ª VT DE MARACANAU"
 dados$unidade[dados$unidade=="02ª VT DE MARACANAÚ"]="02ª VT DE MARACANAU"
 
-unidade<-dados[c(1:38),1]
+unidade<-data.frame(dados[c(1:38),1])
+names(unidade)="unidade"
 
 
 

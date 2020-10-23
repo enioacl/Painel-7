@@ -11,7 +11,9 @@ dados<-dataset
 dados<-dados%>%select(sort(names(.)))
 names(dados)<-c("Instância","mês","Pergunta","quant","soma","unidade")
 dados<-as.data.frame(dados)
-Unidades<-as.data.frame(dados%>%select(unidade)); Unidades<-Unidades[c(1:37,39),]
+Unidades<-as.data.frame(dados%>%select(unidade))
+Unidades<-as.data.frame(Unidades[c(1:37,39),])
+names(Unidades)<-"unidade"
 
 
 
@@ -66,7 +68,7 @@ library(data.table)
 
 
 mês=1:month(floor_date(Sys.Date() - months(1), "month")) # até o mês anterior ao atual
-combin=CJ(unidade=Unidades,mês) #combinação das unidades com cada mês para a comparação
+combin=CJ(unidade=Unidades$unidade,mês) #combinação das unidades com cada mês para a comparação
 combin$quant<-0
 combin$soma<-0
 combin<-as.data.frame(combin)

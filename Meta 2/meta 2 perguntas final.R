@@ -8,7 +8,8 @@ dados<-dados%>%select(sort(names(.)))
 names(dados)=c("Instância","mês","Pergunta","quant","Unidade")
 dados<-dados%>%select(Unidade,mês,Pergunta,quant,Instância)
 Unidade<-as.data.frame(dados%>%select(Unidade))
-Unidade<-Unidade[c(1:37,39),]
+Unidade<-as.data.frame(Unidade[c(1:37,39),])
+names(Unidade)="unidades"
 dados$mês<-as.character(dados$mês)
 
 
@@ -73,7 +74,7 @@ dados2[is.na(dados2)]=0
 
 meses=1:month(floor_date(Sys.Date() - months(1), "month")) # até o mês anterior ao atual
 #meses=1:12
-combin=CJ(Unidade,mês=meses) #combinação das unidades com cada mês para a comparação
+combin=CJ(Unidade=Unidade$unidades,mês=meses) #combinação das unidades com cada mês para a comparação
 combin$P24=rep(0,dim(combin)[1])
 combin$P27=rep(0,dim(combin)[1])
 combin$P210=rep(0,dim(combin)[1])

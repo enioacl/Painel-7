@@ -1,9 +1,9 @@
-﻿
---Meta 5 - P5.4 (CORRETA)
+
+--Meta 5 - P5.4 
 SELECT
-saida.TXT_unidade,
+saida.txt_unidade,
 saida.mes,
-DISTINCT(saida.PROCESSO_NUMERO_UNICO) AS quantidade
+saida.PROCESSO_NUMERO_UNICO AS quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -60,5 +60,5 @@ WHERE
 	AND processo.NUM_ITEM IN (390,90390)
     -- excluídos as classes Execução Fiscal e Caltelar Inominada
 ) saida
---group by saida.TXT_UNIDADE, saida.mes
+group by saida.TXT_UNIDADE, saida.mes,saida.processo_numero_unico
 order by saida.TXT_UNIDADE, saida.mes

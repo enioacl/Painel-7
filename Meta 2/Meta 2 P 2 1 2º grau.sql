@@ -3,7 +3,7 @@
  
  
 SELECT
-distinct(saida.PROCESSO_NUMERO_UNICO) AS quantidade
+saida.PROCESSO_NUMERO_UNICO AS quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,

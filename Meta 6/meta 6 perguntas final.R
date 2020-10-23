@@ -8,7 +8,7 @@ dados<-dados%>%select(sort(names(.)))
 names(dados)<-c("Instância","mês","Pergunta","quantidade","unidade")
 unidade<-dados%>%select(unidade)
 unidade<-as.data.frame(unidade[c(1:37,39),])
-
+names(unidade)="unidade"
 
 #SUBSTITUI AS VT's DOS PROCESSOS QUE FORAM REDISTRIBUÍDOS
 redis<-filter(dados,(Pergunta=="REDISTRIBUIDO"))%>%select(unidade,mês,quantidade)

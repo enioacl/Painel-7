@@ -8,7 +8,7 @@ FROM (
 SELECT
  --distinct pois ele repete o processo que foi julgado mais de uma vez no mês de referência
 saida.mes,
-  distinct(saida.PROCESSO_NUMERO_UNICO) AS quantidade
+  saida.PROCESSO_NUMERO_UNICO AS quantidade
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
 		processo.NUM_ITEM,
@@ -135,7 +135,7 @@ WHERE
 	AND processo.NUM_ITEM IN (2424, 92424)
     )
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
---group by saida.mes
+group by saida.mes,saida.processo_numero_unico
 
 
 UNION
@@ -143,7 +143,7 @@ UNION
 SELECT
  --distinct pois ele repete o processo que foi julgado mais de uma vez no mês de referência
 saida.mes,
- distinct(saida.PROCESSO_NUMERO_UNICO) AS quantidade
+saida.PROCESSO_NUMERO_UNICO AS quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -271,7 +271,7 @@ WHERE
 	AND processo.NUM_ITEM IN (2424, 92424)
     )
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
---group by saida.mes
+group by saida.mes,saida.processo_numero_unico
 
 
 UNION
@@ -279,7 +279,7 @@ UNION
 SELECT
  --distinct pois ele repete o processo que foi julgado mais de uma vez no mês de referência
 saida.mes,
- distinct(saida.PROCESSO_NUMERO_UNICO) AS quantidade
+saida.PROCESSO_NUMERO_UNICO AS quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -407,7 +407,7 @@ WHERE
 	AND processo.NUM_ITEM IN (2424, 92424)
     )
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
---group by saida.mes
+group by saida.mes,saida.processo_numero_unico
 
 
 UNION
@@ -415,7 +415,7 @@ UNION
 SELECT
  --distinct pois ele repete o processo que foi julgado mais de uma vez no mês de referência
 saida.mes,
- distinct(saida.PROCESSO_NUMERO_UNICO) AS quantidade
+saida.PROCESSO_NUMERO_UNICO AS quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -543,7 +543,7 @@ WHERE
 	AND processo.NUM_ITEM IN (2424, 92424)
     )
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
---group by saida.mes
+group by saida.mes,saida.processo_numero_unico
 
 
 UNION
@@ -552,7 +552,7 @@ UNION
 SELECT
  --distinct pois ele repete o processo que foi julgado mais de uma vez no mês de referência
 saida.mes,
- distinct(saida.PROCESSO_NUMERO_UNICO) AS quantidade
+saida.PROCESSO_NUMERO_UNICO AS quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -680,7 +680,7 @@ WHERE
 	AND processo.NUM_ITEM IN (2424, 92424)
     )
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
---group by saida.mes
+group by saida.mes,saida.processo_numero_unico
 
 
 UNION
@@ -689,7 +689,7 @@ UNION
 SELECT
  --distinct pois ele repete o processo que foi julgado mais de uma vez no mês de referência
 saida.mes,
- distinct(saida.PROCESSO_NUMERO_UNICO) AS quantidade
+saida.PROCESSO_NUMERO_UNICO AS quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -817,7 +817,7 @@ WHERE
 	AND processo.NUM_ITEM IN (2424, 92424)
     )
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
---group by saida.mes
+group by saida.mes,saida.processo_numero_unico
 
 
 UNION
@@ -825,7 +825,7 @@ UNION
 SELECT
  --distinct pois ele repete o processo que foi julgado mais de uma vez no mês de referência
 saida.mes,
- distinct(saida.PROCESSO_NUMERO_UNICO) AS quantidade
+saida.PROCESSO_NUMERO_UNICO AS quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -953,7 +953,7 @@ WHERE
 	AND processo.NUM_ITEM IN (2424, 92424)
     )
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
---group by saida.mes
+group by saida.mes,saida.processo_numero_unico
 
 
 UNION
@@ -962,7 +962,7 @@ UNION
 SELECT
  --distinct pois ele repete o processo que foi julgado mais de uma vez no mês de referência
 saida.mes,
- distinct(saida.PROCESSO_NUMERO_UNICO) AS quantidade
+saida.PROCESSO_NUMERO_UNICO AS quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -1090,7 +1090,7 @@ WHERE
 	AND processo.NUM_ITEM IN (2424, 92424)
     )
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
---group by saida.mes
+group by saida.mes,saida.processo_numero_unico
 
 
 UNION
@@ -1099,7 +1099,7 @@ UNION
 SELECT
  --distinct pois ele repete o processo que foi julgado mais de uma vez no mês de referência
 saida.mes,
- distinct(saida.PROCESSO_NUMERO_UNICO) AS quantidade
+saida.PROCESSO_NUMERO_UNICO AS quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -1227,7 +1227,7 @@ WHERE
 	AND processo.NUM_ITEM IN (2424, 92424)
     )
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
---group by saida.mes
+group by saida.mes,saida.processo_numero_unico
 
 
 UNION
@@ -1235,7 +1235,7 @@ UNION
 SELECT
  --distinct pois ele repete o processo que foi julgado mais de uma vez no mês de referência
 saida.mes,
- distinct(saida.PROCESSO_NUMERO_UNICO) AS quantidade
+saida.PROCESSO_NUMERO_UNICO AS quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -1363,7 +1363,7 @@ WHERE
 	AND processo.NUM_ITEM IN (2424, 92424)
     )
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
---group by saida.mes
+group by saida.mes,saida.processo_numero_unico
  
 
 UNION
@@ -1372,7 +1372,7 @@ UNION
 SELECT
  --distinct pois ele repete o processo que foi julgado mais de uma vez no mês de referência
 saida.mes,
- distinct(saida.PROCESSO_NUMERO_UNICO) AS quantidade
+saida.PROCESSO_NUMERO_UNICO AS quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -1500,7 +1500,7 @@ WHERE
 	AND processo.NUM_ITEM IN (2424, 92424)
     )
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
---group by saida.mes
+group by saida.mes,saida.processo_numero_unico
 
 
 
@@ -1509,7 +1509,7 @@ UNION
 SELECT
  --distinct pois ele repete o processo que foi julgado mais de uma vez no mês de referência
 saida.mes,
- distinct(saida.PROCESSO_NUMERO_UNICO) AS quantidade
+saida.PROCESSO_NUMERO_UNICO AS quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -1637,7 +1637,7 @@ WHERE
 	AND processo.NUM_ITEM IN (2424, 92424)
     )
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
---group by saida.mes
+group by saida.mes,saida.processo_numero_unico
 
 
 )

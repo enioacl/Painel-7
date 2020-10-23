@@ -1,7 +1,7 @@
 --6.5 1° grau
 SELECT
     saida.txt_unidade,
-    distinct(saida.PROCESSO_NUMERO_UNICO) as Quantidade
+   saida.PROCESSO_NUMERO_UNICO as Quantidade
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -96,5 +96,5 @@ WHERE
     
     
     ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
-    --group by saida.txt_unidade
+   group by saida.txt_unidade,saida.processo_numero_unico
     order by saida.txt_unidade

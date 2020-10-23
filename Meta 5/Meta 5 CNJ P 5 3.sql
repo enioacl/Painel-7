@@ -1,8 +1,8 @@
 --5.3 
 SELECT
-    saida.TXT_UNIDADE,
+    saida.txt_UNIDADE,
     saida.mes,
-    distinct(saida.PROCESSO_NUMERO_UNICO) AS QUANTIDADE
+    saida.PROCESSO_NUMERO_UNICO AS QUANTIDADE
 FROM (SELECT  
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
@@ -60,5 +60,5 @@ WHERE
 	AND processo.NUM_ITEM IN (390, 90390)
 	AND classe.NUM_CLASSE_CNJ NOT IN (1116, 183)
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
---group by  saida.TXT_UNIDADE, saida.mes
+group by  saida.TXT_UNIDADE, saida.mes,saida.processo_numero_unico
 order by saida.TXT_UNIDADE, saida.mes

@@ -8,7 +8,9 @@ FROM (
 SELECT
  --distinct pois ele repete o processo que foi julgado mais de uma vez no mês de referência
 saida.mes,
-  saida.PROCESSO_NUMERO_UNICO AS quantidade
+  saida.PROCESSO_NUMERO_UNICO AS quantidade 
+FROM (
+	SELECT
 		processo.NUM_REMESSA,
 		processo.NUM_LOTE,
 		processo.NUM_ITEM,

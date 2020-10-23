@@ -1,11 +1,15 @@
 library(lubridate)
 library(dplyr)
+library(lubridate)
+library(data.table)
+library(prodlim)
 dados<-dataset
 dados<-dados%>%select(sort(names(.)))
 names(dados)<-c("Instância","mês","Pergunta","quant","Unidade")
 dados<-dados%>%select(Unidade,mês,Pergunta,quant,Instância)
 Unidade<-as.data.frame(dados%>%select(Unidade))
-Unidade<-Unidade[c(1:37,39),]
+Unidade<-as.data.frame(Unidade[c(1:37,39),])
+names(Unidade)="Unidade"
 
 
 redis<-filter(dados,(Pergunta=="REDISTRIBUIDO"))%>%select(Unidade,mês,quant)
@@ -63,13 +67,8 @@ dados2<-as.data.frame(dados2%>%select(Unidade,mês,everything())%>%arrange(Unida
 
 
 
-require(lubridate)
-require(data.table)
-
-
-#mês<-1:12
 mês<-1:month(floor_date(Sys.Date() - months(1), "month")) # até o mês anterior ao atual
-combin<-CJ(Unidade, mês)
+combin<-CJ(Unidade=Unidade$Unidade, mês)
 combin$P51=rep(0,dim(combin)[1])
 combin$P52=rep(0,dim(combin)[1])
 combin$P53=rep(0,dim(combin)[1])
@@ -82,7 +81,7 @@ combin<-select(combin,Unidade,mês,everything())
 combin=as.data.frame(combin)
 
 
-require(prodlim)
+
 
 pos=which(is.na(row.match(combin[,1:2],dados2[,1:2])))
 dados2<-rbind(dados2,combin[pos,])

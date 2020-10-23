@@ -98,6 +98,6 @@ WHERE
     
     
     ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
-    --group by  saida.TXT_UNIDADE, saida.mes
+    group by  saida.TXT_UNIDADE, saida.mes, saida.processo_numero_unico
 order by saida.TXT_UNIDADE, saida.mes
     

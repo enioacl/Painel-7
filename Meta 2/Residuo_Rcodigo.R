@@ -10,11 +10,11 @@ redis<-filter(dados,(Pergunta=="REDISTRIBUIDO"))%>%select(Unidade,mês,quant)
 dados<-filter(dados,!(Pergunta=="REDISTRIBUIDO"))
 
 # #DEIXAR APENAS A ÚLTIMA VT PARA A QUAL O PROCESSO FOI DISTRIBUÍDO
-redis<-redis%>%group_by(quant)%>%mutate(mês=if_else(mês!=max(mês),as.Date(NA),mês))
+redis<-redis%>%group_by(quant)%>%mutate(mês=if_else(mês!=max(mês),dmy_hms(NA),mês))
 redis<-na.omit(redis)
 redis<-select(redis,Unidade,quant)
 
-
+  
 a<-left_join(dados,redis,by="quant")
 a$Unidade.x<-ifelse(is.na(a$Unidade.y),a$Unidade.x,a$Unidade.y)
 a<-select(a,-Unidade.y)
@@ -35,7 +35,7 @@ while(i<=nrow(l)){
   # Se sim, fazer 
   if(nrow(OI)>=2){
     
-    if(l[i,4]=="p24"){ #colocar a coluna da pergunta
+    if(l[i,2]=="p24"){ #colocar a coluna da pergunta
       l[(i+1):(i+dim(OI)[1]-1),]<-NA
       i=i+dim(OI)[1]
     }else{
@@ -58,12 +58,11 @@ p210<-dados%>%filter(perg=="p210")
 
 
 #FINAL
-p21_p24<-union(p21,p24)
+p21_p24<-rbind(p21,p24)
 p21_p24<-p21_p24%>%select(TXT_UNIDADE,PROCESSO_NUMERO_UNICO)
-p27_p210<-union(p27,p210)
+p27_p210<-rbind(p27,p210)
 p27_p210<-p27_p210%>%select(TXT_UNIDADE,PROCESSO_NUMERO_UNICO)
 residuo<-anti_join(p21_p24,p27_p210,by="PROCESSO_NUMERO_UNICO")
 names(residuo)<-c("unidade","processo")
 residuo<-unique(residuo)
 residuo<-as.data.frame(residuo)
-

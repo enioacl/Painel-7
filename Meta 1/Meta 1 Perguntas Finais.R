@@ -15,7 +15,7 @@ redis<-filter(dados,(Pergunta=="REDISTRIBUIDO"))%>%select(Unidade,mês,quant)
 dados<-filter(dados,!(Pergunta=="REDISTRIBUIDO"))
 redis$mês<-dmy(redis$mês) #aqui mudar para dmy_hms
 
-redis<-redis%>%group_by(quant)%>%mutate(mês=if_else(mês!=max(mês),as.Date(NA),mês))
+redis<-redis%>%group_by(quant)%>%mutate(mês=if_else(mês!=max(mês),dmy_hms(NA),mês))
 redis<-na.omit(redis)
 redis<-select(redis,Unidade,quant)
 

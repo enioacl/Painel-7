@@ -145,5 +145,5 @@ WHERE
     )
 
 ORDER BY processo.NUM_REMESSA, processo.NUM_LOTE, processo.num_item, processo.NUM_ORGAO_ESTATISTICA) saida
---group by saida.mes
+group by saida.mes, saida.PROCESSO_NUMERO_UNICO
 order by saida.mes

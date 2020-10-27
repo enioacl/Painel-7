@@ -41,7 +41,7 @@ dados$mes<-as.numeric(dados$mes)
 
 # #DEIXAR APENAS A ÚLTIMA VT PARA A QUAL O PROCESSO FOI DISTRIBUÍDO
 
-redis<-redis%>%group_by(quant)%>%mutate(mes=if_else(mes!=max(mes),as.Date(NA),mes))
+redis<-redis%>%group_by(quant)%>%mutate(mes=if_else(mes!=max(mes),dmy_hms(NA),mes))
 redis<-na.omit(redis)
 redis<-select(redis,unidade,quant)
 

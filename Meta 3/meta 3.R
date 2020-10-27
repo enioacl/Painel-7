@@ -16,6 +16,7 @@ unidade<-as.data.frame(dados[c(1:37,39),1])
 #SUBSTITUI AS VT's DOS PROCESSOS QUE FORAM REDISTRIBUÍDOS
 redis<-filter(dados,(Pergunta=="REDISTRIBUIDO"))%>%select(unidade,mês,quant)
 redis$mês<-dmy_hms(redis$mês) 
+redis$mês[redis$mês=="null"]=NA
 redis<-na.omit(redis)
 dados<-filter(dados,!(Pergunta=="REDISTRIBUIDO"))
 
@@ -23,8 +24,6 @@ dados<-filter(dados,!(Pergunta=="REDISTRIBUIDO"))
 # #DEIXAR APENAS A ÚLTIMA VT PARA A QUAL O PROCESSO FOI DISTRIBUÍDO
 
 redis<-redis%>%group_by(quant)%>%mutate(mês=if_else(mês!=max(mês),dmy_hms(NA),mês))
-  
-redis<-na.omit(redis)
 redis<-select(redis,unidade,quant)
 
 

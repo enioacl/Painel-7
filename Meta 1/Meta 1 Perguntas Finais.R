@@ -5,6 +5,7 @@ library(prodlim)
 library(data.table)
 library(lubridate)
 dados<-dataset
+dados<-as.data.frame(dados)
 dados<-dados%>%select(sort(names(.)))
 unidade<-as.data.frame(dados[c(1:37,39),5])
 names(dados)=c("Instância","mês","Pergunta","quant","Unidade")
@@ -13,8 +14,9 @@ dados<-dados%>%select(Unidade,mês,Pergunta,quant,Instância)
 #DEIXAR APENAS A ÚLTIMA VT PARA A QUAL O PROCESSO FOI DISTRIBUÍDO
 redis<-filter(dados,(Pergunta=="REDISTRIBUIDO"))%>%select(Unidade,mês,quant)
 dados<-filter(dados,!(Pergunta=="REDISTRIBUIDO"))
-redis$mês<-dmy_hms(redis$mês) #aqui mudar para dmy_hms
+redis$mês[redis$mês=="null"]=NA
 redis<-na.omit(redis)
+redis$mês<-dmy_hms(redis$mês) #aqui mudar para dmy_hms
 redis<-redis%>%group_by(quant)%>%mutate(mês=if_else(mês!=max(mês),dmy_hms(NA),mês))
 redis<-na.omit(redis)
 redis<-select(redis,Unidade,quant)

@@ -27,8 +27,8 @@ dados<-filter(dados,!(Pergunta=="REDISTRIBUIDO"))
 
 
 #DEIXAR APENAS A ÚLTIMA VT PARA A QUAL O PROCESSO FOI DISTRIBUÍDO
-
-redis<-redis%>%group_by(quant)%>%mutate(mês=if_else(mês!=max(mês),as.Date(NA),mês))
+redis<-na.omit(redis)
+redis<-redis%>%group_by(quant)%>%mutate(mês=if_else(mês!=max(mês),dmy_hsm(NA),mês))
 
 redis<-na.omit(redis)
 redis<-select(redis,unidade,quant)

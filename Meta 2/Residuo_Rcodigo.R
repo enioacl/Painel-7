@@ -15,7 +15,7 @@ redis<-redis%>%group_by(quant)%>%mutate(mês=if_else(mês!=max(mês),dmy_hms(NA)
 redis<-na.omit(redis)
 redis<-select(redis,Unidade,quant)
 
-  
+
 a<-left_join(dados,redis,by="quant")
 a$Unidade.x<-ifelse(is.na(a$Unidade.y),a$Unidade.x,a$Unidade.y)
 a<-select(a,-Unidade.y)

@@ -12,12 +12,14 @@ names(unidade)="unidade"
 
 #SUBSTITUI AS VT's DOS PROCESSOS QUE FORAM REDISTRIBUÍDOS
 redis<-filter(dados,(Pergunta=="REDISTRIBUIDO"))%>%select(unidade,mês,quantidade)
+redis$unidade[redis$unidade=="null"]=NA
+redis$mês[redis$mês=="null"]=NA
+redis<-na.omit(redis)
 redis$mês<-dmy_hms(redis$mês) 
 dados<-filter(dados,!(Pergunta=="REDISTRIBUIDO"))
 #dados$mês<-as.numeric(dados$mês)
 
 # #DEIXAR APENAS A ÚLTIMA VT PARA A QUAL O PROCESSO FOI DISTRIBUÍDO
-redis<-na.omit(redis)
 redis<-redis%>%group_by(quantidade)%>%mutate(mês=if_else(mês!=max(mês),dmy_hms(NA),mês))
 redis<-na.omit(redis)
 redis<-select(redis,unidade,quantidade)

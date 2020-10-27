@@ -35,6 +35,9 @@ names(unidade)="unidade"
 
 #SUBSTITUI AS VT's DOS PROCESSOS QUE FORAM REDISTRIBUÍDOS
 redis<-filter(dados,(pergunta=="REDISTRIBUIDO"))%>%select(unidade,mes,quant)
+redis$unidade[redis$unidade=="null"]=NA
+redis$mes[redis$mes=="null"]=NA
+redis<-na.omit(redis)
 redis$mes<-dmy_hsm(redis$mes) 
 dados<-filter(dados,!(pergunta=="REDISTRIBUIDO"))
 dados$mes<-as.numeric(dados$mes)

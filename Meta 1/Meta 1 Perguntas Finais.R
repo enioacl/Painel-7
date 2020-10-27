@@ -31,7 +31,7 @@ dados<-dados%>%group_by(Unidade,mês,Pergunta)%>%summarise(quant=n())%>%data.fra
 
 dados$quant<-as.numeric(dados$quant)
 dados$quant[is.na(dados$quant)]=0
-dados$mês<-as.numeric(dados$mês)
+dados$mês<-as.character(dados$mês)
 
 p11<-dados%>%filter(Pergunta=="P11")%>%select(Unidade, mês, quant)
 p13<-dados%>%filter(Pergunta=="P13")%>%select(Unidade, mês, quant)

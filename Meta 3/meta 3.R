@@ -1,27 +1,29 @@
 # 'dataset' tem os dados de entrada para este script
 
+
 library(readxl)
 library(dplyr)
 library(lubridate)
 library(data.table)
-dados<-dataset 
+library(prodlim)
+dados<-as.data.frame(dataset,stringsAsFactors = FALSE)
 
 dados<-dados%>%select(sort(names(.)))
 names(dados)<-c("mês","Pergunta","quant","unidade")
 dados<-dados%>%select(unidade,mês,Pergunta,quant)
 unidade<-as.data.frame(dados[c(1:37,39),1])
-
+names(unidade)<-"unidade"
 
 
 #SUBSTITUI AS VT's DOS PROCESSOS QUE FORAM REDISTRIBUÍDOS
 redis<-filter(dados,(Pergunta=="REDISTRIBUIDO"))%>%select(unidade,mês,quant)
-redis$Unidade[redis$Unidade=="null"]=NA
-redis$quant[redis$quant=="null"]=NA
-redis$mês[redis$mês=="null"]=NA
+redis$unidade[redis$unidade=="NA"]=NA
+redis$quant[redis$quant=="NA"]=NA
+redis$mês[redis$mês=="NA"]=NA
 redis<-na.omit(redis)
 redis$mês<-dmy_hms(redis$mês)
 dados<-filter(dados,!(Pergunta=="REDISTRIBUIDO"))
-
+dados<-as.data.frame(dados[-c(1:40),])
 
 # #DEIXAR APENAS A ÚLTIMA VT PARA A QUAL O PROCESSO FOI DISTRIBUÍDO
 
@@ -30,28 +32,26 @@ redis<-select(redis,unidade,quant)
 
 
 a<-left_join(dados,redis,by="quant")
-a$unidade.x<-ifelse(is.na(a$unidade.y),a$unidade.x,a$unidade.y)
+
+a<-a%>%mutate(unidade.x=if_else(is.na(unidade.y),as.character(unidade.x),as.character(unidade.y)))
 a<-select(a,-unidade.y)
 names(a)[1]="unidade"
 
 dados<-a
 
 
-dados<-dados%>%group_by(unidade,mês,Pergunta,Instância)%>%summarise(quant=n())%>%data.frame()%>%
-  select(unidade,mês,Pergunta,quant,Instância)
-
-
-
-
+dados<-dados%>%group_by(unidade,mês,Pergunta)%>%summarise(quant=n())%>%data.frame()%>%
+  select(unidade,mês,Pergunta,quant)
 
 dados$quant<-as.numeric(dados$quant)
 dados$quant[is.na(dados$quant)]=0
-dados$mês<-as.numeric(dados$mês)
+dados$mês<-as.numeric(as.character(dados$mês)) #estava como factor...
 
 d35<-dados%>%filter(Pergunta=='P35')%>%select(unidade,mês,quant)
 names(d35)[3]<-"P35"
 d36<-dados%>%filter(Pergunta=='P36')%>%select(unidade,mês,quant)
 names(d36)[3]<-"P36"
+
 
 
 dados2<-full_join(d35,d36,by=c("unidade","mês"))
@@ -60,12 +60,11 @@ dados2[is.na(dados2)]=0
 dados2<-as.data.frame(dados2)
 
 
+
 TRT_1=cbind(unidade=rep(".TRT 7 1ª INSTÂNCIA",length(unique(dados2$mês))),
             (dados2%>%group_by(mês)%>%summarise(P35=sum(P35),P36=sum(P36))))
 dados2<-dados2%>%arrange(unidade,mês)
 dados2=as.data.frame(rbind(dados2,TRT_1))
-
-
 
 
 
@@ -78,7 +77,7 @@ names(combin)=names(dados2)
 combin=as.data.frame(combin)
 
 
-library(prodlim)
+#dados2$mês<-as.character(dados2$mês)
 
 pos=which(is.na(row.match(combin[,1:2],dados2[,1:2]))) #linhas para adicionar 
 ee=rbind(dados2,combin[pos,]) #juntando o data frame com as linhas faltantes
@@ -87,6 +86,7 @@ ee=rbind(dados2,combin[pos,]) #juntando o data frame com as linhas faltantes
 ee=ee%>%arrange(unidade,mês)
 
 dados2=as.data.frame(ee)
+
 
 
 #grau de cumprimento acumulado

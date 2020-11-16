@@ -30,7 +30,7 @@ redis<-select(redis,Unidade,quant)
 
 
 a<-left_join(dados,redis,by="quant")
-a$Unidade.x<-ifelse(is.na(a$Unidade.y),a$Unidade.x,a$Unidade.y)
+a<-a%>%mutate(Unidade.x=if_else(is.na(Unidade.y),as.character(Unidade.x),as.character(Unidade.y)))
 a<-select(a,-Unidade.y)
 names(a)[1]="Unidade"
 

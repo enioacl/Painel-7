@@ -20,8 +20,9 @@ names(Unidades)<-"unidade"
 
 #SUBSTITUI AS VT's DOS PROCESSOS QUE FORAM REDISTRIBUÍDOS
 redis<-filter(dados,(Pergunta=="REDISTRIBUIDO"))%>%select(unidade,mês,quant)
-redis$unidade[redis$unidade=="null"]=NA
-redis$mês[redis$mês=="null"]=NA
+redis$unidade[redis$unidade=="NA"]=NA
+redis$quant[redis$quant=="NA"]=NA
+redis$mês[redis$mês=="NA"]=NA
 redis<-na.omit(redis)
 redis$mês<-dmy_hms(redis$mês)
 dados<-as.data.frame(dados[-c(1:40),])
@@ -37,7 +38,7 @@ redis<-na.omit(redis)
 redis<-select(redis,unidade,quant)
 
 a<-left_join(dados,redis,by="quant")
-a$unidade.x<-ifelse(is.na(a$unidade.y),a$unidade.x,a$unidade.y)
+a<-a%>%mutate(unidade.x=if_else(is.na(unidade.y),as.character(unidade.x),as.character(unidade.y)))
 a<-select(a,-unidade.y)
 a<-a%>%select(unidade.x,mês,quant,soma,Instância)
 

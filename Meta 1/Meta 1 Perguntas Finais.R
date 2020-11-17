@@ -15,6 +15,7 @@ dados<-dados%>%select(Unidade,mês,Pergunta,quant,Instância)
 #DEIXAR APENAS A ÚLTIMA VT PARA A QUAL O PROCESSO FOI DISTRIBUÍDO
 redis<-filter(dados,(Pergunta=="REDISTRIBUIDO"))%>%select(Unidade,mês,quant)
 dados<-filter(dados,!(Pergunta=="REDISTRIBUIDO"))
+dados<-as.data.frame(dados[-c(1:40),])
 redis$Unidade[redis$Unidade=="NA"]=NA
 redis$quant[redis$quant=="NA"]=NA
 redis$mês[redis$mês=="NA"]=NA

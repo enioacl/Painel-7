@@ -21,6 +21,7 @@ redis$mês[redis$mês=="NA"]=NA
 redis<-na.omit(redis)
 redis$mês<-dmy_hms(redis$mês) 
 dados<-filter(dados,!(Pergunta=="REDISTRIBUIDO"))
+dados<-as.data.frame(dados[-c(1:40),])
 dados$mês<-as.numeric(dados$mês)
 
 # #DEIXAR APENAS A ÚLTIMA VT PARA A QUAL O PROCESSO FOI DISTRIBUÍDO

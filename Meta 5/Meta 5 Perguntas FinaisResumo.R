@@ -14,6 +14,7 @@ names(Unidade)="Unidade"
 
 redis<-filter(dados,(Pergunta=="REDISTRIBUIDO"))%>%select(Unidade,mês,quant)
 dados<-filter(dados,!(Pergunta=="REDISTRIBUIDO"))
+dados<-as.data.frame(dados[-c(1:40),])
 
 # #DEIXAR APENAS A ÚLTIMA VT PARA A QUAL O PROCESSO FOI DISTRIBUÍDO
 redis$Unidade[redis$Unidade=="NA"]=NA

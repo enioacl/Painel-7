@@ -10,14 +10,18 @@ redis<-filter(dados,(Pergunta=="REDISTRIBUIDO"))%>%select(Unidade,mês,quant)
 dados<-filter(dados,!(Pergunta=="REDISTRIBUIDO"))
 
 # #DEIXAR APENAS A ÚLTIMA VT PARA A QUAL O PROCESSO FOI DISTRIBUÍDO
+redis$Unidade[redis$Unidade=="NA"]=NA
+redis$quant[redis$quant=="NA"]=NA
+redis$mês[redis$mês=="NA"]=NA
 redis<-na.omit(redis)
+redis$mês<-dmy_hms(redis$mês)
 redis<-redis%>%group_by(quant)%>%mutate(mês=if_else(mês!=max(mês),dmy_hms(NA),mês))
 redis<-na.omit(redis)
 redis<-select(redis,Unidade,quant)
 
 
 a<-left_join(dados,redis,by="quant")
-a$Unidade.x<-ifelse(is.na(a$Unidade.y),a$Unidade.x,a$Unidade.y)
+a<-a%>%mutate(Unidade.x=if_else(is.na(Unidade.y),as.character(Unidade.x),as.character(Unidade.y)))
 a<-select(a,-Unidade.y)
 names(a)=c("DATA","perg","PROCESSO_NUMERO_UNICO","TXT_UNIDADE")
 dados<-as.data.frame(a)

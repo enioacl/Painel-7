@@ -2,17 +2,20 @@ library(dplyr)
 library(lubridate)
 dados<-dataset
 dados<-as.data.frame(dados)
-dados$MES<-dmy_hms(dados$MES) 
+#dados$MES<-dmy_hms(dados$MES) 
 dados<-dados%>%select(sort(names(.)))
 
 names(dados)<-c("mês","Pergunta","quant","Unidade")
 redis<-filter(dados,(Pergunta=="REDISTRIBUIDO"))%>%select(Unidade,mês,quant)
 dados<-filter(dados,!(Pergunta=="REDISTRIBUIDO"))
 
+dados$mês<-ymd_hms(dados$mês) 
+redis$mês<-dmy_hms(redis$mês)
+
 # #DEIXAR APENAS A ÚLTIMA VT PARA A QUAL O PROCESSO FOI DISTRIBUÍDO
-redis$Unidade[redis$Unidade=="NA"]=NA
-redis$quant[redis$quant=="NA"]=NA
-redis$mês[redis$mês=="NA"]=NA
+#redis$Unidade[redis$Unidade=="NA"]=NA
+#redis$quant[redis$quant=="NA"]=NA
+#redis$mês[redis$mês=="NA"]=NA
 redis<-na.omit(redis)
 redis$mês<-dmy_hms(redis$mês)
 redis<-redis%>%group_by(quant)%>%mutate(mês=if_else(mês!=max(mês),dmy_hms(NA),mês))
